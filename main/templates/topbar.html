@@ -1,0 +1,36 @@
+{%load staticfiles%}
+<div class="topbar gray">
+	<div class="container">
+		<div class="row">
+            <div class="col-md-6 col-xs-12 header-top-left">
+                <div>
+                    <div class="news">
+                        <div class="inner">
+                                <ul class="news-list">
+                                    {% for slogan in slogans %}
+                                        <li>{{slogan.text}}</li>
+                                    {% empty %}
+                                        <li>iBox.KG - Место где можешь купить/продать смартфоны, ноутбуки и планшеты в Бишкеке.</li>
+                                        <li>iBox.KG - Покупай и продавай вместе с нами!</li>
+                                        <li>iBox.KG - Лучшее место для покупки и продажи смартфонов и ноутбуков в Кыргызстане!</li>
+                                    {% endfor %}
+                                </ul><!-- /.news-list -->
+                        </div><!-- /.inner -->
+                    </div><!-- /.news -->
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xs-12 header-top-right">
+                <div> 
+                    <div class = "social">
+                        <div class="inner">
+                            <span data-toggle="modal" data-target="#add_instance_pop"><span style="cursor:pointer" >
+                            <img class="blur" src="{% static 'images/newmess123.png' %}"  /></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.col-md-5 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.topbar -->
+

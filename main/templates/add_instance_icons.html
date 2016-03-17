@@ -1,0 +1,12 @@
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red">
+      <i class="large fa fa-plus"></i>
+    </a>
+    
+    <ul>
+      <li><a class="btn-floating btn-large red waves-effect" data-toggle="tooltip" data-placement="top" data-original-title="Продать телефон" href="{% url 'main:add_instance_phones' %}"><i class="large fa fa-mobile"></i></a></li>
+      <li><a class="btn-floating btn-large yellow darken-1 waves-effect" data-toggle="tooltip" data-placement="top" data-original-title="Продать ноутбук"  href="{% url 'main:add_instance_notebooks' %}"><i class="large fa fa-laptop"></i></a></li>
+      <li><a class="btn-floating btn-large green waves-effect" data-toggle="tooltip" data-placement="top" data-original-title="Продать планшет" href="{% url 'main:add_instance_tablets' %}"><i class="large fa fa-tablet"></i></a></li>
+      <li><a class="btn-floating btn-large blue waves-effect" data-toggle="tooltip" data-placement="top" data-original-title="Продать аксессуары"  href="{% url 'main:add_instance_accessories' %}"><i class="large fa fa-plus-square-o"></i></a></li>
+    </ul>
+</div>

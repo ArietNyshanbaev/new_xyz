@@ -1,0 +1,28 @@
+<div class="modal fade" id="notify_me" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Что вы предпочитаете</h4>
+        </div>
+        <div class="modal-body">
+        <form action="{% url 'fishkas:notify_me'%}" method="POST" role="form">
+        {% csrf_token %}
+            {% for category in categories %}
+            <div class="form-group">
+                <label style="text-align: right;clear: both;float:left;margin-right:15px;" for="{{category.id}}"> {{category.title}}</label>
+                <input type="checkbox" name="category_name" id="{{category.id}}" value="{{category.title}}">
+                <hr>
+            </div>
+            {% endfor %}
+            <p style="color:#FB4949">Не отмечайте ничего, если вы хотите отметить все</p>
+            <input type="hidden" name="from_price" id="from_notify" value="">
+            <input type="hidden" name="to_price" id="to_notify" value="">
+            <div class="modal-footer">
+                <input class="btn btn-primary" type="submit" value="Оставить заявку">
+            </div>
+        </form>
+        </div>
+    </div>
+  </div>
+</div>

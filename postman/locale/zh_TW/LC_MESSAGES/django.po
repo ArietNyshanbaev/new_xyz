@@ -1,0 +1,536 @@
+# Chinese TW translation of django-postman.
+# Copyright (C) 2012 Patrick Samson
+# This file is distributed under the same license as the django-postman package.
+#
+# Translators:
+# Leonard Huang <lueotw@gmail.com>, 2011
+#   <lueoad@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: django-postman\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-02 20:28+0600\n"
+"PO-Revision-Date: 2012-06-26 12:57+0000\n"
+"Last-Translator: lueo <lueoad@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: admin.py:30
+msgid "Sender and Recipient cannot be both undefined."
+msgstr "寄件人和收件人皆未定義。"
+
+#: admin.py:37
+msgid "Visitor's email is in excess."
+msgstr "訪客的email量已超過限額。"
+
+#: admin.py:42
+msgid "Visitor's email is missing."
+msgstr "訪客的email未填。"
+
+#: admin.py:48
+msgid "Reading date must be later than sending date."
+msgstr "閱讀日期必須晚於發送日期。"
+
+#: admin.py:53
+msgid "Deletion date by sender must be later than sending date."
+msgstr "寄件人的刪除日期必須晚於發送日期。"
+
+#: admin.py:58
+msgid "Deletion date by recipient must be later than sending date."
+msgstr "收件人的刪除日期必須晚於發送日期。"
+
+#: admin.py:66
+msgid "Response date must be later than sending date."
+msgstr "回應日期必須晚於發送日期。"
+
+#: admin.py:68
+msgid "The message cannot be replied without having been read."
+msgstr "該消息不能被回覆而沒有被閱讀過。"
+
+#: admin.py:70
+msgid "Response date must be later than reading date."
+msgstr "回應日期必須晚於閱讀日期。"
+
+#: admin.py:72
+msgid "Response date cannot be set without at least one reply."
+msgstr "設置回應日期時至少要有一個答覆。"
+
+#: admin.py:74
+msgid "The message cannot be replied without being in a conversation."
+msgstr "該訊息未在對話中，所以不能被回覆。"
+
+#: admin.py:97 admin.py:178 templates/postman/view.html:102
+msgid "Message"
+msgstr "訊息"
+
+#: admin.py:102
+msgid "Dates"
+msgstr "日期"
+
+#: admin.py:107 admin.py:182
+msgid "Moderation"
+msgstr "適度"
+
+#: fields.py:33
+#, python-brace-format
+msgid "Some usernames are unknown or no longer active: {users}."
+msgstr "有些用戶名是未知的或非活動的：{users}。"
+
+#: fields.py:34
+#, python-brace-format
+msgid ""
+"Ensure this value has at most {limit_value} distinct items (it has "
+"{show_value})."
+msgstr "確保該值至多{limit_value}個不同的項目(有{show_value}個)。"
+
+#: fields.py:35
+#, python-brace-format
+msgid ""
+"Ensure this value has at least {limit_value} distinct items (it has "
+"{show_value})."
+msgstr "確保該值至少{limit_value}個不同的項目(有{show_value}個)。"
+
+#: fields.py:36
+#, python-brace-format
+msgid "Some usernames are rejected: {users}."
+msgstr "一些用戶名被拒絕：{users}。"
+
+#: fields.py:37 forms.py:72
+#, python-brace-format
+msgid "{username}"
+msgstr "{username}"
+
+#: fields.py:38 forms.py:73
+#, python-brace-format
+msgid "{username} ({reason})"
+msgstr "{username} ({reason})"
+
+#: forms.py:71
+#, python-brace-format
+msgid "Writing to some users is not possible: {users}."
+msgstr "不可能寫給一些用戶：{users}。"
+
+#: forms.py:158 forms.py:171
+msgid "Recipients"
+msgstr "收件人"
+
+#: forms.py:158 forms.py:171 templates/postman/base_folder.html:132
+#: templates/postman/reply.html:4
+msgid "Recipient"
+msgstr "收件人"
+
+#: forms.py:170
+msgid "Email"
+msgstr "Email"
+
+#: forms.py:187
+msgid "Undefined recipient."
+msgstr "未定義的收件人。"
+
+#: forms.py:222
+msgid "Additional recipients"
+msgstr "其他收件人"
+
+#: forms.py:222
+msgid "Additional recipient"
+msgstr "其他收件人"
+
+#: management/__init__.py:22
+msgid "Message Rejected"
+msgstr "郵件被拒絕"
+
+#: management/__init__.py:22
+msgid "Your message has been rejected"
+msgstr "您的郵件已被拒絕"
+
+#: management/__init__.py:23
+msgid "Message Received"
+msgstr "接收到訊息"
+
+#: management/__init__.py:23
+msgid "You have received a message"
+msgstr "您收到一則訊息"
+
+#: management/__init__.py:24
+msgid "Reply Received"
+msgstr "收到答覆"
+
+#: management/__init__.py:24
+msgid "You have received a reply"
+msgstr "您已收到答覆"
+
+#: models.py:35
+msgid "Pending"
+msgstr "待處理"
+
+#: models.py:36
+msgid "Accepted"
+msgstr "接受"
+
+#: models.py:37 templates/postman/view.html:112
+msgid "Rejected"
+msgstr "被拒絕"
+
+#: models.py:271
+msgid "subject"
+msgstr "主題"
+
+#: models.py:272
+msgid "body"
+msgstr "主體"
+
+#: models.py:273 models.py:356
+msgid "sender"
+msgstr "寄件人"
+
+#: models.py:274 models.py:380
+msgid "recipient"
+msgstr "收件人"
+
+#: models.py:275
+msgid "visitor"
+msgstr "訪客"
+
+#: models.py:276
+msgid "parent message"
+msgstr "前訊息"
+
+#: models.py:277
+msgid "root message"
+msgstr "原訊息"
+
+#: models.py:278
+msgid "sent at"
+msgstr "發送於"
+
+#: models.py:279
+msgid "read at"
+msgstr "閱讀於"
+
+#: models.py:280
+msgid "replied at"
+msgstr "回答於"
+
+#: models.py:281
+msgid "archived by sender"
+msgstr "被寄件人存檔"
+
+#: models.py:282
+msgid "archived by recipient"
+msgstr "被收件人存檔"
+
+#: models.py:283
+msgid "deleted by sender at"
+msgstr "被寄件人刪除"
+
+#: models.py:284
+msgid "deleted by recipient at"
+msgstr "被收件人刪除"
+
+#: models.py:286
+msgid "status"
+msgstr "狀態"
+
+#: models.py:288
+msgid "moderator"
+msgstr "管制者"
+
+#: models.py:289
+msgid "moderated at"
+msgstr "管制於"
+
+#: models.py:290
+msgid "rejection reason"
+msgstr "拒絕原因"
+
+#: models.py:295
+msgid "message"
+msgstr "訊息"
+
+#: models.py:296
+msgid "messages"
+msgstr "訊息"
+
+#: models.py:408
+msgid "Undefined sender."
+msgstr "未定義的寄件人。"
+
+#: models.py:556
+msgid "pending message"
+msgstr "待處理消息"
+
+#: models.py:557
+msgid "pending messages"
+msgstr "待處理消息"
+
+#: templates/admin/postman/pendingmessage/change_form.html:17
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "請更正下列錯誤。"
+
+#: templates/admin/postman/pendingmessage/submit_line.html:6
+msgid "Accept"
+msgstr "接受"
+
+#: templates/admin/postman/pendingmessage/submit_line.html:7
+msgid "Reject"
+msgstr "拒絕"
+
+#: templates/postman/archives.html:3
+msgid "Archived Messages"
+msgstr "歸檔的郵件"
+
+#: templates/postman/archives.html:7
+msgid ""
+"Messages in this folder will never be removed. You can use this folder for "
+"long term storage."
+msgstr "此文件夾中的信息將永遠不會被刪除。你可以使用此文件夾以做為長期保存。"
+
+#: templates/postman/base.html:3
+msgid "Messaging"
+msgstr "訊息"
+
+#: templates/postman/base.html:12 templates/postman/base_folder.html:101
+#: templates/postman/base_write.html:119 templates/postman/view.html:93
+msgid "Inbox"
+msgstr "收件匣"
+
+#: templates/postman/base.html:13 templates/postman/base_folder.html:102
+#: templates/postman/base_write.html:120 templates/postman/sent.html:3
+#: templates/postman/view.html:94
+msgid "Sent Messages"
+msgstr "發送的訊息"
+
+#: templates/postman/base.html:14 templates/postman/base_folder.html:100
+#: templates/postman/base_write.html:118 templates/postman/view.html:92
+#: templates/postman/write.html:3
+msgid "Write"
+msgstr "編寫"
+
+#: templates/postman/base.html:15 templates/postman/base_folder.html:103
+#: templates/postman/base_write.html:121 templates/postman/view.html:95
+msgid "Archives"
+msgstr "歸檔"
+
+#: templates/postman/base.html:16 templates/postman/base_folder.html:104
+#: templates/postman/base_write.html:122 templates/postman/view.html:96
+msgid "Trash"
+msgstr "垃圾"
+
+#: templates/postman/base_folder.html:114
+msgid "Sorry, this page number is invalid."
+msgstr "對不起，此頁號無效。"
+
+#: templates/postman/base_folder.html:118
+msgid "by conversation"
+msgstr "以對話排序"
+
+#: templates/postman/base_folder.html:119
+msgid "by message"
+msgstr "以訊息排序"
+
+#: templates/postman/base_folder.html:123 templates/postman/view.html:121
+msgid "Delete"
+msgstr "刪除"
+
+#: templates/postman/base_folder.html:124 templates/postman/view.html:122
+msgid "Archive"
+msgstr "歸檔"
+
+#: templates/postman/base_folder.html:125
+msgid "Undelete"
+msgstr "取消刪除"
+
+#: templates/postman/base_folder.html:130
+msgid "Action"
+msgstr "動作"
+
+#: templates/postman/base_folder.html:131
+msgid "Sender"
+msgstr "寄件人"
+
+#: templates/postman/base_folder.html:133
+msgid "Subject"
+msgstr "主體"
+
+#: templates/postman/base_folder.html:134
+msgid "Date"
+msgstr "日期"
+
+#: templates/postman/base_folder.html:156
+msgid "No messages."
+msgstr "沒有訊息。"
+
+#: templates/postman/base_write.html:135
+msgid "Send"
+msgstr "發送"
+
+#: templates/postman/email_user.txt:1
+msgid "Dear user,"
+msgstr "親愛的用戶，"
+
+#: templates/postman/email_user.txt:3 templates/postman/email_visitor.txt:3
+#, python-format
+msgid "On %(date)s, you asked to send a message to the user '%(recipient)s'."
+msgstr "於 %(date)s, 你向 '%(recipient)s' 發出了一條訊息。"
+
+#: templates/postman/email_user.txt:5 templates/postman/email_visitor.txt:5
+msgid "Your message has been rejected by the moderator"
+msgstr "您的訊息被管制者拒絕"
+
+#: templates/postman/email_user.txt:5 templates/postman/email_visitor.txt:5
+msgid ", for the following reason:"
+msgstr "，基於以下原因："
+
+#: templates/postman/email_user.txt:9 templates/postman/email_visitor.txt:10
+#, python-format
+msgid "On %(date)s, you sent a message to the user '%(sender)s'."
+msgstr "於%(date)s, 您向'%(sender)s' 發出了一條訊息。"
+
+#: templates/postman/email_user.txt:10
+msgid "Your correspondent has given you an answer."
+msgstr "您的聯絡人回覆了。"
+
+#: templates/postman/email_user.txt:11
+#, python-format
+msgid "You have received a copy of a response from the user '%(sender)s'."
+msgstr "您收到用戶'%(sender)s' 的回應副本。"
+
+#: templates/postman/email_user.txt:13
+#, python-format
+msgid "You have received a message from the user '%(sender)s'."
+msgstr "您收到從用戶'%(sender)s' 來的訊息。"
+
+#: templates/postman/email_user.txt:16 templates/postman/email_visitor.txt:14
+msgid "Thank you again for your interest in our services."
+msgstr "再次感謝您使用我們的服務。"
+
+#: templates/postman/email_user.txt:17 templates/postman/email_visitor.txt:16
+msgid "The site administrator"
+msgstr "網站管理員"
+
+#: templates/postman/email_user.txt:19 templates/postman/email_visitor.txt:18
+msgid ""
+"Note: This message is issued by an automated system.\n"
+"Do not reply, this would not be taken into account."
+msgstr ""
+"註：此郵件是由系統自動發出。\n"
+"請勿回覆。回覆的郵件將無法接收。"
+
+#: templates/postman/email_user_subject.txt:1
+#: templates/postman/email_visitor_subject.txt:1
+#, python-format
+msgid "Message \"%(subject)s\" on the site %(sitename)s"
+msgstr "訊息\"%(subject)s\" 在網站 - %(sitename)s"
+
+#: templates/postman/email_visitor.txt:1
+msgid "Dear visitor,"
+msgstr "親愛的訪客，"
+
+#: templates/postman/email_visitor.txt:8
+msgid "As a reminder, please find below the content of your message."
+msgstr "提醒您，您的郵件內容請見下方。"
+
+#: templates/postman/email_visitor.txt:11
+msgid "Please find below the answer from your correspondent."
+msgstr "請參閱您聯絡人的回答。"
+
+#: templates/postman/email_visitor.txt:15
+msgid "For more comfort, we encourage you to open an account on the site."
+msgstr "我們建議您在網站上註冊一個帳戶，以便更有效的使用本系統。"
+
+#: templates/postman/inbox.html:4
+msgid "Received Messages"
+msgstr "收到的郵件"
+
+#: templates/postman/inbox.html:7
+msgid "Received"
+msgstr "收到的"
+
+#: templates/postman/reply.html:3 templates/postman/view.html:125
+#: templates/postman/view.html.py:128 templates/postman/view.html:131
+msgid "Reply"
+msgstr "回覆的"
+
+#: templates/postman/sent.html:6
+msgid "Sent"
+msgstr "發送的"
+
+#: templates/postman/trash.html:3
+msgid "Deleted Messages"
+msgstr "已刪除郵件"
+
+#: templates/postman/trash.html:10
+msgid ""
+"Messages in this folder can be removed from time to time. For long term "
+"storage, use instead the archive folder."
+msgstr "此文件夾中的郵件隨時會被刪除。如要長期保存，請使用歸檔文件夾。"
+
+#: templates/postman/view.html:102
+msgid "Conversation"
+msgstr "對話"
+
+#: templates/postman/view.html:112
+msgid ":"
+msgstr ":"
+
+#: templates/postman/view.html:119
+msgid "Back"
+msgstr "返回"
+
+#: templatetags/postman_tags.py:50
+msgid "<me>"
+msgstr "<我>"
+
+#: utils.py:39
+msgid "> "
+msgstr "> "
+
+#: utils.py:55
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
+"{sender} wrote:\n"
+"{body}\n"
+msgstr ""
+"\n"
+"\n"
+"{sender}寫道：\n"
+"{body}\n"
+
+#: utils.py:65
+#, python-brace-format
+msgid "Re: {subject}"
+msgstr "回覆：{subject}"
+
+#: views.py:201
+msgid "Message successfully sent."
+msgstr "郵件成功發送。"
+
+#: views.py:203
+msgid "Message rejected for at least one recipient."
+msgstr "郵件的收件人至少有一個被拒絕了。"
+
+#: views.py:421
+msgid "Select at least one object."
+msgstr "至少選擇一個對象。"
+
+#: views.py:428
+msgid "Messages or conversations successfully archived."
+msgstr "訊息或對話已成功存檔。"
+
+#: views.py:435
+msgid "Messages or conversations successfully deleted."
+msgstr "訊息或對話已成功刪除。"
+
+#: views.py:442
+msgid "Messages or conversations successfully recovered."
+msgstr "訊息或對話已成功回收。"
+
+#~ msgid "g:i A,M j,n/j/y"
+#~ msgstr "g:i A,M j,n/j/y"

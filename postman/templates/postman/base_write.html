@@ -1,0 +1,155 @@
+{% load i18n %}
+{% load i18n postman_tags %}
+{% block extrahead %}{{ block.super }}
+{% if autocompleter_app.is_active %}
+{# dj v1.4 #}{% load static %}
+<script type="text/javascript"src="
+{# using the available admin jQuery is enough: #}
+ {# dj v1.4 #}{% static 'admin/js/jquery.min.js' %}
+ {# dj v1.2/3 #}{# {% load adminmedia %}{% admin_media_prefix %}js/jquery.min.js #}
+{# unless you really want your own: #}
+ {# dj v1.2 #}{# {{ MEDIA_URL }}js/jquery.min.js #}
+"></script>
+{% if autocompleter_app.name == "ajax_select" %}{% if autocompleter_app.version == "1.1.4" or autocompleter_app.version == "1.1.5" %}<script type="text/javascript" src="
+{# dj v1.4 #}{% static 'js/jquery.autocomplete.min.js' %}
+{# dj v1.3 #}{# {{ STATIC_URL }}js/jquery.autocomplete.min.js #}
+{# dj v1.2 #}{# {{ MEDIA_URL }}js/jquery.autocomplete.min.js #}
+"></script>
+<link type="text/css" media="all" rel="stylesheet" href="
+{# dj v1.4 #}{% static 'css/jquery.autocomplete.css' %}
+{# dj v1.3 #}{# {{ STATIC_URL }}css/jquery.autocomplete.css #}
+{# dj v1.2 #}{# {{ MEDIA_URL }}css/jquery.autocomplete.css #}
+" />{# else: for version 1.2.x use AJAX_SELECT_BOOTSTRAP + AJAX_SELECT_INLINES or arrange to include jqueryUI/js/css #}{% endif %}{% endif %}
+{% endif %}
+{{ form.media }}{# for ajax_selects (v1.3.6 at least) #}
+{% endblock %}
+{% block content %}
+{%load staticfiles%}
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="ibox,продать в бишкеке, купить в бишкеке, кыргызстан, смартфон">
+    <meta name="author" content="iBox Team">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/chosen/chosen.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-outline/pictopro-outline.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-normal/pictopro-normal.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/jslider/bin/jquery.slider.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+    
+   <!-- Material Design -->
+    <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
+
+{% include 'metrics.html' %}
+     <title>iBox.kg - Личные сообщения - Написать сообщение</title>
+</head>
+<body >
+
+<div id="fb-root"></div>
+<!-- Include header template-->
+{% include "header.html"%}
+<div class="infobar">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ol class="breadcrumb pull-left">
+		  			<li><a href="{% url 'main:main'%}">Главная</a></li>
+		  			<li><a href="/messages">Личные сообщения</a></li>
+                </ol>
+
+				<div class="contact pull-right">
+
+
+					<div class="contact-item mail">
+						<div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
+						<div class="value">info@ibox.kg</div><!-- /.value -->
+					</div><!-- /.mail -->
+				</div><!-- /.contact -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.infobar -->
+<div class="container">
+<div  id="content" >
+{% include 'messages.html' %}
+{% include 'add_instance_icons.html' %}
+    
+<div class="row" style="min-height: 430px">
+  <div class="col-sm-3">
+  <h1>&nbsp </h1>
+<b>
+ <ul id="list-group" style="max-width: 280px">{% postman_unread as unread_count %}
+ <a class="list-group-item" href="{% url 'postman:write' %}"><i class="fa fa-envelope"></i> {% trans "Write" %}</a>
+ <a class="list-group-item" href="{% url 'postman:inbox' %}"> <i class="fa fa-inbox"></i> {% trans "Inbox" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a>
+ <a class="list-group-item" href="{% url 'postman:sent' %}"><i class="fa fa-paper-plane"></i> {% trans "Sent Messages" %}</a>
+ <a class="list-group-item" href="{% url 'postman:archives' %}"><i class="fa fa-archive"></i> {% trans "Archives" %}</a>
+ <a class="list-group-item" href="{% url 'postman:trash' %}"><i class="fa fa-trash"></i> {% trans "Trash" %}</a>
+</ul>
+</b>
+  </div>
+  <div class="col-sm-9">
+
+<div id="postman">
+<h4>{% block pm_write_title %}{% endblock %}</h4>
+<form class="form-group label_black" action="{% if next_url %}?next={{ next_url|urlencode }}{% endif %}" method="post">{% csrf_token %}
+<table class="table" style="border-top: hidden !important;">
+{% block pm_write_recipient %}{% endblock %}
+{{ form.as_p}}
+</table>
+<button type="submit" class="btn btn-primary" style="width:30%">{% trans "Send" %}</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Includes footer form tempate folder outside -->
+{% include "footer.html" %}
+<!-- /#includes exti modal page-->
+{% include "exit_modal_page.html" %}
+
+
+<script src=" {% static 'js/release11/jquery.js' %}"></script>
+<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
+<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
+<script src=" {% static 'js/release11/cycle.js' %}"></script>
+<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
+<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
+<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
+<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
+<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
+<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
+<script src=" {% static 'js/myjs.js'%}"></script>
+
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
+
+<script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
+<script src=" {% static 'MDB/js/modules/wow.js' %}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
+<script src=" {% static 'MDB/js/mdb.js' %}"></script>
+<script src=" {% static 'js/release11/carat2.js' %}"></script>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+<h6 style="color: #f95446" class="text-center">Проверить существует ли данное объявление на iBox</h6>
+<form method="POST" action="{% url 'main:check_diesel' %}">
+{% csrf_token %}
+	<label style="color: black" for="link">
+	  Введите ссылку
+	</label>
+	<input class="form-control" name="link" id="link" required type="text" maxlength="1000" placeholder="Ссылка">
+	<div class="span7">
+	 	<input type='submit' value='Проверить ссылку'  class="send btn-sm btn-rounded btn-primary btn-primary-color " role="button">
+	</div>
+	<br><br>
+</form>

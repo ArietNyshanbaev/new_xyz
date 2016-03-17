@@ -1,0 +1,68 @@
+
+                    <div class="row-item hoverable waves-effect up_down_bordered">
+                                    {% if instance in user_wish %}
+                                        {% include "dislike.html" %}
+                                    {% else %}
+                                        {% include "like.html" %}
+                                    {% endif %}
+                                    <div class="inner">
+                                        <div class="row">
+                                            <a href="{% url 'main:instance' instance.id %}">
+                                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                                {% if instance.photo1 %}
+                                                    <img class="picture_of_instance" src="../../../media/{{instance.photo1}}" alt="{{ instance.model }} в бишкеке">
+                                                {% endif %}
+                                            </div>
+                                            </a>
+                                            
+                                            <div class="col-lg-8 col-md-7 col-sm-7">
+                                            <a href="{% url 'main:instance' instance.id %}">
+                                                <div class="content-inner">
+                                                    <h5 style="color:#666;">
+                                                        {% if instance.title %}
+                                                            {{instance.title|slice:"38"}}
+                                                        {% else %}  
+                                                            {% if instance.model.is_not_unique == True %}
+                                                               {% if instance.modell %}
+                                                                    {{instance.modell|slice:":20"}}
+                                                               {% else %}
+                                                                    {{instance.model.title}}
+                                                               {% endif %}
+                                                            {% else %}
+                                                                {{instance.model.title}}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    </h5>
+                                                    <div class="meta">
+                                                        <ul>
+
+                                                                 
+                                                                {% if instance.title %}
+                                                                <li><i class="fa none">Модель:</i><i style="color: orangered" class="fa price">&nbsp  
+                                                                    
+                                                                        <span style="color: #00658b;">
+                                                                            {% if instance.model.is_not_unique == True %}
+                                                                               {% if instance.modell %}
+                                                                                    {{instance.modell|slice:":20"}}
+                                                                               {% else %}
+                                                                                    {{instance.model.title}}
+                                                                               {% endif %}
+                                                                            {% else %}
+                                                                                {{instance.model.title}}
+                                                                            {% endif %}
+                                                                        </span>
+                                                                    
+                                                                    </i></li>
+                                                                {% endif %}
+                                                                
+                                                                </li>
+                                                             
+                                                                <li><i class="fa none">Цена:</i><i style="color: #00658b;" class="fa price">&nbsp  {{instance.price}} сом</i></li>
+                                                        </ul>
+                                                    </div>
+                                                </div> 
+                                            </a>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>

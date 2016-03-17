@@ -1,0 +1,22 @@
+<!-- Delete Modal page-->
+{% for instance in instances %}
+<div class="modal fade" id="{{instance.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h6 class="modal-title" id="myModalLabel">Удалить {{instance.model}}</h6>
+        </div>
+        <div class="modal-body">
+            <h6>Вы уверены что хотите удалить  ваше объявление? </h6>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                &nbsp&nbsp&nbsp&nbsp
+                <a href="{% url 'auths:delete_myinstance' instance.id %}?sold=1"><button type="button" class="btn btn-success">Удалить, я продал у Вас</button></a>
+                <a href="{% url 'auths:delete_myinstance' instance.id %}?sold=0"><button type="button" class="btn btn-danger">Удалить</button></a>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endfor %}

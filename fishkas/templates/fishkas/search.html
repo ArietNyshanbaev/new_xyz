@@ -1,0 +1,268 @@
+{%load staticfiles%}
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="купить, продать, смартфоны, сотка, бишкек, кыргызстан, купить смартфон в бишкеке, ноутбуки, iphone в бишкеке, продать в бишкеке, apple, macbook, ultrabook, ibox">
+    <meta name="author" content="iBox Team">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/chosen/chosen.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-outline/pictopro-outline.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-normal/pictopro-normal.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/jslider/bin/jquery.slider.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+     <!-- Material Design -->
+    <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
+
+{% include 'metrics.html' %}
+    <title>iBox | Покупай и продавай вместе с нами!</title>
+</head>
+<body>
+
+<!-- Include header template-->
+{% include "header.html"%}
+
+<div class="infobar">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ol class="breadcrumb pull-left">
+		  			<li><a href="{% url 'main:main' %}">Главная</a></li>
+                    <li><a href="#">Поиск </a></li>
+				</ol>
+
+				<div class="contact pull-right">
+					<div class="contact-item mail">
+						<div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
+						<div class="value">info@ibox.kg</div><!-- /.value -->
+					</div><!-- /.mail -->
+				</div><!-- /.contact -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.infobar -->  
+<div id="content" class="page-filter">
+
+{% include 'messages.html'%}
+{% include 'add_instance_icons.html' %}
+
+<div class="section gray-light">
+<div class="container">
+<div class="row">
+<div class="col-md-3 sidebar">
+
+
+    <div id="filter" class="filter-cars block default block-shadow">
+        <div class="block-inner">
+            <div class="block-title">
+                <h3 style="color:white">Поиск</h3>
+
+            </div>
+
+            <div class="block-inner">
+                <form action="{% url 'fishkas:search'%}" method="GET" role="form">
+                    {% csrf_token %}
+                    <div class="form-section">
+                        <div class="form-group">
+                            <select class="form-control" name="category" id="category" required onchange="javascript:Check11();">
+                                {% if this_category == "All_type" %}
+                                    <option selected="" value="All_type" >Все виды</option>
+                                {% else %}
+                                    <option value="All_type" >Все виды</option>
+                                {% endif %}
+
+                                {% for category in categories %}
+                                    {% if category.brand_set.all.count > 0 %}
+                                        {% if this_brand.category == category %}
+                                            <option selected="" value="{{category.title}}">{{category.title}}</option>
+                                        {% else %}
+                                            {% if this_category == category %}
+                                            {% else %}
+                                                <option value="{{category.title}}">{{category.title}}</option>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if this_category == category %}
+                                            <option selected="" value="{{category.title}}">{{category.title}}</option>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        {% for category in categories %}
+                          <div  class="form-group" id="{{category.title}}" style="display:none">
+                                <select class="form-control" name="{{category.title}}" id="category_id">
+                                  <!--{% if this_brand == "all_brands" %}
+                                        <option selected="" value="all_brands">Все бренды</option>
+                                  {% endif %} -->
+                                  {% if this_category %}
+                                        <option selected="" value="all_brands">Все бренды</option>
+                                   {% endif %} 
+                                  {% for brand in category.brand_set.all %}
+                                    {% if this_brand == brand %}
+                                        <option selected="" value="{{brand.id}}">{{brand.title}}</option>
+                                    {% else %}
+                                        <option value="{{brand.id}}">{{brand.title}}</option>
+                                    {% endif %}
+
+                                  {% endfor %}
+                                </select>
+                          </div>
+                        {% endfor %}
+
+                        <div  class="form-group" id="all_things" style="display:none">
+                                <select class="form-control" name="All_type" id="category_id">
+                                    <option value="all_things">Все бренды</option>
+                                </select>
+                        </div>    
+                    </div>
+
+                    <div  class="form-group">
+                        <select class="form-control" name="city" id="city">
+                            <option value="All">Все города</option>
+                            {% for cit in cities %}
+                                {% if cit == city %}
+                                    <option value="{{cit.name}}" selected="">{{cit.name}}</option>
+                                {% else %}
+                                    <option value="{{cit.name}}">{{cit.name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group ">
+                        <input type="number" style=" background: white;
+  height: 2em;" required value="{{start}}" id="starting_price" class="form-control" min = "0" name="start" placeholder="с сом">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="number" style=" background: white;
+  height: 2em;"  required value="{{end}}" id="end_price" min = "0" step="100" class="form-control" name="end" placeholder="до сом">
+                    </div>
+                     <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 year-to">
+
+                                                         <div class="switch">
+                                                            <label>
+                                                            Обмен &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                            {% if exchange == 'on' %}
+                                                              <input class="text-right" name="exchange" checked="" type="checkbox">
+                                                            {% else %}
+                                                              <input class="text-right" name="exchange" type="checkbox">
+                                                            {% endif %}
+                                                              <span class="lever"></span>
+                                                            </label>
+                                                          </div>
+                                                        </div>
+
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 year-to">
+
+                                                         <div class="switch">
+                                                            <label>
+                                                            Документы 
+                                                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                            {% if box == 'on' %}
+                                                              <input class="text-right" name="box" checked="" type="checkbox">
+                                                            {% else %}
+                                                              <input class="text-right" name="box" type="checkbox">
+                                                            {% endif %}
+                                                              <span class="lever"></span>
+                                                            </label>
+                                                          </div>
+                                                        </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="send btn btn-primary btn-primary-color">Найти<i
+                                class="icon icon-normal-right-arrow-small"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /#filter -->
+
+
+</div>
+<div class="col-md-9">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block block-margin sort">
+                <div class="block-inner gray">
+                    <div class="pull-left">
+                        <p>
+                        Найдено {{num_of_instances}} объвлений
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div class="row-block block block-margin">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="content white">
+                        <div class="inner">
+                    {% for instance in instances %}
+                            {% include 'instances_list.html' %}
+                    {% empty %} 
+                    <h5 class="text-center">По вашему запросу ничего не найдено. </h5>
+                    {% endfor %}									
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+
+{% include 'paggination.html' %}
+<!-- Includes footer form tempate folder outside -->
+{% include "footer.html" %}
+<!-- /#includes exti modal page-->
+{% include "exit_modal_page.html" %}
+
+
+<script src=" {% static 'js/release11/jquery.js' %}"></script>
+<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
+<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
+<script src=" {% static 'js/release11/cycle.js' %}"></script>
+<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
+<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
+<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
+<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
+<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
+<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
+<script src=" {% static 'js/myjs.js'%}"></script>
+
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
+
+<script src="{% static 'js/main.js'%}"></script>
+<script src=" {% static 'MDB/js/mdb.js' %}"></script>
+<script src=" {% static 'js/release11/carat2.js' %}"></script>
+</body>
+</html>

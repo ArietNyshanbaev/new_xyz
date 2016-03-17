@@ -1,0 +1,34 @@
+{%load staticfiles%}
+
+<!-- menu for mobile javascript file  -->
+<!-- Brands -->
+<script type="text/javascript">
+    function go_to_brand(){
+	    var brand = document.getElementById("category_menu").value;
+	    if (brand != ""){
+	        var linker = "{% url 'main:brand' 1 %}";
+	        linker = linker.substring(0,linker.length - 1) + brand;
+	        window.location.href = linker;
+	    }
+	}
+	function go_to_model(){
+	    var model = document.getElementById("brand_menu").value;
+
+	    if (model.substring(0,3) == 'all'){
+
+	    	model = model.split("_")[1];
+	    	var linker = "{% url 'main:brand' 1 %}";
+	        linker = linker.substring(0,linker.length - 1) + model;
+
+	        window.location.href = linker;
+	    }
+	    else {
+
+	    	if (model != ""){
+		        var linker = "{% url 'main:model' 1 %}";
+		        linker = linker.substring(0,linker.length - 1) + model;
+		        window.location.href = linker;
+		    }
+		}
+	}
+</script>

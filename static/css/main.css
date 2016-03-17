@@ -1,0 +1,216 @@
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+ 
+/* Toggle Styles */
+
+#proverit{
+    margin-top: 30px;
+}
+/* This sidebar modified by seegatesite.com */
+body{
+    background-color: #f9f7f6;
+}
+#instance-list{
+    font-size: 18px;
+}
+.modal-redact{
+    font-size: 17px;
+}
+#logo{
+    padding-top:15px; margin-right:52px; 
+}
+#logo a{
+    color:#fbfbfb;
+}
+#nav li a{
+    font-family: 'Museo Sans', Helvetica, Arial, sans-serif; font-weight: 400; font-size: 16px;margin-top: 7px;
+}
+#nav :hover{
+    color: yellow;
+}
+#logo :hover{
+    color:yellow;
+    text-decoration:none;
+}
+#add_button :hover{
+    color:yellow;
+    
+}
+#add_button{
+    text-decoration:none;
+}
+.instance-list div{
+    border: 1px solid gray;
+    margin: 18px;
+    padding-top: 15px;
+    border-radius: 18px;
+}
+a.instance-list div:hover{
+    background-color: #A4E786;
+    border: 1px solid #5856D6;
+}
+a{
+    color: black;
+}
+
+
+
+
+
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+#top-header{
+    color: #fbfbfb;
+    padding-bottom: 1px;
+    background-color: #5A5A5A;;
+    border-bottom: 1px solid #5A5A5A;;
+}
+.main-menu{
+    color: #fbfbfb;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0; /* disini agar ketika di kecilkan tidak hilang semua default 0*/
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #BDBEC2;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+ 
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+ 
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+#wrapper.toggled #menu-toggle-2{
+    visibility: hidden;
+}
+.fixed-brand{
+    width: auto;
+}
+/* Sidebar Styles */
+ 
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-top: 2px;
+}
+ 
+.sidebar-nav li {
+    text-indent: 15px;
+    line-height: 40px;
+}
+ 
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #444;
+}
+ 
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+    border-left: red 2px solid;
+}
+ 
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+ 
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+ 
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+ 
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+.no-margin{
+    margin:0;
+}
+ 
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+    .fixed-brand{
+        width: 250px;
+    }
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+ 
+    #sidebar-wrapper {
+        width: 250px;
+    }
+ 
+    #wrapper.toggled #sidebar-wrapper {
+        width: 250px;
+    }
+    #wrapper.toggled-2 #sidebar-wrapper {
+        width: 50px;
+    }
+    #top-header{
+        padding-bottom: 1px;
+    }
+    #wrapper.toggled-2 #sidebar-wrapper:hover {
+        width: 250px;
+    }
+ 
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+         -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    }
+ 
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+        padding-left: 250px;
+ 
+    }
+        #wrapper.toggled-2 #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+        margin-left: -100px;
+         -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+}

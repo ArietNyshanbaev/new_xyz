@@ -1,0 +1,348 @@
+﻿# pythone packages imports
+from __future__ import unicode_literals
+import re
+# django core packages imports 
+from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.core.context_processors import csrf
+from django.core.urlresolvers import reverse , reverse_lazy
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.messages import get_messages
+from django.contrib.auth.models import User
+from django.template import RequestContext
+#impoer of models
+from .models import Information
+from fishkas.models import Slogan, Wish, Notifier
+from main.models import Category, Instance, Sold
+# import of custom writen decorator and views
+from custom_code.decorators import email_required
+from custom_code.ibox_views import need_for_every
+
+def signin(request, key='main'):
+	# redirect to main page authorized users
+	if request.user.is_authenticated():
+		return redirect(reverse("main:main"))
+	# initialize variables
+	args={}
+	args.update(csrf(request))
+	need_for_every(args,request)
+	# retriving values from GET request
+	test_next = request.GET.get('next', '')
+	# adding message if needed
+	if test_next and test_next != '/bet/make_bet':
+		messages.add_message(request, messages.SUCCESS, 'Чтобы совершить данное действие вам нужно авторизоваться. ', fail_silently=True)
+
+	if request.POST:
+		username = request.POST['username']
+		password = request.POST['password']
+
+		user = authenticate(username=username, password=password)
+
+		if user is None:
+			user_real = User.objects.filter(email=username)
+			if len(user_real) > 0:
+				user = authenticate(username=user_real[0].username, password=password)
+		
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				# check if we got next value
+				next_link = request.POST['next']
+				if next_link != '' :
+					if next_link == '/bet/make_bet':
+						next_link = '/bet'
+					return redirect(next_link)
+
+				return redirect(reverse('main:main'))
+			else:
+				args['error_message'] = "Ваш аккаунт временно заблокирован"
+				return render_to_response('auths/signin.html', args)
+		else:
+			args['error_message'] = "Имя пользователя и пароль не совпадают, попробуйте еще раз. "
+			return render_to_response('auths/signin.html', args)
+	else:
+
+		return render_to_response('auths/signin.html', args, context_instance=RequestContext(request))
+
+def signup(request):
+	# redirect not authenticated users to main page
+	if request.user.is_authenticated():
+		return redirect(reverse("main:main"))
+	# initialize variables
+	args={}
+	args.update(csrf(request))
+	need_for_every(args,request)
+	validation = True
+	# Query objects from model
+	all_users = User.objects.all()
+
+	if request.POST:
+		first_name = request.POST.get('first_name', '')
+		username = request.POST.get('username', '')
+		email = request.POST.get('e_mail', '')
+		password1 = request.POST.get('password1', '')
+		password2 = request.POST.get('password2', '')
+		
+		# first_name validation
+		args['first_name'] = first_name
+		args['username'] = username
+		if len(first_name) < 3 :
+			args['first_name_error'] = 'Слишком короткое фамилия и имя'
+			validation = False
+		# username validation
+		if len(username) > 2:
+			users_using_thisname = all_users.filter(username__iexact=username)
+			if users_using_thisname.count() > 0:
+				validation = False
+				args['username_error'] = 'Этот логин уже используется'
+		else:
+			args['username_error'] = 'Слишком короткий логин'
+
+		# password validation
+		if len(password1) < 6 or len(password2) < 6:
+			validation = False
+			args['password_error'] = 'Пароль должен состоять из 6 и более символов'
+
+		# email validation
+		users_using_email = all_users.filter(email=email)
+
+		if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", email):
+			validation = False
+			args['email_error'] = 'Неправильно введен email'
+		else:
+		    if users_using_email.count() > 0:
+			    validation = False
+			    args['email_error'] = 'Этот email уже зарегистрирован'
+		    else:
+			    args['email'] = email
+
+		if validation == False:
+			return render_to_response('auths/signup.html', args)
+
+		if password1 == password2:
+			user = User.objects.create_user(username=username, email=email, password=password1)
+			user.first_name = first_name
+			user.save()
+
+			user_login = authenticate(username=username, password=password1)
+			login(request, user_login)
+			messages.add_message(request, messages.SUCCESS, 'Вы успешно зарегистрировались на сайте', fail_silently=True)
+			
+			return redirect(reverse('main:main'))
+		else:
+			args['email'] = email
+			args['password_error'] = 'Пароли не совпадают'
+			return render_to_response('auths/signup.html', args)
+
+	else:
+		return render_to_response('auths/signup.html', args, context_instance=RequestContext(request))
+
+@login_required(login_url=reverse_lazy('main:main'))
+def signout(request):
+
+	logout(request)
+	return redirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url=reverse_lazy('auths:signin'))
+def profile(request):
+	# initialize variables
+	args = {}
+	args.update(csrf(request))
+	need_for_every(args, request)
+
+	return render_to_response('auths/profile.html',args)
+
+@login_required(login_url=reverse_lazy('auths:signin'))
+def modify_myinstance(request):
+	# initialize variables
+	args = {}
+	args.update(csrf(request))
+
+	if request.POST:
+		title = request.POST.get('title', '')
+		price = request.POST.get('price', '')
+		phone_num = request.POST.get('phone_num', '')
+		note = request.POST.get('note', '')
+		instance_id = request.POST.get('instance_id', '')
+		condition =  request.POST.get('condition', '')
+		guarantee = request.POST.get('guarantee', '')
+		exchange = request.POST.get('exchange', '')
+		bargain = request.POST.get('bargain', '')
+		instance = get_object_or_404(Instance, pk=instance_id)
+
+		if instance.user == request.user:
+			instance.title = title
+			instance.price = price
+			instance.phone_number = phone_num
+			instance.note = note
+			instance.condition = condition
+			instance.guarantee = guarantee
+			if exchange == '1':
+				instance.exchange = True
+			else:
+				instance.exchange = False
+			if bargain == '1':
+				instance.bargain = True
+			else:
+				instance.bargain = False
+			instance.save()
+			messages.add_message(request, messages.SUCCESS, 'Вы успешно отредактировали это обявление.', fail_silently=True)
+		else:
+			messages.add_message(request, messages.WARNING, 'Вы не можете редактировать не свое объявление.', fail_silently=True)
+
+	return redirect(reverse('auths:myinstances'))
+
+@login_required(login_url=reverse_lazy('auths:signin'))
+def delete_myinstance(request, instance_id):
+	# initialize variables
+	args = {}
+	args.update(csrf(request))
+	# Query objects from model
+	instance = get_object_or_404(Instance, pk = instance_id)
+
+	if instance.user == request.user:
+		instance.delete()
+		messages.add_message(request, messages.SUCCESS, 'Объявление успешно удалено.', fail_silently=True)
+		sold = request.GET.get('sold', '')
+		if sold == '1':
+			Sold.objects.create(seller=request.user, date_added=instance.added_date, price=instance.price, model=instance.model, sold_at_ibox=True)
+		else:
+			Sold.objects.create(seller=request.user, date_added=instance.added_date, price=instance.price, model=instance.model, sold_at_ibox=False)
+	
+	return redirect(reverse('auths:myinstances'))
+
+@login_required(login_url=reverse_lazy('auths:signin'))
+def myinstances(request):
+	# initialize variables
+	args = {}
+	args.update(csrf(request))
+	need_for_every(args, request)
+	# Query objects from model
+	instances = Instance.objects.filter(user = request.user).order_by('-added_date')
+	# Passing arguments
+	args['instances'] = instances
+
+	return render_to_response('auths/myinstances.html', args)
+
+@login_required(login_url=reverse_lazy('auths:signin'))
+def my_notify(request):
+	# initialize variables
+	args = {}
+	args.update(csrf(request))
+	need_for_every(args, request)
+	# Passing arguments
+	args['notifiers'] = Notifier.objects.filter(user=request.user)
+
+	return render_to_response('auths/my_notify.html',args)
+
+@login_required(login_url=reverse_lazy('auths:signin'))
+def my_wishlist(request):
+	# initialize variables
+	args = {}
+	args.update(csrf(request))
+	need_for_every(args,request)
+	# Query objects from model
+	instances = Wish.objects.filter(user=request.user)
+	# Passing arguments
+	args['instances'] = instances
+
+	return render_to_response('auths/mywishlist.html', args)
+
+
+@login_required(login_url=reverse_lazy('auths:signin'))
+def modify_profile(request):
+	# initialize variables
+	args = {}
+	args.update(csrf(request))
+	need_for_every(args,request)
+	validation = True
+	user = request.user
+
+	if request.POST:
+		first_name = request.POST.get('first_name', '')
+		email = request.POST.get('e_mail', '')
+
+		# first_name validation
+		if len(first_name) < 4 :
+			args['first_name_error'] = 'Слишком короткое Ф.И.О'
+			validation = False
+		# email validation
+		if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", email):
+			validation = False
+			args['email_error'] = 'Неправильно введен email'
+		else:
+			# Query objects from model
+			users_using_email = User.objects.all().filter(email=email)
+
+			if users_using_email.count() > 0 and request.user.username[0:1] == users_using_email[0].username[0:1] and request.user.username != users_using_email[0].username:
+				#args['email_error'] = 'Этот email уже используется'
+				instances = Instance.objects.filter(user=users_using_email[0])
+				if instances.count() > 0:
+					for instance in instances:
+						instance.user = request.user
+						instance.save()
+				wishes = Wish.objects.filter(user=users_using_email[0])
+				if wishes.count() > 0:
+					for wish in wishes:
+						wish.user = request.user
+						wish.save()
+				user_to_change = get_object_or_404(User, email=email)
+				user_to_change.email = ""
+				user_to_change.save()
+		if validation == False:
+			# Passing arguments
+			args['user'] = request.user
+
+			return render_to_response('auths/modify_profile.html', args)
+
+		user.email = email
+		user.first_name = first_name
+		user.save()
+		messages.add_message(request, messages.SUCCESS, 'Ваш аккаунт успешно отредактирован.', fail_silently=True)
+		args['user'] = request.user
+		return redirect(reverse('auths:profile'))
+	else:
+		# Passing arguments
+		args['user'] = user
+
+		return render_to_response('auths/modify_profile.html', args)
+
+@login_required(login_url=reverse_lazy('auths:signin'))
+def change_password(request):
+	# initialize variables
+	args = {}
+	args.update(csrf(request))
+	need_for_every(args,request)
+	user = request.user
+
+	if request.POST:
+		password1 = request.POST.get('password1', '')
+		password2 = request.POST.get('password2', '')
+		# password validation
+		if len(password1) < 6 or len(password2) < 6:
+			args['password_error'] = 'Пароль должен состоять из 6 и более символов'
+			return render_to_response('auths/change_password.html', args)
+		if password1 == password2:
+			user.set_password(password1)
+			user.save()
+			messages.add_message(request, messages.SUCCESS, 'Ваш пароль успешно изменен, войдите заново используя новый пароль.', fail_silently=True)
+			return redirect(reverse('auths:signin'))
+		else:
+			args['password_error'] = 'Пароли не совпадают'
+		return render_to_response('auths/change_password.html', args)
+	else:
+		return render_to_response('auths/change_password.html', args)
+
+def profile_others(request, user_id):
+	# initialize variables
+	args = {}
+	args.update(csrf(request))
+	need_for_every(args, request)
+	# Query objects from model
+	user_profile = get_object_or_404(User, pk=user_id)
+	# Passing arguments
+	args['user_profile'] = user_profile
+	args['instances'] = Instance.objects.filter(user=user_profile)
+
+	return render_to_response('auths/profile_others.html', args)
