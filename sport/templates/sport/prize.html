@@ -62,14 +62,8 @@
 
 	<div class="filter-wrapper">
     
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{message.tags}} fade in text-center">
-                <a href="#" class="close" data-dismiss="alert">&times;</a>
-                <h6><strong>{{message}}</strong></h6>
-            </div>
-        {% endfor %}
-    {% endif %}
+    {% include 'messages.html' %}
+
 </div><!-- /.slider-filter -->
 
     <div class="section gray-light">
@@ -94,10 +88,10 @@
             </div><!-- /.line -->
           </div><!-- /.page-header-inner -->
             <div class="list-group">
-                <a href="{% url 'sport:main'%}" class="list-group-item waves-effect ">Главная</a>
-                <a href="{% url 'sport:rules'%}" class="list-group-item waves-effect ">Правила</a>
+                <a href="{% url 'sport:list_bets' %}" class="list-group-item waves-effect ">Главная</a>
+                <a href="{% url 'sport:rules' %}" class="list-group-item waves-effect ">Правила</a>
                 <a href="" class="list-group-item active waves-effect ">Призы</a>
-                <a href="{% url 'sport:list_bets'%}" class="list-group-item waves-effect ">Ставки других пользователей</a>
+                <!--<a href="{% url 'sport:list_bets'%}" class="list-group-item waves-effect ">Ставки других пользователей</a>-->
             </div>
           </div>
           </div>          

@@ -12,7 +12,7 @@ from .models import Bet, Match
 from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every
 
-
+"""
 def main(request):
 	# initialize variables
 	args={}
@@ -52,7 +52,21 @@ def main(request):
 		args['predictions'] = zip(matches,predictions)
 
 	return render(request, 'sport/main.html', args)
+"""
 
+def main(request):
+	# initialize variables
+	args={}
+	args.update(csrf(request))
+	try:
+		test = Bet.objects.get(user__username=request.user.username)
+		return redirect(reverse('sport:detailed_bet', kwargs={'bet_id':test.id} ))
+	except Exception, e:
+		pass
+	return redirect(reverse('sport:list_bets'))
+	
+	
+"""
 @login_required(login_url=reverse('auths:signin'))
 @email_required
 def make_bet(request):
@@ -180,6 +194,7 @@ def edit_bet(request):
 		messages.add_message(request, messages.SUCCESS, 'Ваша ставка отредактирована', fail_silently=True)
 
 		return redirect(reverse('sport:main'))
+"""
 
 @login_required(login_url=reverse('auths:signin'))
 def check_bet(request):
@@ -233,7 +248,7 @@ def list_bets(request):
 	need_for_every(args, request)
 	
 	# Passing arguments
-	args['bets'] = Bet.objects.all().order_by('date')
+	args['bets'] = Bet.objects.all().order_by('-over_all_result').order_by('date')
 
 	return render(request, 'sport/list_bets.html', args)
 
