@@ -77,7 +77,7 @@ def list_bets(request):
 	need_for_every(args, request)
 	
 	# Passing arguments
-	args['bets'] = Bet.objects.all().order_by('-over_all_result').order_by('date')
+	args['bets'] = Bet.objects.all().order_by('-over_all_result', 'date')
 
 	return render(request, 'sport/list_bets.html', args)
 
