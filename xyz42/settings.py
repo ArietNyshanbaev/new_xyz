@@ -135,7 +135,9 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = "/"
+
+LOGIN_REDIRECT_URL = "/auths/signin"
+LOGIN_URL = "/auths/signin"
 
 
 # here we got email settings
