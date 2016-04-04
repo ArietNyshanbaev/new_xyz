@@ -66,4 +66,13 @@ class Notifier(models.Model):
 
 	def __unicode__(self):
 		return self.user.username + " from " + str(self.min_price) + " to " + str(self.max_price)
-		
+
+class Imei(models.Model):
+	imei = models.IntegerField('imei', unique=True)
+	instance = models.ForeignKey(Instance)
+	contact_telephone = models.CharField('Контактные данные', max_length=50)
+	owner = models.CharField('Владелец', max_length=70)
+
+class Image_of_Instance(models.Model):
+	image = models.ImageField('image', upload_to='media')
+	instance = models.ForeignKey(Instance)
