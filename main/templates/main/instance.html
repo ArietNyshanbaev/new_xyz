@@ -80,17 +80,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="heading">
-                    {% if imeied %}
-                        <h3 class="text-center">Это девайс сертифицирован iBoxoм</h3>
-                    {% else %}
                         <div class="title">
+
                             <h5 style="font-size: 18px; margin-top: 23px;">{{ instance.title }}</h5>
                         </div><!-- /.title -->
                         <div class="subtitle">
                             Добавлено пользователем <a href="{% url 'auths:profile_others' instance.user.pk %}" style="font-weight: bold">{{ instance.user }}</a>, {{ instance.added_date }}
                         </div><!-- /.subtitle -->
                     </div><!-- /.heading -->
-                    {% endif %}
                 </div><!-- /.col-md-8 -->
 
             </div><!-- /.row -->
@@ -148,9 +145,6 @@
                                         <div class="col-md-12">
                                             <div id="gallery-wrapper" class="hoverable waves-effect ">
                                                 <div class="gallery">
-                                                {% if imeied %}
-                                                
-                                                {% else %}
                                                     {% if instance.photo1 %}
                                                     <div class="slide active">
                                                         <div class="picture-wrapper">
@@ -172,7 +166,6 @@
                                                         </div>
                                                     </div>
                                                     {% endif %}
-                                                {% endif %}
                                                 </div><!-- /.gallery -->
 
                                                 <div id="gallery-pager" class="white block-shadow">
