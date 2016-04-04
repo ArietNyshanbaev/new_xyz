@@ -241,9 +241,9 @@ def imei(request):
 				args['liked'] = liked
 			args['instance'] = instance
 			args['model'] = model = instance.model
-			args['imeied'] = True
+			args['imeied'] = imei
 			messages.add_message(request, messages.SUCCESS, 'Это девайс сертифицирован iBox.kg ', fail_silently=True)
-			return render(request, 'fishkas/instance.html', args )
+			return render(request, 'fishkas/instance2.html', args )
 		else:
 			messages.add_message(request, messages.DANGER, 'Этот imei не зарегистрирован. ', fail_silently=True)
 	return render(request, 'fishkas/imei.html', args)
