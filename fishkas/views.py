@@ -233,7 +233,7 @@ def imei(request):
 	need_for_every(args, request) 
 	if request.POST:
 		imei = request.POST['imei']
-		instnces = Imei.objects.filter(imei=imei)
+		instances = Imei.objects.filter(imei=imei)
 		if instances.count() > 0:
 			instance = instances[0].instance
 			if instance.user == request.user:
