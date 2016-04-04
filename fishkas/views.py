@@ -2,7 +2,7 @@
 import threading
 # django core package imports
 from django import template
-from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.shortcuts import render_to_response, redirect, get_object_or_404, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -17,7 +17,7 @@ from django.template import RequestContext
 from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every
 #import of project models 
-from .models import Wish, Message, Notifier, Slogan
+from .models import Wish, Message, Notifier, Slogan, Imei
 from main.models import Category , Instance , Brand , Modell, City
 
 @login_required(login_url=reverse_lazy('auths:signin'))
@@ -226,6 +226,28 @@ def search(request):
 
 	return render_to_response('fishkas/search.html', args, context_instance=RequestContext(request))
 
+def imei(request):
+	# initialization of variables
+	args={}
+	args.update(csrf(request))
+	need_for_every(args, request) 
+	if request.POST:
+		imei = request.POST['imei']
+		instnces = Imei.objects.filter(imei=imei)
+		if instances.count() > 0:
+			instance = instances[0].instance
+			if instance.user == request.user:
+				liked = Wish.objects.filter(instance=instance)
+				args['liked'] = liked
+			args['instance'] = instance
+			args['model'] = model = instance.model
+			args['imeied'] = True
+			messages.add_message(request, messages.SUCCESS, 'Это девайс сертифицирован iBox.kg ', fail_silently=True)
+			return render(request, 'main:instance.html', args )
+		else:
+			messages.add_message(request, messages.DANGER, 'Этот imei не зарегистрирован. ', fail_silently=True)
+	return render(request, 'fishkas/imei.html', args)
+
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required
 def add_to_wishlist(request, instance_id_field):
@@ -313,3 +335,5 @@ def message(request):
 
 def send_message(instance, request):
 	send_mail('iBox.kg ' + str(instance) ,'Здравствуйте  '+ str(instance.user.first_name) +', Пользователь '+ str(request.user.username) + ' добавил ваше объявление в избранные. Попробуйте связаться с этим пользователем, это ваш потенциальный покупатель. Проверь http://ibox.kg/instance/'+ str(instance.id) , settings.EMAIL_HOST_USER, [instance.user.email], fail_silently=True)
+
+
