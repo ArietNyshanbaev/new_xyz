@@ -225,6 +225,25 @@ def mymodel_delete(sender, instance, **kwargs):
     instance.photo2.delete(False)
     instance.photo3.delete(False)
 
+class Instance_buy(models.Model):
+    user = models.ForeignKey(User, null=True, blank=True)
+    color = models.CharField('цвет', max_length=100, default='неважно')
+    telephones = models.CharField('телефон', max_length=100, null=True, blank=True)
+    price = models.IntegerField('цена', null=True, blank=True, default='договорная')
+    brand = models.ForeignKey(Brand, verbose_name='Бренд', default=-1)
+    model = models.ForeignKey(Modell, verbose_name='модель', default=-1)
+    guarantee = models.CharField('гарантия', max_length=100, null=True, blank=True, default='неважно')
+    smartphone = models.BooleanField('смартфон', default=False)
+    notebook = models.BooleanField('ноутбук', default=False)
+    tablet = models.BooleanField('планшет', default=False)
+    other = models.BooleanField('аксессуары', default=False)
+    clear_model = models.CharField('модель', max_length='100', null=True, blank=True, default='неважно')
+    condition = models.CharField('состояние', max_length='100', null=True, blank=True, default='неважно')
+    box = models.BooleanField('коробка', default=False)
+    earpods = models.BooleanField('наушники', default=False)
+    memory = models.IntegerField('память', null=True, blank=True, default=-1)
+    title = models.CharField('описание темы', max_length=100, null=True, blank=True)
+    city = models.ForeignKey(City, verbose_name='город', default=1,)
 
 class Sold(models.Model):
     seller = models.ForeignKey(User, null=True, blank=True)

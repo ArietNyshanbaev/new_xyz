@@ -79,7 +79,7 @@ def category(request, category_id):
 	args['brands'] = this_category.brand_set.all().order_by('title')
 	args['this_category'] = this_category
 
-	return render_to_response('main/category.html', args, context_instance=RequestContext(request))
+	return render(request, 'main/category.html', args)
 
 @email_required
 def brand(request, brand_id):
@@ -109,7 +109,7 @@ def brand(request, brand_id):
 	args['instances'] = instances
 	args['categories'] = Category.objects.all()
 
-	return render_to_response('main/brand.html',args, context_instance=RequestContext(request))
+	return render(request, 'main/brand.html', args)
 
 @email_required
 def model(request, model_id):
@@ -141,7 +141,7 @@ def model(request, model_id):
 	args['user'] = request.user
 	args['categories'] = Category.objects.all()
 
-	return render_to_response('main/model.html',args, context_instance=RequestContext(request))
+	return render(request, 'main/model.html',args)
 
 @email_required
 def instance(request, instance_id):
@@ -162,7 +162,7 @@ def instance(request, instance_id):
 	args['instance'] = instance
 	args['user'] = request.user
 
-	return render_to_response('main/instance.html', args, context_instance=RequestContext(request))
+	return render(request, 'main/instance.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required
@@ -239,7 +239,7 @@ def add_instance_phones(request):
 	args['brands'] = category.brand_set.all()
 	args['cities'] = City.objects.all()
 
-	return render_to_response("main/add_instance_phones.html",args)
+	return render(request, 'main/add_instance_phones.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required
@@ -302,7 +302,7 @@ def add_instance_notebooks(request):
 	args['brands'] =  category.brand_set.all()
 	args['cities'] = City.objects.all()
 
-	return render_to_response("main/add_instance_notebooks.html", args)
+	return render(request, 'main/add_instance_notebooks.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required
@@ -320,7 +320,6 @@ def add_instance_tablets(request):
 		title = request.POST.get('title', '')
 		brand = request.POST.get('brand', '')
 		color = request.POST.get('color', '')
-		tablet = request.POST.get('telephone', '')
 		note = request.POST.get('note', '')
 		price = request.POST.get('price', '')
 		telephone = request.POST.get('telephone', '')
@@ -368,7 +367,7 @@ def add_instance_tablets(request):
 	args['brands'] = category.brand_set.all()
 	args['user'] = request.user
 	args['cities'] = City.objects.all()
-	return render_to_response("main/add_instance_tablets.html", args)
+	return render(request, 'main/add_instance_tablets.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required
@@ -385,7 +384,6 @@ def add_instance_accessories(request):
 		title = request.POST.get('title', '')
 		brand = request.POST.get('brand', '')
 		color = request.POST.get('color', '')
-		tablet = request.POST.get('telephone', '')
 		note = request.POST.get('note', '')
 		price = request.POST.get('price', '')
 		telephone = request.POST.get('telephone', '')
@@ -433,7 +431,53 @@ def add_instance_accessories(request):
 	args['brands'] = category.brand_set.all()
 	args['cities'] = City.objects.all()
 
-	return render_to_response("main/add_instance_accessories.html",args)
+	return render(request, 'main/add_instance_accessories.html', args)
+
+def add_buy_instance_phones(request):
+	# initialize variables
+	args={}
+	args.update(csrf(request))
+	need_for_every(args,request)
+
+	if request.POST:
+		# retriving values from form
+		city = request.POST.get('city', '')
+		title = request.POST.get('title', '')
+		brand = request.POST.get('brand', '')
+		box = request.POST.get('box', '')
+		earpods = request.POST.get('earpods', '')
+		price = request.POST.get('price', '')
+		telephone = request.POST.get('telephone', '')
+		model_id = request.POST.get(brand, '')
+		model = get_object_or_404(Modell, pk=model_id)
+
+		# validation
+		if len(title) > 80:
+			title = title[:80]
+		if box == '1':
+			box = True
+		else:
+			box = False
+		if city:
+			city = City.objects.filter(name=city)[0]
+
+		buy_instance = Instance.objects.create(linker=link, title=title, memory=memory, color=color, condition=condition, guarantee=guarantee, other=True, box=box, exchange=exchange, bargain=bargain, user=request.user, telephones=telephone, note=note, photo1=photo1, photo2=photo2, photo3=photo3, price=price, model=model, city=city)
+		buy_instance.save()
+		messages.add_message(request, messages.SUCCESS, "Ваше объявление успешно создана",fail_silently=True)
+		# part of notify me
+		# notifier = threading.Thread(target=notify_me, args={instance,})
+		# notifier.start()
+		
+		return redirect(reverse('auths:myinstances'))
+
+	# Quering of objects from model 
+	category = get_object_or_404(Category, title="Аксессуары")
+	# Passing arguments
+	args['brands'] = category.brand_set.all()
+	args['cities'] = City.objects.all()
+
+	return render(request, 'main/add_buy_instance_phones.html', args)
+
 
 def notify_me(instance):
 	# part of notify me
@@ -468,7 +512,7 @@ def delete_from_diesel(request):
 		# Passing arguments
 		args['counter'] = counter
 		need_for_every(args, request)
-		return render_to_response("main/delete_from_diesel.html", args)
+		return render(request, 'main/delete_from_diesel.html', args)
 	else:
 		return redirect(reverse('main:main'))
 
