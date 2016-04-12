@@ -245,7 +245,7 @@ def imei(request):
 			messages.add_message(request, messages.SUCCESS, 'Это девайс сертифицирован iBox.kg ', fail_silently=True)
 			return render(request, 'fishkas/instance2.html', args )
 		else:
-			messages.add_message(request, messages.DANGER, 'Этот imei не зарегистрирован. ', fail_silently=True)
+			messages.add_message(request, messages.WARNING, 'Этот imei не зарегистрирован. ', fail_silently=True)
 	return render(request, 'fishkas/imei.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))

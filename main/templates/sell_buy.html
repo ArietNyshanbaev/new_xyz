@@ -1,0 +1,45 @@
+{%load staticfiles%}
+<div class="section " style="padding: 20px 0px 20px 0px;background-color: hsla(0, 0%, 91%, 0.95)">
+    <div class="container text-center" style="">
+        <div class="view overlay hm-green-strong">
+            <div class="row">
+            <div class="col-md-1 text-center" ></div>
+                <a class="waves-effect "  data-toggle="modal" data-target="#myModal">
+                    <div class="col-md-4 text-center hoverable" style="background-color: #003e55;">
+                        <h5 style="color: white">Продать</h5>
+                    </div>
+                </a>
+                <div class="col-md-2 text-center" ></div>
+                <a class="waves-effect ">
+                    <div class="col-md-4 text-center hoverable" style="background-color: #f95446;">
+                        <h5 style="color: white"> Хочу Купить</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+     </div>     
+</div>
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h5 class="modal-title">Продать</h5>
+        </div>
+        <div class="modal-body text-center">
+          <a href="{% url 'main:add_instance_phones' %}"><h5><i class="fa fa-mobile " aria-hidden="true"></i>&nbsp&nbsp&nbsp Смартфон</h5></a>
+          <a href="{% url 'main:add_instance_notebooks' %}"><h5><i class="fa fa-tv " aria-hidden="true"></i>&nbsp&nbsp&nbsp Ноутбук &nbsp&nbsp</h5></a>
+          <a href="{% url 'main:add_instance_tablets' %}"><h5><i class="fa fa-tablet " aria-hidden="true"></i>&nbsp&nbsp&nbsp Планшет&nbsp &nbsp</h5></a>
+          <a href="{% url 'main:add_instance_accessories' %}"><h5><i class="fa fa-usb " aria-hidden="true"></i>&nbspАксессуары</h5></a>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
