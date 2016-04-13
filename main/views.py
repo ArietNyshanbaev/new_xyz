@@ -20,7 +20,7 @@ from django.template import RequestContext
 from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every
 # import of models 
-from .models import Category , Instance , Brand , Modell, Sold, City
+from .models import Category , Instance , Brand , Modell, Sold, City, Instance_buy
 from fishkas.models import Notifier, Wish, Best_deal
 
 @email_required
@@ -444,24 +444,21 @@ def add_buy_instance_phones(request):
 		city = request.POST.get('city', '')
 		title = request.POST.get('title', '')
 		brand = request.POST.get('brand', '')
-		box = request.POST.get('box', '')
-		earpods = request.POST.get('earpods', '')
 		price = request.POST.get('price', '')
 		telephone = request.POST.get('telephone', '')
+		note = request.POST.get('note', '')
 		model_id = request.POST.get(brand, '')
+
+		model_id = model_id.split('_')[0]
 		model = get_object_or_404(Modell, pk=model_id)
 
 		# validation
 		if len(title) > 80:
 			title = title[:80]
-		if box == '1':
-			box = True
-		else:
-			box = False
 		if city:
 			city = City.objects.filter(name=city)[0]
-
-		buy_instance = Instance.objects.create(linker=link, title=title, memory=memory, color=color, condition=condition, guarantee=guarantee, other=True, box=box, exchange=exchange, bargain=bargain, user=request.user, telephones=telephone, note=note, photo1=photo1, photo2=photo2, photo3=photo3, price=price, model=model, city=city)
+		
+		buy_instance = Instance_buy.objects.create(title=title, smartphone=True, user=request.user, telephones=telephone, note=note, price=price, model=model, city=city)
 		buy_instance.save()
 		messages.add_message(request, messages.SUCCESS, "Ваше объявление успешно создана",fail_silently=True)
 		# part of notify me
@@ -471,7 +468,7 @@ def add_buy_instance_phones(request):
 		return redirect(reverse('auths:myinstances'))
 
 	# Quering of objects from model 
-	category = get_object_or_404(Category, title="Аксессуары")
+	category = get_object_or_404(Category, title='Телефоны')
 	# Passing arguments
 	args['brands'] = category.brand_set.all()
 	args['cities'] = City.objects.all()
