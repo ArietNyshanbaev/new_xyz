@@ -433,7 +433,9 @@ def add_instance_accessories(request):
 
 	return render(request, 'main/add_instance_accessories.html', args)
 
-def add_buy_instance_phones(request):
+@login_required(login_url=reverse_lazy('auths:signin'))
+@email_required
+def add_buy_instance(request, type):
 	# initialize variables
 	args={}
 	args.update(csrf(request))
@@ -457,10 +459,17 @@ def add_buy_instance_phones(request):
 			title = title[:80]
 		if city:
 			city = City.objects.filter(name=city)[0]
-		
-		buy_instance = Instance_buy.objects.create(title=title, smartphone=True, user=request.user, telephones=telephone, note=note, price=price, model=model, city=city)
+		buy_instance = Instance_buy.objects.create(title=title, user=request.user, telephones=telephone, note=note, price=price, model=model, city=city)
+		if type == 'smartphone':
+			buy_instance.smartphone = True
+		elif type == 'notebook':
+			buy_instance.notebook = True
+		elif type == 'tablet':
+			buy_instance.tablet = True
+		else:
+			buy_instance.other = True
 		buy_instance.save()
-		messages.add_message(request, messages.SUCCESS, "Ваше объявление успешно создана",fail_silently=True)
+		messages.add_message(request, messages.SUCCESS, "Ваше объявление успешно создана", fail_silently=True)
 		# part of notify me
 		# notifier = threading.Thread(target=notify_me, args={instance,})
 		# notifier.start()
@@ -468,13 +477,22 @@ def add_buy_instance_phones(request):
 		return redirect(reverse('auths:myinstances'))
 
 	# Quering of objects from model 
-	category = get_object_or_404(Category, title='Телефоны')
+	if type == 'smartphone':
+		category = get_object_or_404(Category, title='Телефоны')
+	elif type == 'notebook':
+		category = get_object_or_404(Category, title='Ноутбуки')
+	elif type == 'tablet':
+		category = get_object_or_404(Category, title='Планшеты')
+	elif type == 'accessories':
+		category = get_object_or_404(Category, title='Аксессуары')
+	else:
+		category = get_object_or_404(Category, title=type)
 	# Passing arguments
 	args['brands'] = category.brand_set.all()
 	args['cities'] = City.objects.all()
+	args['category'] = category.title[:-1]
 
-	return render(request, 'main/add_buy_instance_phones.html', args)
-
+	return render(request, 'main/add_buy_instance.html', args)
 
 def notify_me(instance):
 	# part of notify me

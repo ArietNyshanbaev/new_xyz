@@ -66,7 +66,7 @@
   <div class="page-header">
     <div class="page-header-inner">
       <div class="heading">
-        <h5> Хочу купить смартфон </h5>
+        <h5> Хочу купить {{category}} </h5>
       </div><!-- /.heading -->
 
       <div class="line">
@@ -104,9 +104,27 @@
                     <label for="title">
                       Название объявления
                     </label>
-                    <input class="form-control" name="title" id="title" required type="text" maxlength="60" placeholder="пример:Куплю (Б/У) iPhone 6 32Гб Gold за 33 000 сом">
-                  </div>
-                  <div class="form-group" onchange="javascript:Check_phones();Check_fun();">
+                    
+                  {% if category == 'Телефон' %}
+                    <input class="form-control" name="title" id="title" required type="text" maxlength="60" placeholder="пример:Куплю (Б/У) iPhone 6 64Гб Gold за 33 000 сом">
+                    </div>
+                    <div class="form-group" onchange="javascript:Check_phones();">
+                  {% elif category == 'Ноутбук' %}
+                    <input class="form-control" name="title" id="title" required type="text" maxlength="60" placeholder="пример:Куплю (Б/У) MacBook Air  за 47 000 сом">
+                    </div>
+                    <div class="form-group" onchange="javascript:Check_notebooks();">
+                  {% elif category == 'Планшеты' %}
+                    <input class="form-control" name="title" id="title" required type="text" maxlength="60" placeholder="пример:Куплю (Б/У) iPad Air 2 64Гб Gold за 24 000 сом">
+                    </div>
+                    <div class="form-group" onchange="javascript:Check_tablets();">
+                  {% elif category == 'Аксессуар'%}
+                    <input class="form-control" name="title" id="title" required type="text" maxlength="60" placeholder="пример:Куплю (Б/У) Роутер 1 000 сом">
+                    </div>
+                    <div class="form-group" onchange="javascript:Check_accessories();">
+                  {% else %}
+                    <div class="form-group">
+                  {% endif %}
+                  
                   <label for="brand">
                     Бренд 
                   </label>
@@ -124,7 +142,7 @@
                       <label for="model_id">
                       Модель
                       </label>
-                      <select required class="form-control" name="{{brand.title}}"  onchange="javascript:Check_fun();" id="{{brand.title}}_second"  >
+                      <select required class="form-control" name="{{brand.title}}" id="{{brand.title}}_second"  >
                         {% for model in brand.modell_set.all%}
                           {% if model.is_not_unique == True %}
                             <option value="{{model.id}}_isnot">{{model.title}}</option>
@@ -145,7 +163,17 @@
                   <label for="input-12">
                   Описание
                   </label>
-                  <textarea required placeholder="например: Куплю iPhone 6 в хорошем состоянии, буду давать предпочтение телефонам с коробкой. " name="note" id="input-12" class="input form-control" rows="4" id="note"></textarea>
+                  {% if category == 'Телефон' %}
+                    <textarea required placeholder="например: Куплю iPhone 6 в хорошем состоянии, буду давать предпочтение телефонам с коробкой. " name="note" id="input-12" class="input form-control" rows="4" id="note"></textarea>
+                  {% elif category == 'Ноутбук' %}
+                    <textarea required placeholder="например: Куплю MacBook Air в хорошем состоянии, буду давать предпочтение MacBook с коробкой. " name="note" id="input-12" class="input form-control" rows="4" id="note"></textarea>
+                  {% elif category == 'Планшеты' %}
+                    <textarea required placeholder="например: Куплю iPad Air 2 в хорошем состоянии, буду давать предпочтение планшетам с коробкой. " name="note" id="input-12" class="input form-control" rows="4" id="note"></textarea>
+                  {% elif category == 'Аксессуар'%}
+                    <textarea required placeholder="например: Куплю Роутер в хорошем состоянии, буду давать предпочтение pоутерам с коробкой. " name="note" id="input-12" class="input form-control" rows="4" id="note"></textarea>
+                  {% else %}
+                   <textarea required placeholder="например: Куплю iPhone 6 в хорошем состоянии, буду давать предпочтение телефонам с коробкой. " name="note" id="input-12" class="input form-control" rows="4" id="note"></textarea>
+                  {% endif %}
                 </div>
                 <div class="form-group">
                   <label for="input-13">

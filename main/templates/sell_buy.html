@@ -4,13 +4,13 @@
         <div class="view overlay hm-green-strong">
             <div class="row">
             <div class="col-md-1 text-center" ></div>
-                <a class="waves-effect "  data-toggle="modal" data-target="#SellModal">
+                <a class="waves-effect "  data-toggle="modal" data-target="#add_instance_pop">
                     <div class="col-md-4 text-center hoverable" style="background-color: #003e55;">
                         <h5 style="color: white">Продать</h5>
                     </div>
                 </a>
                 <div class="col-md-2 text-center" ></div>
-                <a class="waves-effect " data-toggle="modal" data-target="#BuyModal">
+                <a class="waves-effect " data-toggle="modal" data-target="#add_instance_buy_pop">
                     <div class="col-md-4 text-center hoverable" style="background-color: #f95446;">
                         <h5 style="color: white"> Хочу Купить</h5>
                     </div>
@@ -20,50 +20,42 @@
      </div>     
 </div>
 
-<!--Sell Modal -->
-  <div class="modal fade" id="SellModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h5 class="modal-title">Продать</h5>
-        </div>
-        <div class="modal-body text-center">
-          <a href="{% url 'main:add_instance_phones' %}"><h5><i class="fa fa-mobile " aria-hidden="true"></i>&nbsp&nbsp&nbsp Смартфон</h5></a>
-          <a href="{% url 'main:add_instance_notebooks' %}"><h5><i class="fa fa-tv " aria-hidden="true"></i>&nbsp&nbsp&nbsp Ноутбук &nbsp&nbsp</h5></a>
-          <a href="{% url 'main:add_instance_tablets' %}"><h5><i class="fa fa-tablet " aria-hidden="true"></i>&nbsp&nbsp&nbsp Планшет&nbsp &nbsp</h5></a>
-          <a href="{% url 'main:add_instance_accessories' %}"><h5><i class="fa fa-usb " aria-hidden="true"></i>&nbspАксессуары</h5></a>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-
-  <!--Sell Modal -->
-  <div class="modal fade" id="BuyModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h5 class="modal-title">Хочу Купить</h5>
-        </div>
-        <div class="modal-body text-center">
-          <a href="{% url 'main:add_buy_instance_phones' %}"><h5><i class="fa fa-mobile " aria-hidden="true"></i>&nbsp&nbsp&nbsp Смартфон</h5></a>
-          <a href=""><h5><i class="fa fa-tv " aria-hidden="true"></i>&nbsp&nbsp&nbsp Ноутбук &nbsp&nbsp</h5></a>
-          <a href=""><h5><i class="fa fa-tablet " aria-hidden="true"></i>&nbsp&nbsp&nbsp Планшет&nbsp &nbsp</h5></a>
-          <a href=""><h5><i class="fa fa-usb " aria-hidden="true"></i>&nbspАксессуары</h5></a>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+  <!-- /#add instance popup page-->
+    <div class="modal fade" id="add_instance_buy_pop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="myModalLabel">Хочу купить</h5>
+            </div>
+            <div class="modal-body text-center">
+                <ul class="list-unstyled list-inline">
+                    <a href="{% url 'main:add_buy_instance' 'smartphone' %}">
+                        <li>
+                            <span class="fa-stack fa-lg"><i class="fa fa-mobile fa-stack-2x "></i></span><span style="color:black;">Телефон</span>
+                        </li>
+                    </a>
+                    <hr>
+                    <a href="{% url 'main:add_buy_instance' 'notebook' %}">
+                        <li>
+                            <span class="fa-stack fa-lg"><i class="fa fa-laptop fa-stack-2x "></i></span><span style="color:black">Ноутбук</span>
+                        </li>
+                    </a>
+                    <hr>
+                    <a href="{% url 'main:add_buy_instance' 'tablet' %}">
+                        <li>
+                            <span class="fa-stack fa-lg"><i class="fa fa-tablet fa-stack-2x "></i></span><span style="color:black">Планшет</span>
+                        </li>
+                    </a>
+                    <hr>
+                    <a href="{% url 'main:add_buy_instance' 'accessories' %}">
+                        <li>
+                            <span class="fa-stack fa-lg"><i class="fa fa-plus-square-o fa-stack-2x "></i></span><span style="color:black">Аксессуар</span>
+                        </li>
+                    </a>
+                    <hr>
+                </ul>
+            </div>
         </div>
       </div>
-      
     </div>
-  </div>
