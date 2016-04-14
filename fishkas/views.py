@@ -18,7 +18,7 @@ from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every
 #import of project models 
 from .models import Wish, Message, Notifier, Slogan, Imei
-from main.models import Category , Instance , Brand , Modell, City
+from main.models import Category , Instance , Brand , Modell, City, Instance_buy
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required
@@ -291,13 +291,16 @@ def delete_from_wishlist(request, instance_id):
 
 
 @login_required(login_url=reverse_lazy('auths:signin'))
-def up(request,instance_id):
+def up(request, instance_id, sell_or_buy):
 	# initialize variables
 	args={}
 	args.update(csrf(request))
 	need_for_every(args,request)
 	# Query objects form model
-	instance = Instance.objects.filter(pk=instance_id)
+	if sell_or_buy == 'sell':
+		instance = Instance.objects.filter(pk=instance_id)
+	else:
+		instance = Instance_buy.objects.filter(pk=instance_id)
 	# validation
 	if instance.count() > 0 and instance[0].user == request.user:
 		status = instance[0].update_date()
