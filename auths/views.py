@@ -14,7 +14,7 @@ from django.template import RequestContext
 #impoer of models
 from .models import Information
 from fishkas.models import Slogan, Wish, Notifier
-from main.models import Category, Instance, Sold
+from main.models import Category, Instance, Sold, Instance_buy
 # import of custom writen decorator and views
 from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every
@@ -194,22 +194,28 @@ def modify_myinstance(request):
 	return redirect(reverse('auths:myinstances'))
 
 @login_required(login_url=reverse_lazy('auths:signin'))
-def delete_myinstance(request, instance_id):
+def delete_myinstance(request, instance_id, ads='sell'):
 	# initialize variables
 	args = {}
 	args.update(csrf(request))
 	# Query objects from model
-	instance = get_object_or_404(Instance, pk = instance_id)
+	if ads == 'sell':
+		instance = get_object_or_404(Instance, pk=instance_id)
+	elif ads == 'buy' :
+		instance = get_object_or_404(Instance_buy, pk=instance_id)
+	else:
+		messages.add_message(request, messages.SUCCESS, 'Совершить данную операцию невозможно.', fail_silently=True)
+		return redirect(request.META.get('HTTP_REFERER'))
 
 	if instance.user == request.user:
 		instance.delete()
 		messages.add_message(request, messages.SUCCESS, 'Объявление успешно удалено.', fail_silently=True)
-		sold = request.GET.get('sold', '')
-		if sold == '1':
-			Sold.objects.create(seller=request.user, date_added=instance.added_date, price=instance.price, model=instance.model, sold_at_ibox=True)
-		else:
-			Sold.objects.create(seller=request.user, date_added=instance.added_date, price=instance.price, model=instance.model, sold_at_ibox=False)
-	
+		if ads == 'sell':
+			sold = request.GET.get('sold', '')
+			if sold == '1':
+				Sold.objects.create(seller=request.user, date_added=instance.added_date, price=instance.price, model=instance.model, sold_at_ibox=True)
+			else:
+				Sold.objects.create(seller=request.user, date_added=instance.added_date, price=instance.price, model=instance.model, sold_at_ibox=False)
 	return redirect(reverse('auths:myinstances'))
 
 @login_required(login_url=reverse_lazy('auths:signin'))
@@ -219,9 +225,11 @@ def myinstances(request):
 	args.update(csrf(request))
 	need_for_every(args, request)
 	# Query objects from model
-	instances = Instance.objects.filter(user = request.user).order_by('-added_date')
+	instances = Instance.objects.filter(user=request.user).order_by('-added_date')
+	instances_to_buy = Instance_buy.objects.filter(user=request.user).order_by('-added_date')
 	# Passing arguments
 	args['instances'] = instances
+	args['instances_to_buy'] = instances_to_buy
 
 	return render_to_response('auths/myinstances.html', args)
 

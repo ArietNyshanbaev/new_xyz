@@ -18,7 +18,7 @@ from django.shortcuts import render, render_to_response, redirect, get_object_or
 from django.template import RequestContext
 # import of custom writen decorator and views
 from custom_code.decorators import email_required
-from custom_code.ibox_views import need_for_every
+from custom_code.ibox_views import need_for_every, notify_me
 # import of models 
 from .models import Category , Instance , Brand , Modell, Sold, City, Instance_buy
 from fishkas.models import Notifier, Wish, Best_deal
@@ -430,7 +430,6 @@ def add_instance_accessories(request):
 	# Passing arguments
 	args['brands'] = category.brand_set.all()
 	args['cities'] = City.objects.all()
-
 	return render(request, 'main/add_instance_accessories.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
@@ -493,17 +492,6 @@ def add_buy_instance(request, type):
 	args['category'] = category.title[:-1]
 
 	return render(request, 'main/add_buy_instance.html', args)
-
-def notify_me(instance):
-	# part of notify me
-	counter = [];
-	notifiers = Notifier.objects.all().filter(max_price__gte=instance.price).filter(min_price__lte=instance.price)
-	for notifier in notifiers:
-		if instance.model.brand.category.title in notifier.categories.split(",") :
-			counter.append(notifier.user.email)
-	counter = list(set(counter))
-	for count in counter:
-		send_mail('iBox напоминалка.' ,'Привет '+ get_object_or_404(User,email=count).first_name +', на iBox.kg поступило объявление за '+ str(instance.price) + ' сом, которое заинтересует вас. Проверь http://ibox.kg/instance/'+ str(instance.id) , settings.EMAIL_HOST_USER, [count], fail_silently=True)
 
 def delete_from_diesel(request):
 	# initialize variables

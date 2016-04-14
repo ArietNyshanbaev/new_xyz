@@ -210,8 +210,7 @@ class Instance(models.Model):
             return status
 
     def __unicode__(self):
-        return self.model.brand.category.title + " " + self.model.brand.title + " " + self.model.title + " " + str(
-            self.added_date)
+        return self.user
 
     class Meta:
         verbose_name = "объявление"
@@ -240,8 +239,25 @@ class Instance_buy(models.Model):
     city = models.ForeignKey(City, verbose_name='город', default=1)
     note = models.TextField('описание', null=True, blank=True)
     
+
+    def update_date(self):
+        dt_now = datetime.utcnow().replace(tzinfo=utc)
+        dt_new = self.updated_date
+        dt = dt_now - dt_new
+        minutes = ((dt.days*24*60*60) + dt.seconds) / 60
+        hours = minutes / 60
+
+        if hours >= 1:
+            self.updated_date = datetime.now()
+            self.save()
+            status = "Тема успешно обновлена!"
+            return status
+        else:
+            status = "Извините, обновить тему можно только 1 раз за час. Подождите еще " + str(60 - minutes) + " минут"
+            return status
+
     def __unicode__(self):
-        return self.telephones
+        return self.user
 
     class Meta:
         verbose_name = "объявление куплю"
