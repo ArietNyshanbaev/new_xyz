@@ -140,7 +140,7 @@
                                                     </div>
                                                     <br>
                                             <span data-toggle="modal" data-target="#{{instance.id}}_sell" class="btn btn-danger" ><span style="cursor:pointer" >Удалить</span></span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                            <span data-toggle="modal" data-target="#{{instance.id}}modify" class="btn btn-success"><span style="cursor:pointer">Редактировать</span></span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                            <span data-toggle="modal" data-target="#{{instance.id}}modify_sell" class="btn btn-success"><span style="cursor:pointer">Редактировать</span></span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                             <a class="btn btn-info" href="{% url 'fishkas:up' instance.id %}">Обновить (АПнуть)</a>
                                                 </div> 
                                             </a>                                               
@@ -149,7 +149,7 @@
                                     </div>
                                 </div>
                     {% empty %} 
-                    <h2 class="text-center">Вы еще не создали объявления.</h2>
+                        <h2 class="text-center">Вы еще не создали объявления.</h2>
                     {% endfor %}										
 				</div><!-- /.inner -->
 			</div><!-- /.content -->
@@ -192,7 +192,7 @@
                                             </div>
                                             <br>
                                     <span data-toggle="modal" data-target="#{{instance.id}}_buy" class="btn btn-danger" ><span style="cursor:pointer" >Удалить</span></span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                    <span data-toggle="modal" data-target="#{{instance.id}}modify" class="btn btn-success"><span style="cursor:pointer">Редактировать</span></span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <span data-toggle="modal" data-target="#{{instance.id}}modify_buy" class="btn btn-success"><span style="cursor:pointer">Редактировать</span></span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                     <a class="btn btn-info" href="{% url 'fishkas:up' instance.id %}">Обновить (АПнуть)</a>
                                         </div> 
                                     </a>                                               

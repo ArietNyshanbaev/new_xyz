@@ -169,12 +169,17 @@ def modify_myinstance(request):
 		guarantee = request.POST.get('guarantee', '')
 		exchange = request.POST.get('exchange', '')
 		bargain = request.POST.get('bargain', '')
-		instance = get_object_or_404(Instance, pk=instance_id)
+		sell_or_buy = request.POST.get('sell_or_buy', '')
+		
+		if sell_or_buy == 'sell':
+			instance = get_object_or_404(Instance, pk=instance_id)
+		else:
+			instance = get_object_or_404(Instance_buy, pk=instance_id)
 
-		if instance.user == request.user:
+		if instance.user == request.user and sell_or_buy == 'sell':
 			instance.title = title
 			instance.price = price
-			instance.phone_number = phone_num
+			instance.telephones = phone_num
 			instance.note = note
 			instance.condition = condition
 			instance.guarantee = guarantee
@@ -189,7 +194,12 @@ def modify_myinstance(request):
 			instance.save()
 			messages.add_message(request, messages.SUCCESS, 'Вы успешно отредактировали это обявление.', fail_silently=True)
 		else:
-			messages.add_message(request, messages.WARNING, 'Вы не можете редактировать не свое объявление.', fail_silently=True)
+			args['title'] = title
+			args['price'] = price
+			args['phone_num'] = phone_num
+			args['note'] = note
+			status = instance.update_info(args)
+			messages.add_message(request, messages.SUCCESS, status, fail_silently=True)
 
 	return redirect(reverse('auths:myinstances'))
 

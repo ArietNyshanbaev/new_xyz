@@ -256,6 +256,15 @@ class Instance_buy(models.Model):
             status = "Извините, обновить тему можно только 1 раз за час. Подождите еще " + str(60 - minutes) + " минут"
             return status
 
+    def update_info(self, args):
+        self.title = args['title']
+        self.price = args['price']
+        self.telephones = args['phone_num']
+        self.note = args['note']
+        self.save()
+        status = 'Вы успешно отредактировали это обявление.'
+        return status
+
     def __unicode__(self):
         return self.user
 

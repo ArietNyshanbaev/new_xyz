@@ -1,6 +1,6 @@
 <!-- Model pages -->
 {% for instance in instances %}
-        <div class="modal fade modal-redact" id="{{instance.id}}modify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade modal-redact" id="{{instance.id}}modify_sell" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
                 <form class="form-horizontal label_black" action="{%url 'auths:modify_myinstance'%}" method="POST" id='add_job_form' role="form">
@@ -116,6 +116,8 @@
                     <input required  type="number" name="price" id="price" value="{{instance.price}}" placeholder="">(сом)<br>
                     <br> 
                     <input type="hidden" value="{{instance.id}}" name="instance_id" >
+                    <input type="hidden" value="sell" name="sell_or_buy" >
+
 
                     <div class="modal-footer">
                         <input type='submit' value='Редактировать'  class="btn btn-success" role="button">
@@ -127,3 +129,42 @@
           </div>
         </div>
     {% endfor %}
+
+    <!-- Model pages -->
+{% for instance in instances_to_buy %}
+    <div class="modal fade modal-redact" id="{{instance.id}}modify_buy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal label_black" action="{%url 'auths:modify_myinstance'%}" method="POST" id='add_job_form' role="form">
+            {% csrf_token %} 
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" style="color:#f95446;" id="myModalLabel">Изменить объявление</h4>
+            </div>
+            <div class="modal-body">
+                <label for="title">
+                  Название объявления
+                </label>
+                <input class="form-control" value="{{instance.title}}" name="title" id="title" required type="text" maxlength="60" placeholder="пример:Срочно куплю iPhone 6 в хорошем состоянии"><br>
+
+                <label for="phone_num"><br>Номер телефона</label><br>
+                <input class="form-control " required type="text" value="{{instance.telephones}}" name="phone_num" id="phone_num" placeholder=""><br>
+                <label for="note">Описание</label><br>
+                <textarea class="form-control "  required name="note" id="note" cols="61" rows = "4">{{instance.note}}</textarea>
+                <br>
+                <label for="price">Цена</label><br>
+                <input required  type="number" name="price" id="price" value="{{instance.price}}" placeholder="">(сом)<br>
+                <br> 
+                <input type="hidden" value="{{instance.id}}" name="instance_id" >
+                <input type="hidden" value="buy" name="sell_or_buy" >
+
+                <div class="modal-footer">
+                    <input type='submit' value='Редактировать'  class="btn btn-success" role="button">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endfor %}
