@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import re
 # django core packages imports 
-from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.shortcuts import render_to_response, redirect, get_object_or_404, render
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse , reverse_lazy
 from django.contrib.auth import authenticate, login, logout
@@ -26,12 +26,13 @@ def signin(request, key='main'):
 	# initialize variables
 	args={}
 	args.update(csrf(request))
-	need_for_every(args,request)
+	
 	# retriving values from GET request
 	test_next = request.GET.get('next', '')
 	# adding message if needed
 	if test_next and test_next != '/bet/make_bet':
 		messages.add_message(request, messages.SUCCESS, 'Чтобы совершить данное действие вам нужно авторизоваться. ', fail_silently=True)
+	need_for_every(args,request)
 
 	if request.POST:
 		username = request.POST['username']
@@ -57,13 +58,13 @@ def signin(request, key='main'):
 				return redirect(reverse('main:main'))
 			else:
 				args['error_message'] = "Ваш аккаунт временно заблокирован"
-				return render_to_response('auths/signin.html', args)
+				return render(request, 'auths/signin.html', args)
 		else:
 			args['error_message'] = "Имя пользователя и пароль не совпадают, попробуйте еще раз. "
-			return render_to_response('auths/signin.html', args)
+			return render(request, 'auths/signin.html', args)
 	else:
-
-		return render_to_response('auths/signin.html', args, context_instance=RequestContext(request))
+		
+		return render(request, 'auths/signin.html', args)
 
 def signup(request):
 	# redirect not authenticated users to main page
@@ -133,10 +134,10 @@ def signup(request):
 		else:
 			args['email'] = email
 			args['password_error'] = 'Пароли не совпадают'
-			return render_to_response('auths/signup.html', args)
+			return render(request, 'auths/signup.html', args)
 
 	else:
-		return render_to_response('auths/signup.html', args, context_instance=RequestContext(request))
+		return render(request, 'auths/signup.html', args)
 
 @login_required(login_url=reverse_lazy('main:main'))
 def signout(request):
@@ -151,7 +152,7 @@ def profile(request):
 	args.update(csrf(request))
 	need_for_every(args, request)
 
-	return render_to_response('auths/profile.html',args)
+	return render(request, 'auths/profile.html',args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 def modify_myinstance(request):
@@ -241,7 +242,7 @@ def myinstances(request):
 	args['instances'] = instances
 	args['instances_to_buy'] = instances_to_buy
 
-	return render_to_response('auths/myinstances.html', args)
+	return render(request, 'auths/myinstances.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 def my_notify(request):
@@ -252,7 +253,7 @@ def my_notify(request):
 	# Passing arguments
 	args['notifiers'] = Notifier.objects.filter(user=request.user)
 
-	return render_to_response('auths/my_notify.html',args)
+	return render(request, 'auths/my_notify.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 def my_wishlist(request):
@@ -265,7 +266,7 @@ def my_wishlist(request):
 	# Passing arguments
 	args['instances'] = instances
 
-	return render_to_response('auths/mywishlist.html', args)
+	return render(request, 'auths/mywishlist.html', args)
 
 
 @login_required(login_url=reverse_lazy('auths:signin'))
@@ -312,7 +313,7 @@ def modify_profile(request):
 			# Passing arguments
 			args['user'] = request.user
 
-			return render_to_response('auths/modify_profile.html', args)
+			return render(request, 'auths/modify_profile.html', args)
 
 		user.email = email
 		user.first_name = first_name
@@ -324,7 +325,7 @@ def modify_profile(request):
 		# Passing arguments
 		args['user'] = user
 
-		return render_to_response('auths/modify_profile.html', args)
+		return render(request, 'auths/modify_profile.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 def change_password(request):
@@ -348,9 +349,9 @@ def change_password(request):
 			return redirect(reverse('auths:signin'))
 		else:
 			args['password_error'] = 'Пароли не совпадают'
-		return render_to_response('auths/change_password.html', args)
+		return render(request, 'auths/change_password.html', args)
 	else:
-		return render_to_response('auths/change_password.html', args)
+		return render(request, 'auths/change_password.html', args)
 
 def profile_others(request, user_id):
 	# initialize variables
@@ -364,4 +365,4 @@ def profile_others(request, user_id):
 	args['instances'] = Instance.objects.filter(user=user_profile).order_by('-added_date')
 	args['instances_to_buy'] = Instance_buy.objects.filter(user=user_profile).order_by('-added_date')
 
-	return render_to_response('auths/profile_others.html', args)
+	return render(request, 'auths/profile_others.html', args)
