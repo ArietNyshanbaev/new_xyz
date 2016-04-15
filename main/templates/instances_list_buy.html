@@ -19,7 +19,19 @@
                                             <a href="{% url 'main:instance' instance.id %}">
                                                 <div class="content-inner">
                                                     <h5 style="color:#666;">
-                                                        {{instance.title|slice:"38"}}
+                                                        {% if instance.title %}
+                                                            {{instance.title|slice:"38"}}
+                                                        {% else %}  
+                                                            {% if instance.model.is_not_unique == True %}
+                                                               {% if instance.modell %}
+                                                                    {{instance.modell|slice:":20"}}
+                                                               {% else %}
+                                                                    {{instance.model.title}}
+                                                               {% endif %}
+                                                            {% else %}
+                                                                {{instance.model.title}}
+                                                            {% endif %}
+                                                        {% endif %}
                                                     </h5>
                                                     <div class="meta">
                                                         <ul>
