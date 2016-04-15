@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.conf import settings
-from django.shortcuts import render, render_to_response, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
 # import of custom writen decorator and views
 from custom_code.decorators import email_required
@@ -47,7 +47,6 @@ def main(request):
 	args['instances'] = Instance.objects.all().order_by("-updated_date")[:16]
 	args['instances_to_buy'] = Instance_buy.objects.all().order_by("-updated_date")[:16]
 	args['best_deals'] = Best_deal.objects.all()
-	args['apple_instances'] = Instance.objects.filter(model__brand__title='Apple').order_by('-updated_date')[:16]
 
 	return render(request, 'main/main.html', args)
 
@@ -198,19 +197,29 @@ def instance(request, instance_id):
 	args = {}
 	args.update(csrf(request))
 	need_for_every(args, request) 
+	operation = request.GET.get('operation', '')
+
 	# Quering of objects from model 
-	instance = get_object_or_404(Instance, pk=instance_id)
-	if instance.user == request.user:
-		liked = Wish.objects.filter(instance=instance)
-		args['liked'] = liked
+	if operation == 'buy':
+		instance = get_object_or_404(Instance_buy, pk=instance_id)
+		args['similar_instances'] = Instance_buy.objects.filter(model=instance.model).order_by('-updated_date').exclude(pk=instance_id)[:4]
+		template = 'main/instance_buy.html'
+	else:
+		instance = get_object_or_404(Instance, pk=instance_id)
+		args['similar_instances'] = Instance.objects.filter(model=instance.model).order_by('-updated_date').exclude(pk=instance_id)[:4]
+		template = 'main/instance.html'
+
+	#if instance.user == request.user:
+	#	liked = Wish.objects.filter(instance=instance)
+	#	args['liked'] = liked
 	
 	# Passing arguments
-	args['similar_instances'] = Instance.objects.filter(model=instance.model).order_by('-updated_date').exclude(pk=instance_id)[:4]
+	
 	args['model'] = model = instance.model
 	args['instance'] = instance
 	args['user'] = request.user
 
-	return render(request, 'main/instance.html', args)
+	return render(request, template, args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required
