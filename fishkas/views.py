@@ -2,7 +2,7 @@
 import threading
 # django core package imports
 from django import template
-from django.shortcuts import render_to_response, redirect, get_object_or_404, render
+from django.shortcuts import redirect, get_object_or_404, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -144,7 +144,7 @@ def what_can_i_effort(request):
 	args['categories'] = Category.objects.all()
 	args['instances'] = instances
 	
-	return render_to_response('fishkas/what_can_i_effort.html', args, context_instance=RequestContext(request))
+	return render(request, 'fishkas/what_can_i_effort.html', args)
 @email_required
 def search(request):
 	# initialize variables
@@ -224,7 +224,7 @@ def search(request):
 	args['this_brand'] = brand
 	args['categories'] = Category.objects.all()
 
-	return render_to_response('fishkas/search.html', args, context_instance=RequestContext(request))
+	return render(request, 'fishkas/search.html', args)
 
 def imei(request):
 	# initialization of variables

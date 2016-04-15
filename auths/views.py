@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import re
 # django core packages imports 
-from django.shortcuts import render_to_response, redirect, get_object_or_404, render
+from django.shortcuts import redirect, get_object_or_404, render
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse , reverse_lazy
 from django.contrib.auth import authenticate, login, logout
@@ -119,7 +119,7 @@ def signup(request):
 			    args['email'] = email
 
 		if validation == False:
-			return render_to_response('auths/signup.html', args)
+			return render(request, 'auths/signup.html', args)
 
 		if password1 == password2:
 			user = User.objects.create_user(username=username, email=email, password=password1)
@@ -341,7 +341,7 @@ def change_password(request):
 		# password validation
 		if len(password1) < 6 or len(password2) < 6:
 			args['password_error'] = 'Пароль должен состоять из 6 и более символов'
-			return render_to_response('auths/change_password.html', args)
+			return render(request, 'auths/change_password.html', args)
 		if password1 == password2:
 			user.set_password(password1)
 			user.save()
