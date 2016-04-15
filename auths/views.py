@@ -361,7 +361,7 @@ def profile_others(request, user_id):
 	user_profile = get_object_or_404(User, pk=user_id)
 	# Passing arguments
 	args['user_profile'] = user_profile
-	args['instances'] = Instance.objects.filter(user=user_profile)
-	args['instances_to_buy'] = Instance_buy.objects.filter(user=user_profile)
+	args['instances'] = Instance.objects.filter(user=user_profile).order_by('-added_date')
+	args['instances_to_buy'] = Instance_buy.objects.filter(user=user_profile).order_by('-added_date')
 
 	return render_to_response('auths/profile_others.html', args)

@@ -45,6 +45,7 @@ def main(request):
 	args['category_accessories'] = category_accessories
 	args['categories'] = Category.objects.all()
 	args['instances'] = Instance.objects.all().order_by("-updated_date")[:16]
+	args['instances_to_buy'] = Instance_buy.objects.all().order_by("-updated_date")[:16]
 	args['best_deals'] = Best_deal.objects.all()
 	args['apple_instances'] = Instance.objects.filter(model__brand__title='Apple').order_by('-updated_date')[:16]
 
@@ -60,10 +61,14 @@ def category(request, category_id):
 	# Quering of objects from model 
 	this_category = get_object_or_404(Category, pk=category_id)
 	instances = Instance.objects.filter(model__brand__category=this_category).order_by('-updated_date')
+	instances_to_buy = Instance_buy.objects.filter(model__brand__category=this_category).order_by('-updated_date')
 
 	# Pagination
 	paginator = Paginator(instances, 20)
+	
 	page = request.GET.get('page')
+	
+
 	try:
 		instances = paginator.page(page)
 	except PageNotAnInteger:
@@ -73,9 +78,23 @@ def category(request, category_id):
         # If page is out of range (e.g. 9999), deliver last page of results.
  		instances = paginator.page(paginator.num_pages)
 
+ 	paginator_buy = Paginator(instances_to_buy, 20)
+ 	page_buy = request.GET.get('page_buy')
+ 		
+ 	try:
+ 		instances_to_buy = paginator_buy.page(page_buy)
+ 	except PageNotAnInteger:
+ 		# If page is not an integer, deliver first page.
+ 		instances_to_buy = paginator_buy.page(1)
+ 	except EmptyPage:
+ 		# If page is out of range (e.g. 9999), deliver last page of results.
+ 		instances_to_buy = paginator_buy.page(paginator_buy.num_pages)
+ 	
+
  	# Passing arguments
  	args['categories'] = Category.objects.all()
 	args['instances'] = instances
+	args['instances_to_buy'] = instances_to_buy
 	args['brands'] = this_category.brand_set.all().order_by('title')
 	args['this_category'] = this_category
 
@@ -90,10 +109,12 @@ def brand(request, brand_id):
 	# Quering of objects from model 
 	brand = get_object_or_404(Brand, pk=brand_id)
 	instances = Instance.objects.filter(model__brand=brand).order_by('-updated_date')
+	instances_to_buy = Instance_buy.objects.filter(model__brand=brand).order_by('-updated_date')
 	
 	# Pagination
 	paginator = Paginator(instances, 20)
 	page = request.GET.get('page')
+
 	try:
 		instances = paginator.page(page)
 	except PageNotAnInteger:
@@ -103,10 +124,23 @@ def brand(request, brand_id):
         # If page is out of range (e.g. 9999), deliver last page of results.
  		instances = paginator.page(paginator.num_pages)
 
+ 	paginator_buy = Paginator(instances_to_buy, 20)
+ 	page_buy = request.GET.get('page_buy')
+
+ 	try:
+ 		instances_to_buy = paginator_buy.page(page_buy)
+ 	except PageNotAnInteger:
+ 		# If page is not an integer, deliver first page.
+ 		instances_to_buy = paginator_buy.page(1)
+ 	except EmptyPage:
+ 		# If page is out of range (e.g. 9999), deliver last page of results.
+ 		instances_to_buy = paginator_buy.page(paginator_buy.num_pages)
+
  	# Passing arguments
 	args['brand'] = brand
 	args['models'] =  brand.modell_set.all().order_by('title')
 	args['instances'] = instances
+	args['instances_to_buy'] = instances_to_buy
 	args['categories'] = Category.objects.all()
 
 	return render(request, 'main/brand.html', args)
@@ -121,6 +155,7 @@ def model(request, model_id):
 	# Quering of objects from model 
 	this_model = get_object_or_404(Modell, pk=model_id)
 	instances = Instance.objects.filter(model = this_model).order_by('-updated_date')
+	instances_to_buy = Instance_buy.objects.filter(model = this_model).order_by('-updated_date')
 
 	# Passing arguments
 	paginator = Paginator(instances, 20)
@@ -134,9 +169,22 @@ def model(request, model_id):
         # If page is out of range (e.g. 9999), deliver last page of results.
  		instances = paginator.page(paginator.num_pages)
 
+ 	paginator_buy = Paginator(instances_to_buy, 20)
+ 	page_buy = request.GET.get('page_buy')
+
+ 	try:
+ 		instances_to_buy = paginator_buy.page(page_buy)
+ 	except PageNotAnInteger:
+ 		# If page is not an integer, deliver first page.
+ 		instances_to_buy = paginator_buy.page(1)
+ 	except EmptyPage:
+ 		# If page is out of range (e.g. 9999), deliver last page of results.
+ 		instances_to_buy = paginator_buy.page(paginator_buy.num_pages)
+
  	# Passing arguments
 	args['models'] = this_model.brand.modell_set.all().order_by('title')
 	args['instances'] = instances
+	args['instances_to_buy'] = instances_to_buy
 	args['this_model'] = this_model
 	args['user'] = request.user
 	args['categories'] = Category.objects.all()

@@ -157,11 +157,11 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#all_ads" aria-controls="all_ads" role="tab" data-toggle="tab" >Все объявления</a></li>
-        <li role="presentation"><a href="#apple_ads" aria-controls="apple_ads" role="tab" data-toggle="tab">Продукция Apple</a></li>
+        <li role="presentation" class="active"><a href="#ads_to_sell" aria-controls="ads_to_sell" role="tab" data-toggle="tab" > Продам </a></li>
+        <li role="presentation"><a href="#ads_to_buy" aria-controls="ads_to_buy" role="tab" data-toggle="tab">Куплю</a></li>
     </ul>
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="all_ads">
+        <div role="tabpanel" class="tab-pane active" id="ads_to_sell">
         	<div class="row">
         		<div class="col-md-12">
         			<div class="content white">
@@ -189,13 +189,13 @@
         		</div><!-- /.col-md-12 -->
         	</div><!-- /.row -->
         </div>
-        <div role="tabpanel" class="tab-pane" id="apple_ads">
+        <div role="tabpanel" class="tab-pane" id="ads_to_buy">
             <div class="row">
                 <div class="col-md-12">
                     <div class="content white">
                         <div class="inner">
-                            {% for instance in apple_instances %}
-                                {% include 'instances_list.html' %}
+                            {% for instance in instances_to_buy %}
+                                {% include 'instances_list_buy.html' %}
                             {% empty %} 
                             <h2 class="text-center"> </h2>
                             {% endfor %}    
@@ -204,8 +204,8 @@
                                     <div class="col-md-10">
                                         <div class="form-group">
                                         <a href="{% url 'main:category' 1%}">
-                                            <button type="submit" class="btn-sm btn-rounded btn-primary btn-primary-color waves-effect">
-                                                Посмотреть все Айфоны <i class="icon icon-normal-right-arrow-small"></i>
+                                             <button type="submit" class="btn-sm btn-rounded btn-primary btn-primary-color waves-effect">
+                                                Посмотреть все объявления <i class="icon icon-normal-right-arrow-small"></i>
                                             </button>
                                         </a>
                                         </div><!-- /.form-group --> 
@@ -226,7 +226,7 @@
 <div class="col-md-3 col-sm-6">
     
     <div class="sidebar">
-    
+
 <br><br><br><br><br><br>
     <div id="filter" class="filter-cars block default block-shadow" style="margin-top: -8px;">
        <div class="block-inner">
@@ -351,8 +351,6 @@
             </div>
         </div>
     </div>
-
-   
     <br>
           <div class='block'>
            <h5 class="text-center" style="color: #00658b; padding-top: 20px; line-height: 70%;" >Лучшие предложения</h5> 
