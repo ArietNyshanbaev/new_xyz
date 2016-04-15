@@ -82,7 +82,7 @@
 			
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">{{user_profile.first_name}} {{user_profile.last_name}}</h3>
+              <h3 class="panel-title">{{user_profile.first_name}}</h3>
             </div>
             <div class="panel-body">
               <div class="row">
@@ -125,6 +125,13 @@
       </div><!-- /.line -->
     </div><!-- /.page-header-inner -->
   </div><!-- /.page-header -->
+
+ <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#ads_to_sell" aria-controls="ads_to_sell" role="tab" data-toggle="tab" > Продам </a></li>
+        <li role="presentation"><a href="#ads_to_buy" aria-controls="ads_to_buy" role="tab" data-toggle="tab"> Куплю </a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="ads_to_sell">
   <div class="row">
     <div class="col-md-12">
       <div class="content white">
@@ -138,6 +145,24 @@
       </div><!-- /.content -->
     </div><!-- /.col-md-12 -->
   </div><!-- /.row -->
+  </div><!--tabpanel -->
+         <div role="tabpanel" class="tab-pane active" id="ads_to_buy">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="content white">
+        <div class="inner">
+                    {% for instance in instances_to_buy %}
+                         {% include 'instances_list.html' %}
+                    {% empty %} 
+                    <h5 class="text-center"> У пользователя пока нет объявлений. </h5>
+                    {% endfor %}                
+        </div>
+      </div><!-- /.content -->
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+  </div><!--tabpanel -->
+  </div><!-- tab-content -->
+
 </div><!-- /.block -->                    
 </div><!-- /#main -->
 </div><!-- /.col-md-9 -->
