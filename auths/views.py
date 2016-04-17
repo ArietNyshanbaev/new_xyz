@@ -262,7 +262,7 @@ def my_wishlist(request):
 	args.update(csrf(request))
 	need_for_every(args,request)
 	# Query objects from model
-	instances = Wish.objects.filter(user=request.user)
+	instances = Wish.objects.filter(user=request.user).reverse()
 	# Passing arguments
 	args['instances'] = instances
 

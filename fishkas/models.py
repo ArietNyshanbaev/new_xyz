@@ -4,13 +4,15 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 # project models imprt
-from main.models import Instance
+from main.models import Instance, Instance_buy
 
 class Wish(models.Model):
 	""" Wish class for wish list """
 
 	user = models.ForeignKey(User, verbose_name='пользователь')
 	instance = models.ForeignKey(Instance, verbose_name='instance', null=True, blank=True)
+	for_buy = models.BooleanField('для покупки ?', default=False)
+	instance_buy = models.BooleanField(Instance_buy, verbose_name='instance_buy', null=True, blank=True)
 
 	def __unicode__(self):
 		return self.user.username + " " + str(self.instance_id)

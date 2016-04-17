@@ -12,7 +12,6 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.messages import get_messages
-from django.template import RequestContext
 # import of custom writen decorator and views
 from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every
@@ -101,50 +100,6 @@ def redact_notify(request):
 	else :
 		return redirect(reverse('main:main'))
 
-@email_required
-def what_can_i_effort(request):
-
-	#initialize variables
-	args={}
-	args.update(csrf(request))
-	need_for_every(args, request)
-
-	# anyway
-	i_have = request.GET.get('price','')
-	if i_have != '':
-		i_have_min = int(i_have) - 5000
-	category_list = request.GET.getlist('category_name')
-	category_list = list(category_list)
-	if i_have == '':
-		i_have = 0
-		i_have_min = 0
-	if len(category_list) == 0:
-		instances = Instance.objects.filter(price__lte=i_have).filter(price__gte=i_have_min ).order_by('-price')
-	else:
-		instances = Instance.objects.filter(price__lte=i_have).filter(price__gte=i_have_min ).order_by('-price').filter(model__brand__category__title__in=category_list)
-	args['num_of_instances'] = instances.count()
-	try:
-		current_page = request.get_full_path().split('?')[1].split('&page')[0]
-		args['current_page'] = current_page
-	except Exception, e:
-		pass
-	# pagination
-	paginator = Paginator(instances, 16)
-	page = request.GET.get('page')
-	try:
-		instances = paginator.page(page)
-	except PageNotAnInteger:
-		# If page is not an integer, deliver first page.
-		instances = paginator.page(1)
-	except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
- 		instances = paginator.page(paginator.num_pages)
- 	# Passing arguments
-	args['price'] = i_have
-	args['categories'] = Category.objects.all()
-	args['instances'] = instances
-	
-	return render(request, 'fishkas/what_can_i_effort.html', args)
 @email_required
 def search(request):
 	# initialize variables
@@ -250,18 +205,26 @@ def imei(request):
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required
-def add_to_wishlist(request, instance_id_field):
+def add_to_wishlist(request, instance_id):
 	# initialize variables
 	args={}
 	args.update(csrf(request))
+	for_buy = request.GET.get('operation', '') == 'buy'
+	success = False
 	# Query objects from model
-	instance = Instance.objects.filter(id=instance_id_field)
-	test = request.user.wish_set.all().filter(instance=instance[0])
-	# check if user has this instance already in his wishlist
-	if test.count() < 1 and instance.count() > 0:
-		wish = Wish.objects.create(user = request.user, instance=instance[0])
+	if for_buy:
+		instance = get_object_or_404(Instance_buy, id=instance_id)
+		if !request.user.wish_set.all().filter(instance_buy=instance).exists():
+			wish = Wish.objects.create(user=request.user, instance_buy=instance, for_buy=True)
+			success = True
+	else:
+		instance = Instance.objects.filter(id=instance_id)
+		if !request.user.wish_set.all().filter(instance=instance).exists():
+			wish = Wish.objects.create(user=request.user, instance=instance)
+			success = True
+	
+	if success:	
 		messages.add_message(request, messages.SUCCESS, 'Объявление успешно добавлено в избранные.', fail_silently=True)
-		instance = instance[0]
 
 		# new thread
 		send_message_thread = threading.Thread(target=send_message, args={instance,request})
