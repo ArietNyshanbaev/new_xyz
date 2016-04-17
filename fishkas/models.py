@@ -6,25 +6,12 @@ from django.contrib.auth.models import User
 # project models imprt
 from main.models import Instance, Instance_buy
 
-class Wish(models.Model):
-	""" Wish class for wish list """
-
-	user = models.ForeignKey(User, verbose_name='пользователь')
-	instance = models.ForeignKey(Instance, verbose_name='instance', null=True, blank=True)
-	for_buy = models.BooleanField('для покупки ?', default=False)
-	instance_buy = models.BooleanField(Instance_buy, verbose_name='instance_buy', null=True, blank=True)
-
-	def __unicode__(self):
-		return self.user.username + " " + str(self.instance_id)
-
-	class Meta:
-		verbose_name = "желаемый"
-		verbose_name_plural = "желаемые"
-
 class Message(models.Model):
 	""" Message class for us kind a feedback """
 
 	message = models.CharField('сообщение', max_length=1000, null=True, blank=True)
+	user = models.CharField('пользователь', max_length=100, null=True, blank=True)
+	sent_date = models.DateTimeField('получено', default=datetime.now)
 
 	def __unicode__(self):
 		return self.message[:20]
@@ -32,6 +19,21 @@ class Message(models.Model):
 	class Meta:
 		verbose_name = "сообщение"
 		verbose_name_plural = "сообщения"
+
+class Wish(models.Model):
+	""" Wish class for wish list """
+
+	user = models.ForeignKey(User, verbose_name='пользователь')
+	instance = models.ForeignKey(Instance, verbose_name='instance', null=True, blank=True)
+	for_buy = models.BooleanField('для покупки', default=False)
+	instance_buy = models.ForeignKey(Instance_buy, verbose_name='instance buy', null=True, blank=True)
+
+	def __unicode__(self):
+		return str(self.user.username)
+
+	class Meta:
+		verbose_name = "желаемый"
+		verbose_name_plural = "желаемые"
 
 class Best_deal(models.Model):
 	""" Best_deal class for Luchwee predlojenie dnay """
@@ -67,13 +69,17 @@ class Notifier(models.Model):
 	categories = models.CharField('id категорий', max_length=1000)
 
 	def __unicode__(self):
-		return self.user.username + " from " + str(self.min_price) + " to " + str(self.max_price)
+		return str(self.user.username) + " from " + str(self.min_price) + " to " + str(self.max_price)
 
 class Imei(models.Model):
 	imei = models.IntegerField('imei', unique=True)
 	instance = models.ForeignKey(Instance)
 	contact_telephone = models.CharField('Контактные данные', max_length=50)
 	owner = models.CharField('Владелец', max_length=70)
+
+	def __unicode__(self):
+		return str(self.imei) 
+
 
 class Image_of_Instance(models.Model):
 	image = models.ImageField('image', upload_to='media')

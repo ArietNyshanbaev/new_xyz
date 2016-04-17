@@ -91,7 +91,7 @@ class Migration(migrations.Migration):
                 ('added_date', models.DateTimeField(default=datetime.datetime.now, verbose_name=b'\xd0\xb4\xd0\xb0\xd1\x82\xd0\xb0 \xd0\xb4\xd0\xbe\xd0\xb1\xd0\xb0\xd0\xb2\xd0\xbb\xd0\xb5\xd0\xbd\xd0\xb8\xd1\x8f')),
                 ('updated_date', models.DateTimeField(default=datetime.datetime.now, verbose_name=b'\xd0\xb4\xd0\xb0\xd1\x82\xd0\xb0 \xd0\xbe\xd0\xb1\xd0\xbd\xd0\xbe\xd0\xb2\xd0\xbb\xd0\xb5\xd0\xbd\xd0\xb8\xd1\x8f (up!)')),
                 ('telephones', models.CharField(max_length=100, null=True, verbose_name=b'\xd1\x82\xd0\xb5\xd0\xbb\xd0\xb5\xd1\x84\xd0\xbe\xd0\xbd', blank=True)),
-                ('price', models.IntegerField(null=True, verbose_name=b'\xd1\x86\xd0\xb5\xd0\xbd\xd0\xb0', blank=True)),
+                ('price', models.IntegerField(default=-1, null=True, verbose_name=b'\xd1\x86\xd0\xb5\xd0\xbd\xd0\xb0', blank=True)),
                 ('smartphone', models.BooleanField(default=False, verbose_name=b'\xd1\x81\xd0\xbc\xd0\xb0\xd1\x80\xd1\x82\xd1\x84\xd0\xbe\xd0\xbd')),
                 ('notebook', models.BooleanField(default=False, verbose_name=b'\xd0\xbd\xd0\xbe\xd1\x83\xd1\x82\xd0\xb1\xd1\x83\xd0\xba')),
                 ('tablet', models.BooleanField(default=False, verbose_name=b'\xd0\xbf\xd0\xbb\xd0\xb0\xd0\xbd\xd1\x88\xd0\xb5\xd1\x82')),

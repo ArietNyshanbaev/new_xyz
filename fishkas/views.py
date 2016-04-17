@@ -292,8 +292,10 @@ def message(request):
 	args.update(csrf(request))
 
 	if request.POST:
+
 		message = request.POST['message']
-		message = Message.objects.create(message=message)
+		username = request.POST.get('username', '')
+		message = Message.objects.create(message=message, username=username)
 		messages.add_message(request, messages.SUCCESS, 'Ваше сообщение успешно отправлено.', fail_silently=True)
 		return redirect(request.META.get('HTTP_REFERER'))
 	else:
