@@ -10,7 +10,7 @@ class Message(models.Model):
 	""" Message class for us kind a feedback """
 
 	message = models.CharField('сообщение', max_length=1000, null=True, blank=True)
-	user = models.CharField('пользователь', max_length=100, null=True, blank=True)
+	username = models.CharField('пользователь', max_length=100, null=True, blank=True)
 	sent_date = models.DateTimeField('получено', default=datetime.now)
 
 	def __unicode__(self):
@@ -23,13 +23,13 @@ class Message(models.Model):
 class Wish(models.Model):
 	""" Wish class for wish list """
 
+	instance_buy = models.ForeignKey(Instance_buy, verbose_name='instance buy', null=True, blank=True)
+	for_buy = models.BooleanField(default=False)
 	user = models.ForeignKey(User, verbose_name='пользователь')
 	instance = models.ForeignKey(Instance, verbose_name='instance', null=True, blank=True)
-	for_buy = models.BooleanField('для покупки', default=False)
-	instance_buy = models.ForeignKey(Instance_buy, verbose_name='instance buy', null=True, blank=True)
 
 	def __unicode__(self):
-		return str(self.user.username)
+		return u'' or str(self.user.username)
 
 	class Meta:
 		verbose_name = "желаемый"

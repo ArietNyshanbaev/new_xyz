@@ -214,12 +214,12 @@ def add_to_wishlist(request, instance_id):
 	# Query objects from model
 	if for_buy:
 		instance = get_object_or_404(Instance_buy, id=instance_id)
-		if !request.user.wish_set.all().filter(instance_buy=instance).exists():
+		if request.user.wish_set.all().filter(instance_buy=instance):
 			wish = Wish.objects.create(user=request.user, instance_buy=instance, for_buy=True)
 			success = True
 	else:
 		instance = Instance.objects.filter(id=instance_id)
-		if !request.user.wish_set.all().filter(instance=instance).exists():
+		if request.user.wish_set.all().filter(instance=instance):
 			wish = Wish.objects.create(user=request.user, instance=instance)
 			success = True
 	
