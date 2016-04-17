@@ -210,7 +210,7 @@ class Instance(models.Model):
             return status
 
     def __unicode__(self):
-        return unicode(self.model.title)+ ' buy ' + str(self.id)
+        return unicode(self.model.title)+ ' for buy ' + str(self.id)
 
     class Meta:
         verbose_name = "объявление"
