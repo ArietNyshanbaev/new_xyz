@@ -1,9 +1,9 @@
 {%load staticfiles%}
 <div class="row-item hoverable waves-effect up_down_bordered">
     {% if instance in user_wish %}
-        {% include "dislike.html" %}
+        {% include "dislike_buy.html" %}
     {% else %}
-        {% include "like.html" %}
+        {% include "like_buy.html" %}
     {% endif %}
     <div class="inner">
         <div class="row">

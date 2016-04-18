@@ -214,12 +214,12 @@ def add_to_wishlist(request, instance_id):
 	# Query objects from model
 	if for_buy:
 		instance = get_object_or_404(Instance_buy, id=instance_id)
-		if request.user.wish_set.all().filter(instance_buy=instance):
+		if not request.user.wish_set.all().filter(instance_buy=instance).exists():
 			wish = Wish.objects.create(user=request.user, instance_buy=instance, for_buy=True)
 			success = True
 	else:
-		instance = Instance.objects.filter(id=instance_id)
-		if request.user.wish_set.all().filter(instance=instance):
+		instance = get_object_or_404(Instance, id=instance_id)
+		if not request.user.wish_set.all().filter(instance=instance).exists():
 			wish = Wish.objects.create(user=request.user, instance=instance)
 			success = True
 	
@@ -229,6 +229,7 @@ def add_to_wishlist(request, instance_id):
 		# new thread
 		send_message_thread = threading.Thread(target=send_message, args={instance,request})
 		send_message_thread.start()
+	
 
 	return redirect(request.META.get('HTTP_REFERER'))
 
@@ -238,18 +239,17 @@ def delete_from_wishlist(request, instance_id):
 	#initialize variables
 	args={}
 	args.update(csrf(request))
+	for_buy = request.GET.get('operation', '') == 'buy'
 
-	#check if instance to delete is owned by user who made a request
-	test = Wish.objects.filter(instance__pk=instance_id)
-	if test.count() > 0:
-		if test[0].user.username == request.user.username:
-			test[0].delete()
-			messages.add_message(request, messages.SUCCESS, 'Избранные объявление успешно удалено.', fail_silently=True)
-		else:
-			messages.add_message(request, messages.WARNING, 'Избранные объявление временно не может быть удалено.', fail_silently=True)
+	if for_buy:
+		instances = get_object_or_404(Instance_buy, id=instance_id)
+		get_object_or_404(Wish, instance_buy=instances, user__username=request.user.username).delete()
+		messages.add_message(request, messages.SUCCESS, 'Избранные объявление успешно удалено.', fail_silently=True)
 	else:
-		messages.add_message(request, messages.WARNING, 'Не сушествует', fail_silently=True)
-
+		instances = get_object_or_404(Instance, id=instance_id)
+		get_object_or_404(Wish, instance=instances, user__username=request.user.username).delete()
+		messages.add_message(request, messages.SUCCESS, 'Избранные объявление успешно удалено.', fail_silently=True)
+		
 	return redirect(request.META.get('HTTP_REFERER'))
 
 

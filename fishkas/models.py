@@ -29,7 +29,7 @@ class Wish(models.Model):
 	instance = models.ForeignKey(Instance, verbose_name='instance', null=True, blank=True)
 
 	def __unicode__(self):
-		return u'' or str(self.user.username)
+		return str(self.user.username)
 
 	class Meta:
 		verbose_name = "желаемый"

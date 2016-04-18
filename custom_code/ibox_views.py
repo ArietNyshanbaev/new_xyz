@@ -5,8 +5,6 @@ from django.core.mail import send_mail
 
 def need_for_every(args, request):
 	""" This function does everything usual that is needed for evert def """
-	
-	args['user'] = request.user
 
 	test = request.session.get('test_popup', 'no')
 	if test == 'no':
@@ -17,7 +15,10 @@ def need_for_every(args, request):
 		user_wish = Wish.objects.filter(user=request.user)
 		temp = []
 		for wish in user_wish:
-			temp.append(wish.instance)
+			if wish.for_buy:
+				temp.append(wish.instance_buy)
+			else:
+				temp.append(wish.instance)
 		args['user_wish'] = temp
 	# dealing with messages
 	args['messages'] = list(get_messages(request))
