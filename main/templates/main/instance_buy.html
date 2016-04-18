@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
 
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
     <!-- Light Box effect for image 
     <link rel="stylesheet" type="text/css" media="screen" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.css" />
     <style type="text/css">
@@ -101,7 +102,7 @@
                     <div class="action-buttons">
                         <div class="buy-it-now">
                             <h6>Цена</h6>
-                            <h5 class="iboxed_orange">{{instance.price}} сом</h5>
+                            <h5 class="iboxed_orange">{{instance.min_price}} - {{instance.max_price}} сом</h5>
                         </div><!-- /.buy-it-now -->
 
                         <div class="buy-it-financial" >
@@ -173,9 +174,9 @@
                                                         <div class="row">
                                                             <div class="col-sm-12 col-md-12">
                                                                 {% if instance in user_wish %}
-                                                                    <a class="btn btn-primary btn-xs waves-effect" href="{% url 'fishkas:delete_from_wishlist' instance.id %}"><i class="icon icon-normal-star"></i>Удалить из избранных</a>
+                                                                    <a class="btn btn-primary btn-xs waves-effect" href="{% url 'fishkas:delete_from_wishlist' instance.id %}?operation=buy"><i class="icon icon-normal-star"></i>Удалить из избранных</a>
                                                                 {% else %}
-                                                                    <a class="btn btn-primary btn-xs waves-effect" href="{% url 'fishkas:add_to_wishlist' instance.id %}"><i class="icon icon-normal-star"></i>Добавить в избранные</a>
+                                                                    <a class="btn btn-primary btn-xs waves-effect" href="{% url 'fishkas:add_to_wishlist' instance.id %}?operation=buy"><i class="icon icon-normal-star"></i>Добавить в избранные</a>
                                                                 {% endif %}
                                                                 <table class="table">
                                                                     <tbody>
@@ -220,7 +221,7 @@
 
                                                                         <tr>
                                                                             <td class="property">Цена</td>
-                                                                            <td class="value">{{instance.price}} сом</td>
+                                                                            <td class="value">{{instance.min_price}} - {{instance.max_price}} сом</td>
                                                                         </tr>
 
                                                                         <tr>
@@ -246,15 +247,14 @@
                                                     </div><!-- /#overview -->
                                             </div><!-- /.block-inner -->
 
-                                             {% if instance.user == user %}
+                                        {% if instance.user == user %}
 
 
                                          <a class="btn btn-primary btn-xs waves-effect" style="background-color: lightseagreen" href="{% url 'fishkas:up' instance.id 'buy' %}"><i class="icon icon-normal-star"></i>Up (Обновить)</a>
-                                <br/>
-
-
-                            {% endif %}
+                                        <br/>
+                                        {% else %}
                                          <a class="btn btn-primary btn-xs waves-effect" href="{% if user.is_anonymous %}{% url 'auths:signin'  %}?next=/instance/{{ instance.pk }}{% else %}{% url 'postman:write' instance.user %}?subject={% if instance.model.is_not_unique == True %}{% if instance.modell %}{{instance.modell|slice:":20"}}{% else %}{{instance.model.title}}{% endif %}{% else %}{{instance.model.title}}{% endif %}&body=Я бы хотел спросить, {% endif %}"><i class="icon icon-normal-question-mark"></i> Задать вопрос покупателю</a>
+                                        {% endif %}
                                             </div><!-- /.block -->
                                         </div><!-- /#tab-container -->
                                     </div><!-- ./overview -->

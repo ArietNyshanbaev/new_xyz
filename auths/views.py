@@ -163,6 +163,8 @@ def modify_myinstance(request):
 	if request.POST:
 		title = request.POST.get('title', '')
 		price = request.POST.get('price', '')
+		min_price = request.POST.get('min_price', '')
+		max_price = request.POST.get('max_price', '')
 		phone_num = request.POST.get('phone_num', '')
 		note = request.POST.get('note', '')
 		instance_id = request.POST.get('instance_id', '')
@@ -195,8 +197,11 @@ def modify_myinstance(request):
 			instance.save()
 			messages.add_message(request, messages.SUCCESS, 'Вы успешно отредактировали это обявление.', fail_silently=True)
 		else:
+			if int(min_price) > int(max_price):
+				max_price, min_price = min_price, max_price
+			args['min_price'] = min_price
+			args['max_price'] = max_price
 			args['title'] = title
-			args['price'] = price
 			args['phone_num'] = phone_num
 			args['note'] = note
 			status = instance.update_info(args)
@@ -261,10 +266,9 @@ def my_wishlist(request):
 	args = {}
 	args.update(csrf(request))
 	need_for_every(args,request)
-	# Query objects from model
-	instances = Wish.objects.filter(user=request.user).reverse()
-	# Passing arguments
-	args['instances'] = instances
+	# Query objects from model and assigning to context
+	args['instances'] = Wish.objects.filter(user=request.user, for_buy=False).reverse()
+	args['instances_to_buy'] = Wish.objects.filter(user=request.user, for_buy=True).reverse()
 
 	return render(request, 'auths/mywishlist.html', args)
 

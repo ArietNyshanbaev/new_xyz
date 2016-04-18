@@ -229,7 +229,8 @@ class Instance_buy(models.Model):
     updated_date = models.DateTimeField('дата обновления (up!)', default=datetime.now)
     user = models.ForeignKey(User, null=True, blank=True)
     telephones = models.CharField('телефон', max_length=100, null=True, blank=True)
-    price = models.IntegerField('цена', null=True, blank=True, default=-1)
+    min_price = models.IntegerField('минимальная ценa', null=True, blank=True, default=-1)
+    max_price = models.IntegerField('максимальная ценa', null=True, blank=True, default=-1)
     model = models.ForeignKey(Modell, verbose_name='модель')
     smartphone = models.BooleanField('смартфон', default=False)
     notebook = models.BooleanField('ноутбук', default=False)
@@ -258,7 +259,8 @@ class Instance_buy(models.Model):
 
     def update_info(self, args):
         self.title = args['title']
-        self.price = args['price']
+        self.min_price = args['min_price']
+        self.max_price = args['max_price']
         self.telephones = args['phone_num']
         self.note = args['note']
         self.save()

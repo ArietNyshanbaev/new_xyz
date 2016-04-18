@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
     <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
 
     <!-- Material Design -->
     <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
@@ -356,15 +357,12 @@
                                                     </div><!-- /#overview -->
                                             </div><!-- /.block-inner -->
 
-                                             {% if instance.user == user %}
-
-
+                                        {% if instance.user == user %}
                                          <a class="btn btn-primary btn-xs waves-effect" style="background-color: lightseagreen" href="{% url 'fishkas:up' instance.id 'sell' %}"><i class="icon icon-normal-star"></i>Up (Обновить)</a>
-                                <br/>
-
-
-                            {% endif %}
+                                        <br/>
+                                        {% else %}
                                          <a class="btn btn-primary btn-xs waves-effect" href="{% if user.is_anonymous %}{% url 'auths:signin'  %}?next=/instance/{{ instance.pk }}{% else %}{% url 'postman:write' instance.user %}?subject={% if instance.model.is_not_unique == True %}{% if instance.modell %}{{instance.modell|slice:":20"}}{% else %}{{instance.model.title}}{% endif %}{% else %}{{instance.model.title}}{% endif %}&body=Я бы хотел спросить, {% endif %}"><i class="icon icon-normal-question-mark"></i> Задать вопрос продавцу</a>
+                                        {% endif %}
 
                                             </div><!-- /.block -->
 

@@ -203,16 +203,16 @@ def instance(request, instance_id):
 	if operation == 'buy':
 		instance = get_object_or_404(Instance_buy, pk=instance_id)
 		args['similar_instances'] = Instance_buy.objects.filter(model=instance.model).order_by('-updated_date').exclude(pk=instance_id)[:4]
+		if instance.user == request.user:
+			args['liked'] = Wish.objects.filter(instance_buy=instance)
 		template = 'main/instance_buy.html'
 	else:
 		instance = get_object_or_404(Instance, pk=instance_id)
 		args['similar_instances'] = Instance.objects.filter(model=instance.model).order_by('-updated_date').exclude(pk=instance_id)[:4]
+		if instance.user == request.user:
+			args['liked'] = Wish.objects.filter(instance=instance)
 		template = 'main/instance.html'
-
-	#if instance.user == request.user:
-	#	liked = Wish.objects.filter(instance=instance)
-	#	args['liked'] = liked
-	
+		
 	# Passing arguments
 	
 	args['model'] = model = instance.model
@@ -502,20 +502,22 @@ def add_buy_instance(request, type):
 		city = request.POST.get('city', '')
 		title = request.POST.get('title', '')
 		brand = request.POST.get('brand', '')
-		price = request.POST.get('price', '')
+		min_price = request.POST.get('min_price', '')
+		max_price = request.POST.get('max_price', '')
 		telephone = request.POST.get('telephone', '')
 		note = request.POST.get('note', '')
 		model_id = request.POST.get(brand, '')
 
 		model_id = model_id.split('_')[0]
 		model = get_object_or_404(Modell, pk=model_id)
-
+		if int(min_price) > int(max_price):
+			max_price, min_price = min_price, max_price
 		# validation
 		if len(title) > 80:
 			title = title[:80]
 		if city:
 			city = City.objects.filter(name=city)[0]
-		buy_instance = Instance_buy.objects.create(title=title, user=request.user, telephones=telephone, note=note, price=price, model=model, city=city)
+		buy_instance = Instance_buy.objects.create(title=title, user=request.user, telephones=telephone, note=note, min_price=min_price, max_price=max_price, model=model, city=city)
 		if type == 'smartphone':
 			buy_instance.smartphone = True
 		elif type == 'notebook':

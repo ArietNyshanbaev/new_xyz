@@ -240,16 +240,18 @@ def delete_from_wishlist(request, instance_id):
 	args={}
 	args.update(csrf(request))
 	for_buy = request.GET.get('operation', '') == 'buy'
-
+	success = False
 	if for_buy:
 		instances = get_object_or_404(Instance_buy, id=instance_id)
 		get_object_or_404(Wish, instance_buy=instances, user__username=request.user.username).delete()
-		messages.add_message(request, messages.SUCCESS, 'Избранные объявление успешно удалено.', fail_silently=True)
+		success = True
 	else:
 		instances = get_object_or_404(Instance, id=instance_id)
 		get_object_or_404(Wish, instance=instances, user__username=request.user.username).delete()
+		success = True
+
+	if success:
 		messages.add_message(request, messages.SUCCESS, 'Избранные объявление успешно удалено.', fail_silently=True)
-		
 	return redirect(request.META.get('HTTP_REFERER'))
 
 

@@ -152,8 +152,11 @@
                 <label for="note">Описание</label><br>
                 <textarea class="form-control "  required name="note" id="note" cols="61" rows = "4">{{instance.note}}</textarea>
                 <br>
-                <label for="price">Цена</label><br>
-                <input required  type="number" name="price" id="price" value="{{instance.price}}" placeholder="">(сом)<br>
+                <label for="price">Минимальная Цена</label><br>
+                <input required  type="number" name="min_price" id="price" value="{{instance.min_price}}" placeholder="">(сом)<br>
+                <br> 
+                <label for="price">Максимальная Цена</label><br>
+                <input required  type="number" name="max_price" id="price" value="{{instance.max_price}}" placeholder="">(сом)<br>
                 <br> 
                 <input type="hidden" value="{{instance.id}}" name="instance_id" >
                 <input type="hidden" value="buy" name="sell_or_buy" >

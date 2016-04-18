@@ -9,8 +9,8 @@ class InstanceAdmin(admin.ModelAdmin):
 admin.site.register(Instance, InstanceAdmin)
 
 class Instance_buy_Admin(admin.ModelAdmin):
-	list_display = ('user', 'added_date', 'price')
-	list_filter = ('added_date', 'price')
+	list_display = ('user', 'added_date', 'min_price', 'max_price')
+	list_filter = ('added_date', 'min_price',  'max_price')
 admin.site.register(Instance_buy, Instance_buy_Admin)
 
 class SoldAdmin(admin.ModelAdmin):
