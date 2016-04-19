@@ -18,7 +18,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
 # import of custom writen decorator and views
 from custom_code.decorators import email_required
-from custom_code.ibox_views import need_for_every, notify_me
+from custom_code.ibox_views import need_for_every, notify_sell
 # import of models 
 from .models import Category , Instance , Brand , Modell, Sold, City, Instance_buy
 from fishkas.models import Notifier, Wish, Best_deal
@@ -212,7 +212,7 @@ def instance(request, instance_id):
 		if instance.user == request.user:
 			args['liked'] = Wish.objects.filter(instance=instance)
 		template = 'main/instance.html'
-		
+
 	# Passing arguments
 	
 	args['model'] = model = instance.model
@@ -286,7 +286,7 @@ def add_instance_phones(request):
 		instance.save()
 		messages.add_message(request, messages.SUCCESS, "Ваше объявление успешно создано", fail_silently=True)
 		# part of notify me
-		notifier = threading.Thread(target=notify_me, args={instance,})
+		notifier = threading.Thread(target=notify_sell, args={instance,})
 		notifier.start()
 
 		return redirect(reverse('auths:myinstances'))
@@ -349,7 +349,7 @@ def add_instance_notebooks(request):
 		instance.save()
 		messages.add_message(request, messages.SUCCESS, "Ваше объявление успешно создано", fail_silently=True)
 		# part of notify me
-		notifier = threading.Thread(target=notify_me, args={instance,})
+		notifier = threading.Thread(target=notify_sell, args={instance,})
 		notifier.start()
 		
 		return redirect(reverse('auths:myinstances'))
@@ -414,7 +414,7 @@ def add_instance_tablets(request):
 		instance.save()
 		messages.add_message(request, messages.SUCCESS, "Ваше объявление успешно создано", fail_silently=True)
 		# part of notify me
-		notifier = threading.Thread(target=notify_me, args={instance,})
+		notifier = threading.Thread(target=notify_sell, args={instance,})
 		notifier.start()
  
 		return redirect(reverse('auths:myinstances'))
@@ -476,8 +476,8 @@ def add_instance_accessories(request):
 		instance = Instance.objects.create(linker=link, title=title, memory=memory, color=color, condition=condition, guarantee=guarantee, other=True, box=box, exchange=exchange, bargain=bargain, user=request.user, telephones=telephone, note=note, photo1=photo1, photo2=photo2, photo3=photo3, price=price, model=model, city=city)
 		instance.save()
 		messages.add_message(request, messages.SUCCESS, "Ваше объявление успешно создана",fail_silently=True)
-		# part of notify me
-		notifier = threading.Thread(target=notify_me, args={instance,})
+		# part of notify sellers
+		notifier = threading.Thread(target=notify_sell, args={instance,})
 		notifier.start()
 		
 		return redirect(reverse('auths:myinstances'))
@@ -528,11 +528,11 @@ def add_buy_instance(request, type):
 			buy_instance.other = True
 		buy_instance.save()
 		messages.add_message(request, messages.SUCCESS, "Ваше объявление успешно создана", fail_silently=True)
-		# part of notify me
-		# notifier = threading.Thread(target=notify_me, args={instance,})
-		# notifier.start()
+		# part of notify for sellers
+		notifier = threading.Thread(target=notify_buy, args={instance,})
+		notifier.start()
 		
-		return redirect(reverse('auths:myinstances'))
+		return redirect(reverse('auths:myinstances')+'?tab=buy')
 
 	# Quering of objects from model 
 	if type == 'smartphone':

@@ -506,9 +506,12 @@
 <!-- /#includes exti modal page-->
 {% include "exit_modal_page.html" %}
 
-
-
 <script src=" {% static 'js/release11/jquery.js' %}"></script>
+<!-- Buy tab activation-->
+{% if request.GET.tab == 'buy' %}
+    {% include 'tab_script.html' %}
+{% endif %}
+
 <script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
 <script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
 <script src=" {% static 'js/release11/bootstrap.js' %}"></script>
@@ -533,6 +536,8 @@
 
 <script src=" {% static 'MDB/js/mdb.js' %}"></script>
 <script src=" {% static 'js/release11/carat2.js' %}"></script>
+
+
 {% if test_popup %}
     {% include "popUp.html"%}
 {% endif %}

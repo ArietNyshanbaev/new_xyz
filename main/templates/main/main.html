@@ -434,10 +434,6 @@
 <!-- /#includes exti modal page-->
 {% include "exit_modal_page.html" %}
 
-{% if request.GET.tab == 'buy' %}
-    {% include 'tab_script.html' %}
-{% endif %}
-
 <script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
 <script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
 <script src=" {% static 'js/release11/bootstrap.js' %}"></script>
@@ -461,6 +457,9 @@
 <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
 <script src=" {% static 'MDB/js/mdb.js' %}"></script>
 <script src=" {% static 'js/release11/carat2.js' %}"></script>
+{% if request.GET.tab == 'buy' %}
+    {% include 'tab_script.html' %}
+{% endif %}
 <!-- Material Design -->
 
 <!--
