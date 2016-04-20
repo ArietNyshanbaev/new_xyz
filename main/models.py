@@ -225,6 +225,7 @@ def mymodel_delete(sender, instance, **kwargs):
     instance.photo3.delete(False)
 
 class Instance_buy(models.Model):
+    """ Database table for sads (to_buy)"""
     added_date = models.DateTimeField('дата добавления', default=datetime.now)
     updated_date = models.DateTimeField('дата обновления (up!)', default=datetime.now)
     user = models.ForeignKey(User, null=True, blank=True)
@@ -239,6 +240,7 @@ class Instance_buy(models.Model):
     title = models.CharField('описание темы', max_length=100, null=True, blank=True)
     city = models.ForeignKey(City, verbose_name='город', default=1)
     note = models.TextField('описание', null=True, blank=True)
+    testsing  = models.CharField('to delete', max_length=100, null=True, blank=True)
     
 
     def update_date(self):
