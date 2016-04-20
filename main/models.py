@@ -240,8 +240,7 @@ class Instance_buy(models.Model):
     title = models.CharField('описание темы', max_length=100, null=True, blank=True)
     city = models.ForeignKey(City, verbose_name='город', default=1)
     note = models.TextField('описание', null=True, blank=True)
-    testsing  = models.CharField('to delete', max_length=100, null=True, blank=True)
-    
+    testsing  = models.CharField('to delete', max_length=100, null=True, blank=False)
 
     def update_date(self):
         dt_now = datetime.utcnow().replace(tzinfo=utc)
