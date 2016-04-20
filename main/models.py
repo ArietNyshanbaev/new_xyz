@@ -239,8 +239,7 @@ class Instance_buy(models.Model):
     other = models.BooleanField('аксессуары', default=False)
     title = models.CharField('описание темы', max_length=100, null=True, blank=True)
     city = models.ForeignKey(City, verbose_name='город', default=1)
-    note = models.TextField('описание', null=True, blank=True)
-    testsing  = models.CharField('to delete', max_length=100, null=True, blank=False)
+    note = models.TextField('описаниe', null=True, blank=True)
 
     def update_date(self):
         dt_now = datetime.utcnow().replace(tzinfo=utc)
@@ -272,8 +271,8 @@ class Instance_buy(models.Model):
         return unicode(self.model.title)+ ' ' + str(self.id)
 
     class Meta:
-        verbose_name = "объявление куплю"
-        verbose_name_plural = "объявления куплю"
+        verbose_name = "oбъявление (куплю)"
+        verbose_name_plural = "объявления (куплю)"
 
 class Sold(models.Model):
     seller = models.ForeignKey(User, null=True, blank=True)
