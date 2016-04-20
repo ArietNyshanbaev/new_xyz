@@ -185,7 +185,7 @@ def imei(request):
 	# initialization of variables
 	args={}
 	args.update(csrf(request))
-	need_for_every(args, request) 
+	
 	if request.POST:
 		imei = request.POST['imei']
 		instances = Imei.objects.filter(imei=imei)
@@ -201,6 +201,7 @@ def imei(request):
 			return render(request, 'fishkas/instance2.html', args )
 		else:
 			messages.add_message(request, messages.WARNING, 'Этот imei не зарегистрирован. ', fail_silently=True)
+	need_for_every(args, request) 
 	return render(request, 'fishkas/imei.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))

@@ -72,7 +72,7 @@ class Notifier(models.Model):
 		return str(self.user.username) + " from " + str(self.min_price) + " to " + str(self.max_price)
 
 class Imei(models.Model):
-	imei = models.IntegerField('imei', unique=True)
+	imei = models.CharField('imei', unique=True, max_length=50)
 	instance = models.ForeignKey(Instance)
 	contact_telephone = models.CharField('Контактные данные', max_length=50)
 	owner = models.CharField('Владелец', max_length=70)

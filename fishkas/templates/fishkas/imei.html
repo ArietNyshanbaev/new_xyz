@@ -72,18 +72,15 @@
                       {% csrf_token %}
                       
                       <input type="hidden" name="next" value="{{ request.GET.next }}" />
-
-                        <div class="form-group">
-                          <label for="input-10">
-                            <span>imei</span>
-                          </label>
-                          <input required name="imei" class="form-control" type="text" id="input-10" />
+                        <div class="row">
+                          <div class="input-field ">
+                            <input required name="imei" id="input_text" type="text" length="15" maxlength="15">
+                            <label for="input_text">imei</label>
+                          </div>
                         </div>
-
                         <div class="span7">
                           <input type='submit' value='Проверить'  class="btn  btn-primary btn-md form-control" role="button">
                         </div>
-
                       </form>
                 </div>
             </div>
@@ -91,12 +88,8 @@
         </div><!-- /.section -->
     </div>
 </div>
-
 <!-- Includes footer form tempate folder outside -->
 {% include "footer.html" %}
-   
-
-
 
 <script src=" {% static 'js/release11/jquery.js' %}"></script>
 <script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
@@ -111,13 +104,10 @@
 <script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
 <script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
 <script src=" {% static 'js/myjs.js'%}"></script>
-
 <script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
 <script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
 <script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
 <script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
-
-
 <script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
 <script src=" {% static 'MDB/js/modules/wow.js' %}"></script>
 <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
