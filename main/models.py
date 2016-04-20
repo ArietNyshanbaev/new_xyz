@@ -223,7 +223,7 @@ def mymodel_delete(sender, instance, **kwargs):
     instance.photo1.delete(False)
     instance.photo2.delete(False)
     instance.photo3.delete(False)
-"""
+
 class Instance_buy(models.Model):
     
     added_date = models.DateTimeField('дата добавления', default=datetime.now)
@@ -274,7 +274,7 @@ class Instance_buy(models.Model):
     class Meta:
         verbose_name = "объявление куплю"
         verbose_name_plural = "объявления куплю"
-"""
+
 class Sold(models.Model):
     seller = models.ForeignKey(User, null=True, blank=True)
     date = models.DateTimeField('дата удаления', default=datetime.now)

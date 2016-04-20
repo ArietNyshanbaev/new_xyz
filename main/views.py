@@ -20,7 +20,7 @@ from django.template import RequestContext
 from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every, notify_sell
 # import of models 
-from .models import Category , Instance , Brand , Modell, Sold, City, #Instance_buy
+from .models import Category , Instance , Brand , Modell, Sold, City, Instance_buy
 from fishkas.models import Notifier, Wish, Best_deal
 
 @email_required
@@ -45,11 +45,11 @@ def main(request):
 	args['category_accessories'] = category_accessories
 	args['categories'] = Category.objects.all()
 	args['instances'] = Instance.objects.all().order_by("-updated_date")[:16]
-	#args['instances_to_buy'] = Instance_buy.objects.all().order_by("-updated_date")[:16]
+	args['instances_to_buy'] = Instance_buy.objects.all().order_by("-updated_date")[:16]
 	args['best_deals'] = Best_deal.objects.all()
 
 	return render(request, 'main/main.html', args)
-"""
+
 @email_required
 def category(request, category_id):
 	# initialize variables
@@ -589,4 +589,4 @@ def check_diesel(request):
 			
 	return redirect(request.META.get('HTTP_REFERER'))
 
-"""
+
