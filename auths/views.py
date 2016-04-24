@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth.models import User
-from django.template import RequestContext
 #impoer of models
 from .models import Information
 from fishkas.models import Slogan, Wish, Notifier
@@ -18,7 +17,7 @@ from main.models import Category, Instance, Sold, Instance_buy
 # import of custom writen decorator and views
 from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every
-
+from .forms import SigninForm
 def signin(request, key='main'):
 	# redirect to main page authorized users
 	if request.user.is_authenticated():
@@ -35,36 +34,35 @@ def signin(request, key='main'):
 	need_for_every(args,request)
 
 	if request.POST:
-		username = request.POST['username']
-		password = request.POST['password']
+		form = SigninForm(request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			username = cd['username']
+			password = cd['password']
 
-		user = authenticate(username=username, password=password)
+			user = authenticate(username=username, password=password)
 
-		if user is None:
-			user_real = User.objects.filter(email=username)
-			if len(user_real) > 0:
-				user = authenticate(username=user_real[0].username, password=password)
-		
-		if user is not None:
-			if user.is_active:
-				login(request, user)
-				# check if we got next value
-				next_link = request.POST['next']
-				if next_link != '' :
-					if next_link == '/bet/make_bet':
-						next_link = '/bet'
-					return redirect(next_link)
-
-				return redirect(reverse('main:main'))
+			if user is None:
+				user_real = User.objects.filter(email=username)
+				if len(user_real) > 0:
+					user = authenticate(username=user_real[0].username, password=password)
+			
+			if user is not None:
+				if user.is_active:
+					login(request, user)
+					# check if we got next value
+					next_link = request.POST.get('next', '')
+					if next_link != '' :
+						return redirect(next_link)
+					return redirect(reverse('main:main'))
+				else:
+					args['error_message'] = "Ваш аккаунт временно заблокирован"
 			else:
-				args['error_message'] = "Ваш аккаунт временно заблокирован"
-				return render(request, 'auths/signin.html', args)
-		else:
-			args['error_message'] = "Имя пользователя и пароль не совпадают, попробуйте еще раз. "
-			return render(request, 'auths/signin.html', args)
+				args['error_message'] = "Имя пользователя и пароль не совпадают, попробуйте еще раз. "
 	else:
-		
-		return render(request, 'auths/signin.html', args)
+		form = SigninForm()
+	args['form'] = form
+	return render(request, 'auths/signin.html', args)
 
 def signup(request):
 	# redirect not authenticated users to main page
@@ -151,7 +149,7 @@ def profile(request):
 	args = {}
 	args.update(csrf(request))
 	need_for_every(args, request)
-
+	
 	return render(request, 'auths/profile.html',args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
