@@ -102,8 +102,8 @@ def signup(request):
 
 @login_required(login_url=reverse_lazy('main:main'))
 def signout(request):
-
 	logout(request)
+	
 	return redirect(request.META.get('HTTP_REFERER'))
 
 @login_required(login_url=reverse_lazy('auths:signin'))
@@ -113,7 +113,7 @@ def profile(request):
 	args.update(csrf(request))
 	need_for_every(args, request)
 	
-	return render(request, 'auths/profile.html',args)
+	return render(request, 'auths/profile.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 def modify_myinstance(request):
