@@ -17,7 +17,9 @@ from main.models import Category, Instance, Sold, Instance_buy
 # import of custom writen decorator and views
 from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every
-from .forms import SigninForm
+from .forms import SigninForm, SignupForm
+
+
 def signin(request, key='main'):
 	# redirect to main page authorized users
 	if request.user.is_authenticated():
@@ -42,10 +44,8 @@ def signin(request, key='main'):
 
 			user = authenticate(username=username, password=password)
 
-			if user is None:
-				user_real = User.objects.filter(email=username)
-				if len(user_real) > 0:
-					user = authenticate(username=user_real[0].username, password=password)
+			if user is None and User.objects.filter(email=username).exists:
+				user = authenticate(username=User.objects.filter(email=username)[0].username, password=password)
 			
 			if user is not None:
 				if user.is_active:
@@ -74,68 +74,31 @@ def signup(request):
 	need_for_every(args,request)
 	validation = True
 	# Query objects from model
-	all_users = User.objects.all()
+	
 
 	if request.POST:
-		first_name = request.POST.get('first_name', '')
-		username = request.POST.get('username', '')
-		email = request.POST.get('e_mail', '')
-		password1 = request.POST.get('password1', '')
-		password2 = request.POST.get('password2', '')
-		
-		# first_name validation
-		args['first_name'] = first_name
-		args['username'] = username
-		if len(first_name) < 3 :
-			args['first_name_error'] = 'Слишком короткое фамилия и имя'
-			validation = False
-		# username validation
-		if len(username) > 2:
-			users_using_thisname = all_users.filter(username__iexact=username)
-			if users_using_thisname.count() > 0:
-				validation = False
-				args['username_error'] = 'Этот логин уже используется'
-		else:
-			args['username_error'] = 'Слишком короткий логин'
+		form = SignupForm(request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			first_name = cd['name']
+			username = cd['username']
+			email = cd['email']
+			password = cd['password']
 
-		# password validation
-		if len(password1) < 6 or len(password2) < 6:
-			validation = False
-			args['password_error'] = 'Пароль должен состоять из 6 и более символов'
-
-		# email validation
-		users_using_email = all_users.filter(email=email)
-
-		if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", email):
-			validation = False
-			args['email_error'] = 'Неправильно введен email'
-		else:
-		    if users_using_email.count() > 0:
-			    validation = False
-			    args['email_error'] = 'Этот email уже зарегистрирован'
-		    else:
-			    args['email'] = email
-
-		if validation == False:
-			return render(request, 'auths/signup.html', args)
-
-		if password1 == password2:
-			user = User.objects.create_user(username=username, email=email, password=password1)
-			user.first_name = first_name
-			user.save()
-
-			user_login = authenticate(username=username, password=password1)
-			login(request, user_login)
-			messages.add_message(request, messages.SUCCESS, 'Вы успешно зарегистрировались на сайте', fail_silently=True)
-			
-			return redirect(reverse('main:main'))
-		else:
-			args['email'] = email
-			args['password_error'] = 'Пароли не совпадают'
-			return render(request, 'auths/signup.html', args)
+			if form.is_unique_user():
+				user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name)
+				user.save()
+				# authenticate and login user
+				user_login = authenticate(username=username, password=password)
+				login(request, user_login)
+				messages.add_message(request, messages.SUCCESS, 'Вы успешно зарегистрировались на сайте', fail_silently=True)
+				
+				return redirect(reverse('main:main'))
 
 	else:
-		return render(request, 'auths/signup.html', args)
+		form = SignupForm()
+	args['form'] = form
+	return render(request, 'auths/signup.html', args)
 
 @login_required(login_url=reverse_lazy('main:main'))
 def signout(request):
