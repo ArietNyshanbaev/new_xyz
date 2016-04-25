@@ -1,487 +1,466 @@
 {%load staticfiles%}
 <!doctype html>
-
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="купить, продать, смартфоны, сотка, бишкек, кыргызстан, купить смартфон в бишкеке, ноутбуки, iphone в бишкеке, продать в бишкеке, apple, macbook, ultrabook, ibox">
-    <meta name="author" content="iBox Team">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="#">
-    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
-    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/chosen/chosen.min.css' %}" media="screen, projection">
-    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-normal/pictopro-normal.css' %}" media="screen, projection">
-    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
-    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
-    <!-- Material Design -->
-    <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
-    <!-- Google fonts -->
-    <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
-
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
-    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
-
-    <script src=" {% static 'js/release11/jquery.js' %}"></script>
-
-    <div id="fb-root"></div>
-    {% include 'metrics.html' %}
-    <title>iBox | Покупай и продавай вместе с нами!</title>
-</head>
-<body >
-
-<ul class="news-list"></ul>
-<!-- Include header template-->
-{% include "header.html"%}
-
-<div class="infobar">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<ol class="breadcrumb pull-left">
-		  			<li><a href="">Главная</a></li>
-				</ol>
-
-				<div class="contact pull-right">
-
-
-					<div class="contact-item mail">
-						<div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
-						<div class="value">info@ibox.kg</div><!-- /.value -->
-					</div><!-- /.mail -->
-				</div><!-- /.contact -->
-			</div><!-- /.col-md-12 -->
-		</div><!-- /.row -->
-	</div><!-- /.container -->
-</div><!-- /.infobar -->  
-
-<div id="content" class="frontpage">
-
-	<div class="filter-wrapper">
-    
-    {% include 'messages.html'%}
-    
-    {% include 'add_instance_icons.html' %}
-    
-    {% include 'sell_buy.html' %}
-        
-
-	 <div class="section " style="padding: 7px 0 7px 0">
-        <div class="container">
-            <div class="category-boxes">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="keywords" content="купить, продать, смартфоны, сотка, бишкек, кыргызстан, купить смартфон в бишкеке, ноутбуки, iphone в бишкеке, продать в бишкеке, apple, macbook, ultrabook, ibox">
+        <meta name="author" content="iBox Team">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="#">
+        <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
+        <link rel="stylesheet" type="text/css" href=" {% static 'libraries/chosen/chosen.min.css' %}" media="screen, projection">
+        <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-normal/pictopro-normal.css' %}" media="screen, projection">
+        <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+        <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
+        <!-- Material Design -->
+        <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
+        <!-- Google fonts -->
+        <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
+        <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+        <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
+        <script src=" {% static 'js/release11/jquery.js' %}"></script>
+        <div id="fb-root"></div>
+        {% include 'metrics.html' %}
+        <title>iBox | Покупай и продавай вместе с нами!</title>
+    </head>
+    <body >
+        <ul class="news-list"></ul>
+        <!-- Include header template-->
+        {% include "header.html"%}
+        <div class="infobar">
+            <div class="container">
                 <div class="row">
-                    <div class="col-md-3 main_menu">
-                        <a href="{% url 'main:category' category_smartphones.id %}">
-                            <div class="testimonial-card z-depth-1 hoverable waves-effect">
-                                <div class="card-up default-color-dark">
-                                    <img src="{% static 'images/smartphonenew.png'%} " class="img-responsive" style="width: 92%;">
-                                </div>
-                                <div class="card-content">
-                                    <h5>Смартфоны</h5>
-                                </div>
+                    <div class="col-md-12">
+                        <ol class="breadcrumb pull-left">
+                            <li><a href="">Главная</a></li>
+                        </ol>
+                        <div class="contact pull-right">
+                            <div class="contact-item mail">
+                                <div class="label"><i class="icon icon-normal-mail"></i></div>
+                                <!-- /.label -->
+                                <div class="value">info@ibox.kg</div>
+                                <!-- /.value -->
                             </div>
-                        </a>
-                    </div>
-       
-                    <div class="col-md-3 main_menu">
-                        <a href="{% url 'main:category' category_notebooks.id %}">
-                            <div class="testimonial-card z-depth-1 hoverable waves-effect">
-                                <div class="card-up default-color-dark">
-                                    <img src="{% static 'images/notebooksnew.png' %}" class="img-responsive" style="width: 90%;">
-                                </div>
-                               
-                                <div class="card-content">
-                                    <h5>Ноутбуки</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-md-3 main_menu">
-                        <a href="{% url 'main:category' category_tablets.id %}">
-                            <div class="testimonial-card z-depth-1 hoverable waves-effect">
-                                <div class="card-up default-color-dark">
-                                    <img src="{% static 'images/tabletsnew.png' %}" class="img-responsive" >
-                                </div>
-                                
-                                <div class="card-content">
-                                    <h5>Планшеты</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3 main_menu">
-                        <a href="{% url 'main:category' category_accessories.id %}">
-                            <div class="testimonial-card z-depth-1 hoverable waves-effect">
-                                <div class="card-up default-color-dark">
-                                    <img src="{% static 'images/accessoriesnew.png' %}" class="img-responsive" style="width: 85%;">
-                                </div>
-                               
-                                <div class="card-content">
-                                    <h5>Аксессуары</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    </div><!-- /.slider-filter -->
-
-    <div class="section gray-light" style="padding: 0px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-9 col-sm-12">
-                    <div id="main">
-                        <div class="row-block block" id="best-deals">
-	<div class="page-header">
-		<div class="page-header-inner">
-			<div class="line">
-				<hr/>
-			</div><!-- /.line -->
-
-
-
-				<div class="heading">
-				    <h2 style="color:#00658b">Последние объявления</h2>
-			    </div><!-- /.heading -->
-
-			<div class="line">
-				<hr/>
-			</div><!-- /.line -->
-		</div><!-- /.page-header-inner -->
-	</div><!-- /.page-header -->
-
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#ads_to_sell" aria-controls="ads_to_sell" role="tab" data-toggle="tab" > Продам </a></li>
-        <li role="presentation"><a href="#ads_to_buy" aria-controls="ads_to_buy" role="tab" data-toggle="tab">Куплю</a></li>
-    </ul>
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="ads_to_sell">
-        	<div class="row">
-        		<div class="col-md-12">
-        			<div class="content white">
-        				<div class="inner">
-                            {% for instance in instances %}
-                                {% include 'instances_list.html' %}
-                            {% empty %} 
-                            <h2 class="text-center"> </h2>
-                            {% endfor %}	
-                            <div class="row">
-                                <div class="col-md-1"></div>
-                                    <div class="col-md-10">
-                                        <div class="form-group">
-                                        <a href="{% url 'main:category' 1%}">
-                                            <button type="submit" class="btn-sm btn-rounded btn-primary btn-primary-color waves-effect">
-                                                Посмотреть все объявления <i class="icon icon-normal-right-arrow-small"></i>
-                                            </button>
-                                        </a>
-                                        </div><!-- /.form-group -->	
-                                    </div>
-                                <div class="col-md-1"></div>
-                            </div>						
-        				</div>
-        			</div><!-- /.content -->
-        		</div><!-- /.col-md-12 -->
-        	</div><!-- /.row -->
-        </div>
-        <div role="tabpanel" class="tab-pane" id="ads_to_buy">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="content white">
-                        <div class="inner">
-                            {% for instance in instances_to_buy %}
-                                {% include 'instances_list_buy.html' %}
-                            {% empty %} 
-                            <h2 class="text-center"> </h2>
-                            {% endfor %}    
-                            <div class="row">
-                                <div class="col-md-1"></div>
-                                    <div class="col-md-10">
-                                        <div class="form-group">
-                                        <a href="{% url 'main:category' 1%}?tab=buy">
-                                             <button type="submit" class="btn-sm btn-rounded btn-primary btn-primary-color waves-effect">
-                                                Посмотреть все объявления <i class="icon icon-normal-right-arrow-small"></i>
-                                            </button>
-                                        </a>
-                                        </div><!-- /.form-group --> 
-                                    </div>
-                                <div class="col-md-1"></div>
-                            </div>                                                
+                            <!-- /.mail -->
                         </div>
-                    </div><!-- /.content -->
-                </div><!-- /.col-md-12 -->
-            </div><!-- /.row -->
+                        <!-- /.contact -->
+                    </div>
+                    <!-- /.col-md-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
         </div>
-    </div>
-</div><!-- /.block -->                    
-</div><!-- /#main -->
-<!--<p class="btn btn-primary from-control">Want more</p>-->
-</div><!-- /.col-md-9 -->
-
-<div class="col-md-3 col-sm-6">
-    
-    <div class="sidebar">
-
-<br><br><br><br><br><br>
-    <div id="filter" class="filter-cars block default block-shadow" style="margin-top: -8px;">
-       <div class="block-inner">
-            <div class="page-header-inner">
-            <div class="line">
-                <hr/>
-            </div><!-- /.line -->
-            <div class="heading text-center">
-                <h5 style="color:white">Поиск</h5>
-            </div><!-- /.heading -->
-
-            <div class="line">
-                <hr/>
-            </div><!-- /.line -->
-          </div><!-- /.page-header-inner -->
-
-            <div class="block-inner">
-                <form action="{% url 'fishkas:search'%}" method="GET" role="form">
-                                                    {% csrf_token %}
+        <!-- /.infobar -->  
+        <div id="content" class="frontpage">
+            <div class="filter-wrapper">
+                {% include 'messages.html'%}
+                {% include 'add_instance_icons.html' %}
+                {% include 'sell_buy.html' %}
+                <div class="section " style="padding: 7px 0 7px 0">
+                    <div class="container">
+                        <div class="category-boxes">
                             <div class="row">
-                                <div class="">
-                                    <div class="content">
-                                        <div class="inner">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="search-sales">
-                                                        <div class="row">
-                                                            <div class="form-group col-md-12">
-                                                                <select class="form-control" name="category" id="category" required onchange="javascript:Check11();">
-                                                                    <option value="All_type">Все виды</option>
-                                                                    {% for category in categories %}
-                                                                        {% if category.brand_set.all.count > 0 %}
-                                                                            <option value="{{category.title}}">{{category.title}}</option>
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                </select>
-                                                            </div>
-
-
-
-
-                                                            
-                                                            {% for category in categories %}
-                                                              <div  class="form-group col-md-12" id="{{category.title}}" style="display:none" >
-                                                                    <select class="form-control" name="{{category.title}}" id="category_id" >
-                                                                      <option value="all_brands">
-                                                                            {% if category.title == 'Аксессуары'%}
-                                                                                Все виды
-                                                                            {% else %}
-                                                                                Все бренды
-                                                                            {% endif %}
-                                                                      </option>
-                                                                      {% for brand in category.brand_set.all %}
-                                                                          <option value="{{brand.id}}">{{brand.title}}</option>
-                                                                      {% endfor %}
-                                                                    </select>
-                                                              </div>
-                                                            {% endfor %} 
-                                                            <div  class="form-group col-md-12" id="all_things" style="display:none">
-                                                                <select class="form-control" name="All_type" id="category_id">
-                                                                      <option value="all_things">Все бренды</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                    </div> 
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="content">
-                                        <div class="inner">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="search-sales">
-                                                    <div class="row">
-                                                        <div class="form-group year-to">
-                                                            <input type="number"  class="form-control" name="start" placeholder=" с 0 (сом)">
-                                                        </div>
-
-                                                        <div class="form-group year-to">
-                                                            <input type="number"  class="form-control" name="end" placeholder=" до 100000 (сом)">
-                                                        </div>
-                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 year-to">
-
-                                                         <div class="switch">
-                                                            <label>
-                                                            Обмен &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                              <input class="text-right" name="exchange" type="checkbox">
-                                                              <span class="lever"></span>
-                                                              
-                                                            </label>
-                                                          </div>
-                                                        </div>
-
-                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 year-to">
-
-                                                         <div class="switch">
-                                                            <label>
-                                                            Документы 
-                                                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                              <input class="text-right" name="box" type="checkbox">
-                                                              <span class="lever"></span>
-                                                              
-                                                            </label>
-                                                          </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
+                                <div class="col-md-3 main_menu">
+                                    <a href="{% url 'main:category' category_smartphones.id %}">
+                                        <div class="testimonial-card z-depth-1 hoverable waves-effect">
+                                            <div class="card-up default-color-dark">
+                                                <img src="{% static 'images/smartphonenew.png'%} " class="img-responsive" style="width: 92%;">
+                                            </div>
+                                            <div class="card-content">
+                                                <h5>Смартфоны</h5>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>  
+                                    </a>
+                                </div>
+                                <div class="col-md-3 main_menu">
+                                    <a href="{% url 'main:category' category_notebooks.id %}">
+                                        <div class="testimonial-card z-depth-1 hoverable waves-effect">
+                                            <div class="card-up default-color-dark">
+                                                <img src="{% static 'images/notebooksnew.png' %}" class="img-responsive" style="width: 90%;">
+                                            </div>
+                                            <div class="card-content">
+                                                <h5>Ноутбуки</h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3 main_menu">
+                                    <a href="{% url 'main:category' category_tablets.id %}">
+                                        <div class="testimonial-card z-depth-1 hoverable waves-effect">
+                                            <div class="card-up default-color-dark">
+                                                <img src="{% static 'images/tabletsnew.png' %}" class="img-responsive" >
+                                            </div>
+                                            <div class="card-content">
+                                                <h5>Планшеты</h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3 main_menu">
+                                    <a href="{% url 'main:category' category_accessories.id %}">
+                                        <div class="testimonial-card z-depth-1 hoverable waves-effect">
+                                            <div class="card-up default-color-dark">
+                                                <img src="{% static 'images/accessoriesnew.png' %}" class="img-responsive" style="width: 85%;">
+                                            </div>
+                                            <div class="card-content">
+                                                <h5>Аксессуары</h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
-                            <br>
-                                    <div class="form-group">
-                                        <button type="submit" class="send btn-sm btn-rounded btn-primary btn-primary-color waves-effect ">
-                                            Найти <i class="icon icon-normal-right-arrow-small"></i>
-                                        </button>
-                                    </div>
-                            </form>
-            </div>
-        </div>
-    </div>
-    <br>
-          <div class='block'>
-           <h5 class="text-center" style="color: #00658b; padding-top: 20px; line-height: 70%;" >Лучшие предложения</h5> 
-           {% for best_deal in best_deals %}
-            <br><br>
-            <div class="testimonial-card z-depth-1 hoverable waves-effect">
-            <a href="{% url 'main:instance' best_deal.instance.pk %}">
-                <button class="btn btn-default form-control waves-effect waves-light">{{best_deal.category}}</button>
-            </a>
-             <div class="inner"  >
-                    <div class="grid-item">
-                        <div class="inner">
-                        <a href="{% url 'main:instance' best_deal.instance.pk %}" class="slide">
-                            <div class="picture">
-                                <div class="image-slider">
-                                    {% if best_deal.instance.photo1 %}
-                                            <img src="../../../media/{{best_deal.instance.photo1}}" class="img-responsive" alt="#">
-                                    {% endif %}
-                                </div><!-- /.image-slider -->
-                            </div><!-- /.picture -->
-
-                            <h5 class="text-center">
-                                
-                                {% if best_deal.instance.model.is_not_unique == True %}
-                                   {% if best_deal.instance.modell %}
-                                        {{best_deal.instance.modell|slice:":20"}}
-                                   {% else %}
-                                        {{best_deal.instance.model.title}}
-                                   {% endif %}
-                                {% else %}
-                                    {{best_deal.instance.model.title}}
-                                {% endif %}
-
-                            </h5>
-
-                            <div class="price">{{best_deal.instance.price}} сом</div><!-- /.price -->
-
-                            <div class="meta">
-                                <ul class="clearfix ">
-                                    <ul>
-                                        {% if best_deal.instance.exchange == True %}
-                                            <li data-toggle="tooltip" title="Обмен есть"><i class="fa none">Обмен:</i> <i class="fa fa-check" style="color: #00658b"></i> </li>
-                                        {% else %}
-                                            <li data-toggle="tooltip" title="Обмена нет"><i class="fa none">Обмен:</i> <i class="fa fa-close" style="color: orangered"></i></li>
-                                        {% endif %}
-                                        {% if best_deal.instance.bargain == True %}
-                                            <li data-toggle="tooltip" title="Можно торговаться"><i class="fa none">Торг:</i> <i class="fa fa-check" style="color: #00658b"></i></li>
-                                        {% else %}
-                                            <li data-toggle="tooltip" title="Торговаться нельзя" ><i class="fa none">Торг:</i> <i class="fa fa-close" style="color: orangered"></i></li>
-                                        {% endif %}
-                                        {% if best_deal.instance.guarantee == 'Нет гарантии' %}
-                                            <li data-toggle="tooltip" title="Гарантию не даю"><i class="fa none">Гарантия:</i> <i class="fa fa-close" style="color: orangered"></i></li>
-                                        {% else%}
-                                            <li data-toggle="tooltip" title="Даю гарантию"><i class="fa none">Гарантия:</i> <i class="fa fa-check" style="color: #00658b"></i></li>
-                                        {% endif %}
-
-                                    </ul>
-                                </ul>
-                            </div><!-- /.meta -->
-                            </a>
-                        </div><!-- /.inner -->
-                    </div><!-- /.grid-item -->                        
-                </div><!-- /.inner -->
+                        </div>
+                    </div>
                 </div>
-            {% endfor %}
-
+            </div>
+            <!-- /.slider-filter -->
+            <div class="section gray-light" style="padding: 0px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-12">
+                            <div id="main">
+                                <div class="row-block block" id="best-deals">
+                                    <div class="page-header">
+                                        <div class="page-header-inner">
+                                            <div class="line">
+                                                <hr/>
+                                            </div>
+                                            <!-- /.line -->
+                                            <div class="heading">
+                                                <h2 style="color:#00658b">Последние объявления</h2>
+                                            </div>
+                                            <!-- /.heading -->
+                                            <div class="line">
+                                                <hr/>
+                                            </div>
+                                            <!-- /.line -->
+                                        </div>
+                                        <!-- /.page-header-inner -->
+                                    </div>
+                                    <!-- /.page-header -->
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active"><a href="#ads_to_sell" aria-controls="ads_to_sell" role="tab" data-toggle="tab" > Продам </a></li>
+                                        <li role="presentation"><a href="#ads_to_buy" aria-controls="ads_to_buy" role="tab" data-toggle="tab">Куплю</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="ads_to_sell">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="content white">
+                                                        <div class="inner">
+                                                            {% for instance in instances %}
+                                                            {% include 'instances_list.html' %}
+                                                            {% empty %} 
+                                                            <h2 class="text-center"> </h2>
+                                                            {% endfor %}    
+                                                            <div class="row">
+                                                                <div class="col-md-1"></div>
+                                                                <div class="col-md-10">
+                                                                    <div class="form-group">
+                                                                        <a href="{% url 'main:category' 1%}">
+                                                                        <button type="submit" class="btn-sm btn-rounded btn-primary btn-primary-color waves-effect">
+                                                                        Посмотреть все объявления <i class="icon icon-normal-right-arrow-small"></i>
+                                                                        </button>
+                                                                        </a>
+                                                                    </div>
+                                                                    <!-- /.form-group -->   
+                                                                </div>
+                                                                <div class="col-md-1"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.content -->
+                                                </div>
+                                                <!-- /.col-md-12 -->
+                                            </div>
+                                            <!-- /.row -->
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" id="ads_to_buy">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="content white">
+                                                        <div class="inner">
+                                                            {% for instance in instances_to_buy %}
+                                                            {% include 'instances_list_buy.html' %}
+                                                            {% empty %} 
+                                                            <h2 class="text-center"> </h2>
+                                                            {% endfor %}    
+                                                            <div class="row">
+                                                                <div class="col-md-1"></div>
+                                                                <div class="col-md-10">
+                                                                    <div class="form-group">
+                                                                        <a href="{% url 'main:category' 1%}?tab=buy">
+                                                                        <button type="submit" class="btn-sm btn-rounded btn-primary btn-primary-color waves-effect">
+                                                                        Посмотреть все объявления <i class="icon icon-normal-right-arrow-small"></i>
+                                                                        </button>
+                                                                        </a>
+                                                                    </div>
+                                                                    <!-- /.form-group --> 
+                                                                </div>
+                                                                <div class="col-md-1"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.content -->
+                                                </div>
+                                                <!-- /.col-md-12 -->
+                                            </div>
+                                            <!-- /.row -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.block -->                    
+                            </div>
+                            <!-- /#main -->
+                            <!--<p class="btn btn-primary from-control">Want more</p>-->
+                        </div>
+                        <!-- /.col-md-9 -->
+                        <div class="col-md-3 col-sm-6">
+                            <div class="sidebar">
+                                <br><br><br><br><br><br>
+                                <div id="filter" class="filter-cars block default block-shadow" style="margin-top: -8px;">
+                                    <div class="block-inner">
+                                        <div class="page-header-inner">
+                                            <div class="line">
+                                                <hr/>
+                                            </div>
+                                            <!-- /.line -->
+                                            <div class="heading text-center">
+                                                <h5 style="color:white">Поиск</h5>
+                                            </div>
+                                            <!-- /.heading -->
+                                            <div class="line">
+                                                <hr/>
+                                            </div>
+                                            <!-- /.line -->
+                                        </div>
+                                        <!-- /.page-header-inner -->
+                                        <div class="block-inner">
+                                            <form action="{% url 'fishkas:search'%}" method="GET" role="form">
+                                                {% csrf_token %}
+                                                <div class="row">
+                                                    <div class="">
+                                                        <div class="content">
+                                                            <div class="inner">
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane active" id="search-sales">
+                                                                        <div class="row">
+                                                                            <div class="form-group col-md-12">
+                                                                                <select class="form-control" name="category" id="category" required onchange="javascript:Check11();">
+                                                                                    <option value="All_type">Все виды</option>
+                                                                                    {% for category in categories %}
+                                                                                    {% if category.brand_set.all.count > 0 %}
+                                                                                    <option value="{{category.title}}">{{category.title}}</option>
+                                                                                    {% endif %}
+                                                                                    {% endfor %}
+                                                                                </select>
+                                                                            </div>
+                                                                            {% for category in categories %}
+                                                                            <div  class="form-group col-md-12" id="{{category.title}}" style="display:none" >
+                                                                                <select class="form-control" name="{{category.title}}" id="category_id" >
+                                                                                    <option value="all_brands">
+                                                                                        {% if category.title == 'Аксессуары'%}
+                                                                                        Все виды
+                                                                                        {% else %}
+                                                                                        Все бренды
+                                                                                        {% endif %}
+                                                                                    </option>
+                                                                                    {% for brand in category.brand_set.all %}
+                                                                                    <option value="{{brand.id}}">{{brand.title}}</option>
+                                                                                    {% endfor %}
+                                                                                </select>
+                                                                            </div>
+                                                                            {% endfor %} 
+                                                                            <div  class="form-group col-md-12" id="all_things" style="display:none">
+                                                                                <select class="form-control" name="All_type" id="category_id">
+                                                                                    <option value="all_things">Все бренды</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="content">
+                                                            <div class="inner">
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane active" id="search-sales">
+                                                                        <div class="row">
+                                                                            <div class="form-group year-to">
+                                                                                <input type="number"  class="form-control" name="start" placeholder=" с 0 (сом)">
+                                                                            </div>
+                                                                            <div class="form-group year-to">
+                                                                                <input type="number"  class="form-control" name="end" placeholder=" до 100000 (сом)">
+                                                                            </div>
+                                                                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 year-to">
+                                                                                <div class="switch">
+                                                                                    <label>
+                                                                                    Обмен &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                                                    <input class="text-right" name="exchange" type="checkbox">
+                                                                                    <span class="lever"></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 year-to">
+                                                                                <div class="switch">
+                                                                                    <label>
+                                                                                    Документы 
+                                                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                                                    <input class="text-right" name="box" type="checkbox">
+                                                                                    <span class="lever"></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <button type="submit" class="send btn-sm btn-rounded btn-primary btn-primary-color waves-effect ">
+                                                    Найти <i class="icon icon-normal-right-arrow-small"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class='block'>
+                                    <h5 class="text-center" style="color: #00658b; padding-top: 20px; line-height: 70%;" >Лучшие предложения</h5>
+                                    {% for best_deal in best_deals %}
+                                    <br><br>
+                                    <div class="testimonial-card z-depth-1 hoverable waves-effect">
+                                        <a href="{% url 'main:instance' best_deal.instance.pk %}">
+                                        <button class="btn btn-default form-control waves-effect waves-light">{{best_deal.category}}</button>
+                                        </a>
+                                        <div class="inner"  >
+                                            <div class="grid-item">
+                                                <div class="inner">
+                                                    <a href="{% url 'main:instance' best_deal.instance.pk %}" class="slide">
+                                                        <div class="picture">
+                                                            <div class="image-slider">
+                                                                {% if best_deal.instance.photo1 %}
+                                                                <img src="../../../media/{{best_deal.instance.photo1}}" class="img-responsive" alt="#">
+                                                                {% endif %}
+                                                            </div>
+                                                            <!-- /.image-slider -->
+                                                        </div>
+                                                        <!-- /.picture -->
+                                                        <h5 class="text-center">
+                                                            {% if best_deal.instance.model.is_not_unique == True %}
+                                                            {% if best_deal.instance.modell %}
+                                                            {{best_deal.instance.modell|slice:":20"}}
+                                                            {% else %}
+                                                            {{best_deal.instance.model.title}}
+                                                            {% endif %}
+                                                            {% else %}
+                                                            {{best_deal.instance.model.title}}
+                                                            {% endif %}
+                                                        </h5>
+                                                        <div class="price">{{best_deal.instance.price}} сом</div>
+                                                        <!-- /.price -->
+                                                        <div class="meta">
+                                                            <ul class="clearfix ">
+                                                                <ul>
+                                                                    {% if best_deal.instance.exchange == True %}
+                                                                    <li data-toggle="tooltip" title="Обмен есть"><i class="fa none">Обмен:</i> <i class="fa fa-check" style="color: #00658b"></i> </li>
+                                                                    {% else %}
+                                                                    <li data-toggle="tooltip" title="Обмена нет"><i class="fa none">Обмен:</i> <i class="fa fa-close" style="color: orangered"></i></li>
+                                                                    {% endif %}
+                                                                    {% if best_deal.instance.bargain == True %}
+                                                                    <li data-toggle="tooltip" title="Можно торговаться"><i class="fa none">Торг:</i> <i class="fa fa-check" style="color: #00658b"></i></li>
+                                                                    {% else %}
+                                                                    <li data-toggle="tooltip" title="Торговаться нельзя" ><i class="fa none">Торг:</i> <i class="fa fa-close" style="color: orangered"></i></li>
+                                                                    {% endif %}
+                                                                    {% if best_deal.instance.guarantee == 'Нет гарантии' %}
+                                                                    <li data-toggle="tooltip" title="Гарантию не даю"><i class="fa none">Гарантия:</i> <i class="fa fa-close" style="color: orangered"></i></li>
+                                                                    {% else%}
+                                                                    <li data-toggle="tooltip" title="Даю гарантию"><i class="fa none">Гарантия:</i> <i class="fa fa-check" style="color: #00658b"></i></li>
+                                                                    {% endif %}
+                                                                </ul>
+                                                            </ul>
+                                                        </div>
+                                                        <!-- /.meta -->
+                                                    </a>
+                                                </div>
+                                                <!-- /.inner -->
+                                            </div>
+                                            <!-- /.grid-item -->                        
+                                        </div>
+                                        <!-- /.inner -->
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!-- /.sidebar -->
+                        </div>
+                        <!-- /.col-md-3 -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container -->
+            </div>
+            <!-- /.section -->
         </div>
-                            
-</div><!-- /.sidebar -->
-</div><!-- /.col-md-3 -->
-</div><!-- /.row -->
-</div><!-- /.container -->
-</div><!-- /.section -->
-
-</div><!-- /#content -->  
-
-<!-- Includes footer form tempate folder outside -->
-{% include "footer.html" %}
-<!-- /#includes exti modal page-->
-{% include "exit_modal_page.html" %}
-
-<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
-<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
-<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
-<script src=" {% static 'js/release11/cycle.js' %}"></script>
-<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
-<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
-<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
-<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
-<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
-<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
-<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
-<script src=" {% static 'js/myjs.js'%}"></script>
-
-<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
-<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
-<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
-<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
-
-<script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/wow.js' %}"></script>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
-<script src=" {% static 'MDB/js/mdb.js' %}"></script>
-<script src=" {% static 'js/release11/carat2.js' %}"></script>
-{% if request.GET.tab == 'buy' %}
-    {% include 'tab_script.html' %}
-{% endif %}
-<!-- Material Design -->
-
-<!--
-<script src=" {% static 'MDB/js/modules/waves-effect.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/mdb.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/buttons.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/chart.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/collapsible.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/dropdown.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/forms-basic.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/dropdown.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/global.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/video-bg.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/velocity.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/scrolling-nav.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/wow.js' %}"></script>-->
-
-
-
-</body>
-{% if test_popup %}
+        <!-- /#content -->  
+        <!-- Includes footer form tempate folder outside -->
+        {% include "footer.html" %}
+        <!-- /#includes exti modal page-->
+        {% include "exit_modal_page.html" %}
+        <script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
+        <script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
+        <script src=" {% static 'js/release11/bootstrap.js' %}"></script>
+        <script src=" {% static 'js/release11/cycle.js' %}"></script>
+        <script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
+        <script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
+        <script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
+        <script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
+        <script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
+        <script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
+        <script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
+        <script src=" {% static 'js/myjs.js'%}"></script>
+        <script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
+        <script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
+        <script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
+        <script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
+        <script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
+        <script src=" {% static 'MDB/js/modules/wow.js' %}"></script>
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
+        <script src=" {% static 'MDB/js/mdb.js' %}"></script>
+        <script src=" {% static 'js/release11/carat2.js' %}"></script>
+        {% if request.GET.tab == 'buy' %}
+        {% include 'tab_script.html' %}
+        {% endif %}
+        <!-- Material Design -->
+        <!--
+            <script src=" {% static 'MDB/js/modules/waves-effect.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/mdb.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/buttons.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/chart.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/collapsible.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/dropdown.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/forms-basic.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/dropdown.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/global.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/video-bg.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/velocity.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/scrolling-nav.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
+            <script src=" {% static 'MDB/js/modules/wow.js' %}"></script>-->
+    </body>
+    {% if test_popup %}
     {% include "popUp.html"%}
-{% endif %}
+    {% endif %}
 </html>
