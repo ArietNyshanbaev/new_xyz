@@ -41,14 +41,36 @@ class SignupForm(forms.Form):
 		widget=forms.EmailInput(attrs={'required': 'true'})
 	)
 
-	def is_unique_user(self):
-		unique = True
-		if User.objects.filter(username=self.cleaned_data['username']).exists():
-			unique = False
-			errors = self._errors.setdefault('username', ErrorList())
-			errors.append(u"Этот логин уже зарегистрирован")
-		if User.objects.filter(email=self.cleaned_data['email']).exists():
-			unique = False
-			errors = self._errors.setdefault('email', ErrorList())
-			errors.append(u"Этот email уже используется")
-		return unique
+	def clean_username(self):
+		cd = self.cleaned_data
+		if User.objects.filter(username=cd['username']).exists():
+			raise forms.ValidationError('Этот логин уже зарегистрирован')
+		return cd['username']
+	def clean_email(self):
+		cd = self.cleaned_data
+		if User.objects.filter(email=cd['email']).exists():
+			raise forms.ValidationError('Этот email уже используется')
+		return cd['email']
+
+class InstanceModifyForm(forms.Form):
+	CONDITION2 = (
+    ('Новый (как новый)', 'Новый (как новый)'),
+    ('Отличный (есть небольшие царапины )', 'Отличный (есть небольшие царапины )'),
+    ('Среднее(есть царапины и потертости)', 'Среднее(есть царапины и потертости)'),
+    ('Плохое (есть сколы, треск, разбитый экран и т.д.)', 'Плохое (есть сколы, треск, разбитый экран и т.д.)'),
+    ('На запчасти', 'На запчасти'),
+)
+	CONDITION = (('Ariet', 'Aidai'), ('Aidai', 'Ariet'))
+	CONDITION3 = ('Ariet', 'Aidai')
+	title = forms.CharField(
+		label=' Название объявления ',
+		required=True,
+		max_length=100,
+		widget=forms.TextInput(attrs={'required': 'true'})
+	)
+
+	condition = forms.ChoiceField(
+		label=' Название объявления2 ',
+		required=True,
+        choices=CONDITION
+    )

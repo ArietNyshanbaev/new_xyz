@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Instance, Brand, Modell, Sold, City, Instance_buy
+from .models import Category, Instance, Brand, Modell, Sold, City, Instance_buy, Device
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
@@ -23,6 +23,7 @@ admin.site.register(Category)
 admin.site.register(Brand)
 admin.site.register(Modell)
 admin.site.register(City)
+admin.site.register(Device)
 
 # customizng of user admin django
 UserAdmin.list_display = ('email', 'first_name', 'last_name', 'is_active', 'date_joined', 'is_staff')

@@ -1,167 +1,88 @@
+{% extends "auths/base.html" %}
 {%load staticfiles%}
-<!doctype html>
-
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="купить, продать, смартфоны, сотка, бишкек, кыргызстан, купить смартфон в бишкеке, ноутбуки, iphone в бишкеке, продать в бишкеке, apple, macbook, ultrabook, ibox">
-    <meta name="author" content="iBox Team">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="#">
-    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
-    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
-    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
-
-    <!-- Material Design -->
-    <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
-    <!-- Google fonts -->
-    <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
-
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
-    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
-
-{% include 'metrics.html' %}
-    <title>iBox | Покупай и продавай вместе с нами!</title>
-</head>
-<body>
-
-<!-- Include header template-->
-{% include "header.html"%}
-
-<div class="infobar">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<ol class="breadcrumb pull-left">
-		  			<li><a href="{% url 'main:main' %}">Главная</a></li>
-                    <li><a href="#">Избранные объявления </a></li>
-				</ol>
-
-				<div class="contact pull-right">
-					<div class="contact-item mail">
-						<div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
-						<div class="value">info@ibox.kg</div><!-- /.value -->
-					</div><!-- /.mail -->
-				</div><!-- /.contact -->
-			</div><!-- /.col-md-12 -->
-		</div><!-- /.row -->
-	</div><!-- /.container -->
-</div><!-- /.infobar -->  
-
-<div id="content" class="frontpage">
-
-	<div class="filter-wrapper">
-        {% include 'messages.html' %}
-        {% include 'add_instance_icons.html' %} 
-    </div><!-- /.slider-filter -->
-
-    <div class="section gray-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10 col-sm-12">
-                    <div id="main">
-                        <div class="row-block block" id="best-deals">
-	<div class="page-header">
-		<div class="page-header-inner">
-			<div class="heading">
-				<h2>Мои избранные объявления</h2>
-			</div><!-- /.heading -->
-
-			<div class="line">
-				<hr/>
-			</div><!-- /.line -->
-		</div><!-- /.page-header-inner -->
-	</div><!-- /.page-header -->
-
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#ads_to_sell" aria-controls="ads_to_sell" role="tab" data-toggle="tab" > Продам </a></li>
-        <li role="presentation"><a href="#ads_to_buy" aria-controls="ads_to_buy" role="tab" data-toggle="tab">Куплю</a></li>
-    </ul>
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="ads_to_sell">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="content white">
-                        <div class="inner">
-                            {% for wish_instance in instances %}
-                            {% with wish_instance.instance as instance %}  
-                                {% include 'instances_list.html' %}
-                            {% endwith %}
-                            {% empty %} 
-                                 <h4 class="text-center">У вас еще нет избранных объявлений. (продам) </h4>
-                            {% endfor %}                        
+{% block roadmap %}
+<li><a href="#">Избранные объявления </a></li>
+{% endblock %}
+{% block content %}
+<div class="section gray-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 col-sm-12">
+                <div id="main">
+                    <div class="row-block block" id="best-deals">
+                        <div class="page-header">
+                            <div class="page-header-inner">
+                                <div class="heading">
+                                    <h2>Мои избранные объявления</h2>
+                                </div>
+                                <!-- /.heading -->
+                                <div class="line">
+                                    <hr/>
+                                </div>
+                                <!-- /.line -->
+                            </div>
+                            <!-- /.page-header-inner -->
                         </div>
-                    </div><!-- /.content -->
-                </div><!-- /.col-md-12 -->
-            </div><!-- /.row -->
-        </div>
-        <div role="tabpanel" class="tab-pane" id="ads_to_buy">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="content white">
-                        <div class="inner">
-                            {% for wish_instance in instances_to_buy %}
-                            {% with wish_instance.instance_buy as instance %}  
-                                {% include 'instances_list_buy.html' %}
-                            {% endwith %}
-                            {% empty %} 
-                                <h4 class="text-center">У вас еще нет избранных объявлений. (хочу купить) </h4>
-                            {% endfor %}                                                   
+                        <!-- /.page-header -->
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#ads_to_sell" aria-controls="ads_to_sell" role="tab" data-toggle="tab" > Продам </a></li>
+                            <li role="presentation"><a href="#ads_to_buy" aria-controls="ads_to_buy" role="tab" data-toggle="tab">Куплю</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="ads_to_sell">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="content white">
+                                            <div class="inner">
+                                                {% for wish_instance in instances %}
+                                                {% with wish_instance.instance as instance %}  
+                                                {% include 'instances_list.html' %}
+                                                {% endwith %}
+                                                {% empty %} 
+                                                <h4 class="text-center">У вас еще нет избранных объявлений. (продам) </h4>
+                                                {% endfor %}                        
+                                            </div>
+                                        </div>
+                                        <!-- /.content -->
+                                    </div>
+                                    <!-- /.col-md-12 -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="ads_to_buy">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="content white">
+                                            <div class="inner">
+                                                {% for wish_instance in instances_to_buy %}
+                                                {% with wish_instance.instance_buy as instance %}  
+                                                {% include 'instances_list_buy.html' %}
+                                                {% endwith %}
+                                                {% empty %} 
+                                                <h4 class="text-center">У вас еще нет избранных объявлений. (хочу купить) </h4>
+                                                {% endfor %}                                                   
+                                            </div>
+                                        </div>
+                                        <!-- /.content -->
+                                    </div>
+                                    <!-- /.col-md-12 -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
                         </div>
-                    </div><!-- /.content -->
-                </div><!-- /.col-md-12 -->
-            </div><!-- /.row -->
+                    </div>
+                    <!-- /.block -->                    
+                </div>
+                <!-- /#main -->
+            </div>
+            <!-- /.col-md-9 -->
         </div>
+        <!-- /.row -->
     </div>
-
-
-
-</div><!-- /.block -->                    
-</div><!-- /#main -->
-</div><!-- /.col-md-9 -->
-</div><!-- /.row -->
-</div><!-- /.container -->
-</div><!-- /.section -->
-
-</div><!-- /#content -->  
-
-<!-- Includes footer form tempate folder outside -->
-{% include "footer.html" %}
-<!-- /#includes exti modal page-->
-{% include "exit_modal_page.html" %}
-
-
-
-<script src=" {% static 'js/release11/jquery.js' %}"></script>
-<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
-<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
-<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
-<script src=" {% static 'js/release11/cycle.js' %}"></script>
-<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
-<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
-<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
-<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
-<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
-<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
-<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
-<script src=" {% static 'js/myjs.js'%}"></script>
-
-<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
-<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
-<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
-<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
-
-<script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
-<script src=" {% static 'MDB/js/modules/wow.js' %}"></script>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
-<script src=" {% static 'MDB/js/mdb.js' %}"></script>
-<script src=" {% static 'js/release11/carat2.js' %}"></script>
-</body>
-</html>
+    <!-- /.container -->
+</div>
+<!-- /.section -->
+{% include 'add_instance_icons.html' %}
+{% endblock %}

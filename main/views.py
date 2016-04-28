@@ -20,7 +20,7 @@ from django.template import RequestContext
 from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every, notify_sell
 # import of models 
-from .models import Category , Instance , Brand , Modell, Sold, City, Instance_buy
+from .models import Category , Instance , Brand , Modell, Sold, City, Instance_buy, Device
 from fishkas.models import Notifier, Wish, Best_deal
 
 @email_required
@@ -583,10 +583,35 @@ def check_diesel(request):
 	if request.POST:
 		link = request.POST.get('link', '')
 		if Instance.objects.filter(linker=link).count() > 0:
-			messages.add_message(request, messages.WARNING, 'Добавлять нельзя , данное объявление уже существует.',fail_silently=True)
+			messages.add_message(request, messages.WARNING, 'Добавлять нельзя , данное объявление уже существует.', fail_silently=True)
 		else:
-			messages.add_message(request, messages.SUCCESS, 'Можно добавлять',fail_silently=True)
+			messages.add_message(request, messages.SUCCESS, 'Можно добавлять', fail_silently=True)
 			
 	return redirect(request.META.get('HTTP_REFERER'))
 
+@login_required(login_url=reverse_lazy('auths:signin'))
+def add_device(request):
+	args = {}
+	args.update(csrf(request))
+	
+
+	if request.POST:
+		# retriving values from form
+		brand = request.POST.get('brand', '')
+		contacts = request.POST.get('contacts', '')
+		imei = request.POST.get('imei', '')
+		model_id = request.POST.get(brand, '')
+		model_id = model_id.split('_')[0]
+		model = get_object_or_404(Modell, pk=model_id)
+		device = Device.objects.filter(imei=imei)
+		if device.exists():
+			messages.add_message(request, messages.WARNING, 'Девайс с данным imei уже зарегистрирован. ' + 'Проверьте пройдя по ссылке ibox.kg' + reverse('fishkas:imei'), fail_silently=True)
+		else:
+			device = Device.objects.create(model=model, imei=imei, user=request.user, contacts=contacts)
+			messages.add_message(request, messages.SUCCESS, 'Ваш девайс успешно зарегистрирован', fail_silently=True)
+			return redirect(reverse('auths:profile'))
+	need_for_every(args,request)
+	args['category'] = category = get_object_or_404(Category, title='Телефоны')
+	args['brands'] = category.brand_set.all()
+	return render(request, 'main/add_device.html', args)
 

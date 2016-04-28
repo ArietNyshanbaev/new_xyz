@@ -13,11 +13,11 @@ from django.contrib.auth.models import User
 #impoer of models
 from .models import Information
 from fishkas.models import Slogan, Wish, Notifier
-from main.models import Category, Instance, Sold, Instance_buy
+from main.models import Category, Instance, Sold, Instance_buy, Device
 # import of custom writen decorator and views
 from custom_code.decorators import email_required
 from custom_code.ibox_views import need_for_every
-from .forms import SigninForm, SignupForm
+from .forms import SigninForm, SignupForm, InstanceModifyForm
 
 
 def signin(request, key='main'):
@@ -44,7 +44,7 @@ def signin(request, key='main'):
 
 			user = authenticate(username=username, password=password)
 
-			if user is None and User.objects.filter(email=username).exists:
+			if user is None and User.objects.filter(email=username).exists():
 				user = authenticate(username=User.objects.filter(email=username)[0].username, password=password)
 			
 			if user is not None:
@@ -85,15 +85,14 @@ def signup(request):
 			email = cd['email']
 			password = cd['password']
 
-			if form.is_unique_user():
-				user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name)
-				user.save()
-				# authenticate and login user
-				user_login = authenticate(username=username, password=password)
-				login(request, user_login)
-				messages.add_message(request, messages.SUCCESS, 'Вы успешно зарегистрировались на сайте', fail_silently=True)
-				
-				return redirect(reverse('main:main'))
+			user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name)
+			user.save()
+			# authenticate and login user
+			user_login = authenticate(username=username, password=password)
+			login(request, user_login)
+			messages.add_message(request, messages.SUCCESS, 'Вы успешно зарегистрировались на сайте', fail_silently=True)
+			
+			return redirect(reverse('main:main'))
 
 	else:
 		form = SignupForm()
@@ -103,7 +102,7 @@ def signup(request):
 @login_required(login_url=reverse_lazy('main:main'))
 def signout(request):
 	logout(request)
-	
+
 	return redirect(request.META.get('HTTP_REFERER'))
 
 @login_required(login_url=reverse_lazy('auths:signin'))
@@ -112,7 +111,8 @@ def profile(request):
 	args = {}
 	args.update(csrf(request))
 	need_for_every(args, request)
-	
+	args['devices'] = Device.objects.filter(user=request.user)
+
 	return render(request, 'auths/profile.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
@@ -167,7 +167,7 @@ def modify_myinstance(request):
 			args['note'] = note
 			status = instance.update_info(args)
 			messages.add_message(request, messages.SUCCESS, status, fail_silently=True)
-
+	
 	return redirect(reverse('auths:myinstances'))
 
 @login_required(login_url=reverse_lazy('auths:signin'))

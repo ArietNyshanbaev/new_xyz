@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^add_instance/notebooks$', 'main.views.add_instance_notebooks', name='add_instance_notebooks'),
     url(r'^add_instance/tablets$', 'main.views.add_instance_tablets', name='add_instance_tablets'),
     url(r'^add_instance/accessories$', 'main.views.add_instance_accessories', name='add_instance_accessories'),
+    url(r'^add_device$', 'main.views.add_device', name='add_device'),
     url(r'^delete_diesel/$', 'main.views.delete_from_diesel', name='delete_diesel'),
     url(r'^check_diesel/$', 'main.views.check_diesel', name='check_diesel'),
 ]

@@ -193,6 +193,9 @@ class Instance(models.Model):
 
         super(Instance, self).save(*args, **kwargs)
 
+    #def modify_instance(self, cleaned_data):
+
+
     def update_date(self):
         dt_now = datetime.utcnow().replace(tzinfo=utc)
         dt_new = self.updated_date
@@ -288,3 +291,14 @@ class Sold(models.Model):
     class Meta:
         verbose_name = "проданный"
         verbose_name_plural = "проданные"
+
+class Device(models.Model):
+    user = models.ForeignKey(User, related_name='devices', verbose_name='Владелец')
+    lost = models.BooleanField('Потеряно?', default=False)
+    contacts = models.CharField('Контактные данные', max_length=250)
+    note = models.TextField('описаниe', null=True, blank=True)
+    model = models.ForeignKey(Modell, verbose_name='модель')
+    imei = models.CharField('imei', max_length=16)
+
+    def __unicode__(self):
+        return self.user.username + self.model.title
