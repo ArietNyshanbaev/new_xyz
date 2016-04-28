@@ -24,12 +24,9 @@ def signin(request, key='main'):
 	# initialize variables
 	args={}
 	args.update(csrf(request))
-	
-	# retriving values from GET request
-	test_next = request.GET.get('next', '')
-	# adding message if needed
-	if test_next and test_next != '/bet/make_bet':
-		messages.add_message(request, messages.SUCCESS, 'Чтобы совершить данное действие вам нужно авторизоваться. ', fail_silently=True)
+
+	if request.GET.get('next', ''):
+		messages.info(request, 'Чтобы совершить данное действие вам нужно авторизоваться. ')
 	need_for_every(args,request)
 
 	if request.POST:
@@ -68,8 +65,6 @@ def signup(request):
 	args.update(csrf(request))
 	need_for_every(args,request)
 	validation = True
-	# Query objects from model
-	
 
 	if request.POST:
 		form = SignupForm(request.POST)
@@ -85,7 +80,7 @@ def signup(request):
 			# authenticate and login user
 			user_login = authenticate(username=username, password=password)
 			login(request, user_login)
-			messages.add_message(request, messages.SUCCESS, 'Вы успешно зарегистрировались на сайте', fail_silently=True)
+			messages.info(request, 'Вы успешно зарегистрировались на сайте' )
 			
 			return redirect(reverse('main:main'))
 
@@ -151,7 +146,7 @@ def modify_myinstance(request):
 			else:
 				instance.bargain = False
 			instance.save()
-			messages.add_message(request, messages.SUCCESS, 'Вы успешно отредактировали это обявление.', fail_silently=True)
+			messages.info(request, 'Вы успешно отредактировали это обявление.')
 		else:
 			if int(min_price) > int(max_price):
 				max_price, min_price = min_price, max_price
@@ -161,7 +156,7 @@ def modify_myinstance(request):
 			args['phone_num'] = phone_num
 			args['note'] = note
 			status = instance.update_info(args)
-			messages.add_message(request, messages.SUCCESS, status, fail_silently=True)
+			messages.info(request, status )
 	
 	return redirect(reverse('auths:myinstances'))
 
@@ -176,12 +171,12 @@ def delete_myinstance(request, instance_id, ads='sell'):
 	elif ads == 'buy' :
 		instance = get_object_or_404(Instance_buy, pk=instance_id)
 	else:
-		messages.add_message(request, messages.SUCCESS, 'Совершить данную операцию невозможно.', fail_silently=True)
+		messages.error(request, 'Совершить данную операцию невозможно.')
 		return redirect(request.META.get('HTTP_REFERER'))
 
 	if instance.user == request.user:
 		instance.delete()
-		messages.add_message(request, messages.SUCCESS, 'Объявление успешно удалено.', fail_silently=True)
+		messages.success(request, 'Объявление успешно удалено.')
 		if ads == 'sell':
 			sold = request.GET.get('sold', '')
 			if sold == '1':
@@ -196,12 +191,9 @@ def myinstances(request):
 	args = {}
 	args.update(csrf(request))
 	need_for_every(args, request)
-	# Query objects from model
-	instances = Instance.objects.filter(user=request.user).order_by('-added_date')
-	instances_to_buy = Instance_buy.objects.filter(user=request.user).order_by('-added_date')
-	# Passing arguments
-	args['instances'] = instances
-	args['instances_to_buy'] = instances_to_buy
+	# Query objects from model and Passing arguments
+	args['instances'] = Instance.objects.filter(user=request.user).order_by('-added_date')
+	args['instances_to_buy'] = Instance_buy.objects.filter(user=request.user).order_by('-added_date')
 
 	return render(request, 'auths/myinstances.html', args)
 
@@ -278,7 +270,7 @@ def modify_profile(request):
 		user.email = email
 		user.first_name = first_name
 		user.save()
-		messages.add_message(request, messages.SUCCESS, 'Ваш аккаунт успешно отредактирован.', fail_silently=True)
+		messages.info(request, 'Ваш аккаунт успешно отредактирован.')
 		args['user'] = request.user
 		return redirect(reverse('auths:profile'))
 	else:
@@ -305,7 +297,7 @@ def change_password(request):
 		if password1 == password2:
 			user.set_password(password1)
 			user.save()
-			messages.add_message(request, messages.SUCCESS, 'Ваш пароль успешно изменен, войдите заново используя новый пароль.', fail_silently=True)
+			messages.success(request, 'Ваш пароль успешно изменен, войдите заново используя новый пароль.')
 			return redirect(reverse('auths:signin'))
 		else:
 			args['password_error'] = 'Пароли не совпадают'

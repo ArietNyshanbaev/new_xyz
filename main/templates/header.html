@@ -1,65 +1,56 @@
 {% load i18n postman_tags %}{% load pagination_tags %}
 {%load staticfiles%}
 <header id="header">
-	<div class="header-inner">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 clearfix">
-					<div class="brand">
-						<div class="logo">
-							<a href="/">
-								<img src=" {% static 'images/deadpool_logo.png' %} " alt="iBox.KG - Покупай и продавай вместе с нами!">
-							</a>
-						</div><!-- /.logo -->
- 
-						<div class="slogan">Сайт бесплатных объявлений для Телефонов ,<br> Планшетов , Ноутбуков и Аксессуаров к ним.  </div><!-- /.slogan -->
-					</div><!-- /.brand -->
-					
-					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-					    <span class="sr-only">Toggle navigation</span>
-					    <span class="icon-bar"></span>
-					    <span class="icon-bar"></span>
-					    <span class="icon-bar"></span>
-					</button>
-
-					<nav class="collapse navbar-collapse navbar-collapse" role="navigation">
-						<ul class="navigation">
-                        {% if user.is_authenticated %}
-                            <li><a href="{% url 'auths:my_wishlist' %}"><i class="fa fa-star fa-lg icon-left"></i> Избранные объявления <sup>{% if user.wish_set.all.count %} <span style="background-color:orangered; font-size:18px;" class="badge">{{user.wish_set.all.count}}</span>{% endif %}</sup> </a></li>
+    <div class="header-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 clearfix">
+                    <div class="brand">
+                        <div class="logo">
+                            <a href="/">
+                            <img src=" {% static 'images/deadpool_logo.png' %} " alt="iBox.KG - Покупай и продавай вместе с нами!">
+                            </a>
+                        </div>
+                        <!-- /.logo -->
+                        <div class="slogan">Сайт бесплатных объявлений для Телефонов ,<br> Планшетов , Ноутбуков и Аксессуаров к ним.  </div>
+                        <!-- /.slogan -->
+                    </div>
+                    <!-- /.brand -->
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <nav class="collapse navbar-collapse navbar-collapse" role="navigation">
+                        <ul class="navigation">
+                            {% if user.is_authenticated %}
+                            {% postman_unread as unread_count %}
+                            <li><a href="/messages"><i class="fa fa-envelope"></i> Cообщения {% if unread_count %} <span style="background-color:red;" class="badge" >{{ unread_count }}</span>{% endif %} </a></li>
+                            <li><a href="{% url 'auths:my_wishlist' %}"><i class="fa fa-star fa-lg icon-left"></i> Избранные <sup>{% if user.wish_set.all.count %} <span style="background-color:orangered; font-size:18px;" class="badge">{{user.wish_set.all.count}}</span>{% endif %}</sup> </a></li>
                             <li><a href="{% url 'auths:myinstances' %}"><i class="fa fa-tasks icon-left"></i> Мои объявления</a></li>
-
-
-                            <li class="dropdown" >{% postman_unread as unread_count %}
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" ><i class="fa fa-user icon-left"></i> {{user.username}} <span class="caret"></span>{% if unread_count %} <span style="background-color:orangered;font-size:18px;" class="badge" >{{ unread_count }}</span>{% endif %}</a>
-					<ul class="dropdown-menu" id='dropdown_user_menu' role="menu" style="margin-top: -1%;">
-                    <li><a href="{% url 'auths:profile' %}"><span data-toggle="modal" data-target="#add_instance_pop"><span data-toggle="modal" data-target="#add_instance_pop" style="cursor:pointer" >
-                             <i class="fa fa-plus-circle"></i>  Добавить объявление </span></span></a></li>
-
-						<li><a href="{% url 'auths:profile' %}"><i class="fa fa-user icon-left"></i>Профиль </a></li>
-						<li><a href="/messages"><i class="fa fa-envelope"></i> Личные сообщения {% if unread_count %} <span style="background-color:red;" class="badge" >{{ unread_count }}</span>{% endif %} </a></li>
-						<li><a href="{% url 'auths:my_notify' %}"><i class="fa fa-share-square icon-left"></i>Напоминалки</a></li>
-						<li class="divider"></li>
-
-						<li><a><span data-toggle="modal" data-target="#signout"><span style="cursor:pointer"><i class="fa fa-sign-out fa-lg icon-left"></i>Bыйти</span></span></a></li>
-
-					</ul>
-				</li>
-
-                        {% else %}
-    						<li><a href="{% url 'auths:signin'%}"><i class="fa fa-sign-in icon-left"></i>Войти</a></li>
+                            <li><a href="{% url 'auths:profile' %}"><i class="fa fa-user icon-left"></i> Профиль </a></li>
+                            <li><a><span data-toggle="modal" data-target="#signout"><span style="cursor:pointer"><i class="fa fa-sign-out fa-lg icon-left"></i></span></span></a></li>
+                            {% else %}
+                            <li><a href="{% url 'auths:signin'%}"><i class="fa fa-sign-in icon-left"></i>Войти</a></li>
                             <li><a href="{% url 'auths:signup'%}"><i class="fa fa-user-plus icon-left"></i>Регистрация</a></li>
-                        {% endif %}
-						</ul><!-- /.nav -->
-					</nav>
-				</div><!-- /.col-md-12 -->
-			</div><!-- /.row -->
-		</div><!-- /.container -->
-	</div><!-- /.header-inner -->
-</header><!-- /#header -->
-
+                            {% endif %}
+                        </ul>
+                        <!-- /.nav -->
+                    </nav>
+                </div>
+                <!-- /.col-md-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.header-inner -->
+</header>
+<!-- /#header -->
 <!-- /#add instance popup page-->
-    <div class="modal fade" id="add_instance_pop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+<div class="modal fade" id="add_instance_pop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -96,5 +87,5 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
-      </div>
     </div>
+</div>
