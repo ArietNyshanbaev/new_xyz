@@ -1,0 +1,169 @@
+{%load staticfiles%}
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="купить, продать, смартфоны, сотка, бишкек, кыргызстан, купить смартфон в бишкеке, ноутбуки, iphone в бишкеке, продать в бишкеке, apple, macbook, ultrabook, ibox">
+    <meta name="author" content="iBox Team">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
+    <!-- Material Design -->
+    <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
+
+{% include 'metrics.html' %}
+    <title>iBox | Покупай и продавай вместе с нами!</title>
+</head>
+<body>
+
+<!-- Include header template-->
+{% include "header.html"%}
+
+<div class="infobar">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ol class="breadcrumb pull-left">
+		  			<li><a href="{% url 'main:main' %}">Главная</a></li>
+                    <li><a href="#">Напоминалки</a></li>
+				</ol>
+
+				<div class="contact pull-right">
+					<div class="contact-item mail">
+						<div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
+						<div class="value">info@ibox.kg</div><!-- /.value -->
+					</div><!-- /.mail -->
+				</div><!-- /.contact -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.infobar -->  
+
+<div id="content" class="frontpage">
+
+	<div class="filter-wrapper">
+    {% include 'messages.html' %}
+    {% include 'add_instance_icons.html' %}
+            
+    
+    </div><!-- /.slider-filter -->
+
+    <div class="section gray-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div id="main">
+                        <div class="row-block block" id="best-deals">
+	<div class="page-header">
+		<div class="page-header-inner">
+			<div class="heading">
+				<h2>Мои напоминалки</h2>
+			</div><!-- /.heading -->
+
+			<div class="line">
+				<hr/>
+			</div><!-- /.line -->
+		</div><!-- /.page-header-inner -->
+	</div><!-- /.page-header -->
+
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="content white">
+				<div class="inner">
+                    
+    					<div class="row-item">
+                            <div class="inner">
+                                <div class="row">
+                                <div class="col-lg-2"></div>
+                                    <div class="col-lg-8 col-md-7 col-sm-7">
+                                        <table class="table table-hover">
+                                          <tr>
+                                            <th>Виды гаджета</th>
+                                            <th>С (сом)</th>       
+                                            <th>По (сом)</th>
+                                            <th>Удалить</th>
+                                            <th>Редактировать</th>
+                                          </tr>
+                                          {% for notify in notifiers %} 
+                                          <tr>
+                                            <td>{{notify.categories}}</td>
+                                            <td><div class="price">{{notify.min_price}} сом </div></td>  
+                                            <td><div class="price">{{notify.max_price}} сом </div></td>
+                                            <td><span data-toggle="modal" data-target="#{{notify.id}}" class="btn btn-danger" ><span style="cursor:pointer" >Удалить</span></span> </td>
+                                            <td><span data-toggle="modal" data-target="#{{notify.id}}modify" class="btn btn-success"><span style="cursor:pointer">Редактировать</span></span></td>
+                                          </tr>
+                                          {% empty %} 
+                                            <h4 class="text-center">У вас пока нет напоминалок.</h4>
+                                          {% endfor %}        
+                                        </table>
+                                            
+                                        </div><!-- /.content-inner -->
+                                    </div><!-- /.col-md-8 -->
+                                </div><!-- /.row -->
+                            </div><!-- /.inner -->
+                        </div><!-- /.row-item -->
+                    								
+				</div><!-- /.inner -->
+			</div><!-- /.content -->
+		</div><!-- /.col-md-12 -->
+	</div><!-- /.row -->
+</div><!-- /.block -->                    
+</div><!-- /#main -->
+</div><!-- /.col-md-9 -->
+</div><!-- /.row -->
+</div><!-- /.container -->
+</div><!-- /.section -->
+
+</div><!-- /#content -->  
+
+<!-- Includes footer form tempate folder outside -->
+{% include "footer.html" %}
+
+{% include "modal_page_delete_notifiers.html" %}
+{% include "modal_page_redact_notifiers.html" %}
+<!-- /#includes exti modal page-->
+{% include "exit_modal_page.html" %}   
+
+
+
+<script src=" {% static 'js/release11/jquery.js' %}"></script>
+<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
+<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
+<script src=" {% static 'js/release11/cycle.js' %}"></script>
+<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
+<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
+<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
+<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
+<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
+<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
+<script src=" {% static 'js/myjs.js'%}"></script>
+
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
+
+<script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
+<script src=" {% static 'MDB/js/modules/wow.js' %}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
+<script src=" {% static 'MDB/js/mdb.js' %}"></script>
+<script src=" {% static 'js/release11/carat2.js' %}"></script>
+</body>
+</html>
