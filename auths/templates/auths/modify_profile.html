@@ -1,103 +1,105 @@
 {% extends "auths/base.html" %}
 {%load staticfiles%}
 {% block roadmap %}
-		  			<li><a href="{% url 'main:main'%}">Главная</a></li>
-            <li><a href="{% url 'auths:profile'%}">{{user.username}}</a></li>
-            <li><a href="">редактировать аккаунт</a></li>
-				{% endblock %}
+<li><a href="{% url 'main:main'%}">Главная</a></li>
+<li><a href="{% url 'auths:profile'%}">{{user.username}}</a></li>
+<li><a href="">редактировать аккаунт</a></li>
+{% endblock %}
 {% block content %}
-  {% include 'add_instance_icons.html' %}
-        
-    
-
-    <div class="section gray-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 col-sm-12">
-                    <div id="main">
-                        <div class="row-block block" id="best-deals">
-	<div class="page-header">
-		<div class="page-header-inner">
-			<div class="heading">
-				<h2>Страница профиля </h2>
-			</div><!-- /.heading -->
-
-			<div class="line">
-				<hr/>
-			</div><!-- /.line -->
-		</div><!-- /.page-header-inner -->
-	</div><!-- /.page-header -->
-
-
-	<div class="row">
-		<div class="col-md-12">
-			
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title">{{user.first_name}} {{user.last_name}}</h3>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class=" col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2"> 
-                  <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>Логин:</td>
-                        <td>{{user.username}}</td>
-                      </tr>             
-                      <tr>
-                        <td>Email</td>
-                        <td><a href="">{{user.email}}</a></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                <form action="" method="POST" class="text-center label_black"  role="form">
-                {% csrf_token %}
-                <h5 style="color:#f95446;">Редактировать</h5>
-                {% if error_message %}
-                    <div class="alert alert-danger" role="alert">{{error_message}}<br></div>
-                {% endif %}
-
-                {% if first_name_error %}
-                    <div class="alert alert-danger" role="alert">{{first_name_error}}</div>
-                {% endif %}
-                <div class="form-group">
-                  <label for="input-10">
-                    Ф.И.О
-                  </label>
-                  <input required name="first_name" value="{{user.first_name}}"  class="form-control" type="text" id="input-10" />
-                </span>
-                <br>
-                {% if email_error %}
-                    <div class="alert alert-danger" role="alert">{{email_error}}</div>
-                {% endif %}
-                  <label for="input-11">
-                    Email
-                  </label>
-                <div class="form-group">
-                  <input required name="e_mail" value="{{user.email}}" class="form-control" type="text" id="input-11" />
-                  
-                </div>
-                <br><br><br>
-                    <div class="span7">
-                      <input id = 'signup-btn' type='submit' value='Отредактировать'  class="form-control input input--jiro btn btn-primary btn-md " role="button">
+{% include 'add_instance_icons.html' %}
+<div class="section gray-light">
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 col-sm-12">
+            <div id="main">
+                <div class="row-block block" id="best-deals">
+                    <div class="page-header">
+                        <div class="page-header-inner">
+                            <div class="heading">
+                                <h2>Страница профиля </h2>
+                            </div>
+                            <!-- /.heading -->
+                            <div class="line">
+                                <hr/>
+                            </div>
+                            <!-- /.line -->
+                        </div>
+                        <!-- /.page-header-inner -->
                     </div>
-                </form>
+                    <!-- /.page-header -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{user.first_name}} {{user.last_name}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class=" col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+                                            <table class="table table-user-information">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Логин:</td>
+                                                        <td>{{user.username}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Email</td>
+                                                        <td><a href="">{{user.email}}</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-3">
+                                            <form action="" method="POST" class="text-center label_black"  role="form">
+                                                {% csrf_token %}
+                                                <h5 style="color:#f95446;">Редактировать</h5>
+                                                {% if error_message %}
+                                                <div class="alert alert-danger" role="alert">{{error_message}}<br></div>
+                                                {% endif %}
+                                                {% if first_name_error %}
+                                                <div class="alert alert-danger" role="alert">{{first_name_error}}</div>
+                                                {% endif %}
+                                                <div class="form-group">
+                                                    <label for="input-10">
+                                                    Ф.И.О
+                                                    </label>
+                                                    <input required name="first_name" value="{{user.first_name}}"  class="form-control" type="text" id="input-10" />
+                                                    </span>
+                                                    <br>
+                                                    {% if email_error %}
+                                                    <div class="alert alert-danger" role="alert">{{email_error}}</div>
+                                                    {% endif %}
+                                                    <label for="input-11">
+                                                    Email
+                                                    </label>
+                                                    <div class="form-group">
+                                                        <input required name="e_mail" value="{{user.email}}" class="form-control" type="text" id="input-11" />
+                                                    </div>
+                                                    <br><br><br>
+                                                    <div class="span7">
+                                                        <input id = 'signup-btn' type='submit' value='Отредактировать'  class="form-control input input--jiro btn btn-primary btn-md " role="button">
+                                                    </div>
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.col-md-12 -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.block -->                    
                 </div>
-              </div>
+                <!-- /#main -->
             </div>
-      </div>				
-		</div><!-- /.col-md-12 -->
-	</div><!-- /.row -->
-</div><!-- /.block -->                    
-</div><!-- /#main -->
-</div><!-- /.col-md-9 -->
+            <!-- /.col-md-9 -->
+        </div>
+    </div>
+    <!-- /.row -->
 </div>
-</div><!-- /.row -->
-</div><!-- /.container -->
+<!-- /.container -->
 {% endblock %}

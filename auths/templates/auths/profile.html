@@ -60,90 +60,93 @@
                     <!-- /.block -->                    
                 </div>
                 <!-- /#main -->
-            
-    <!-- /.row -->
-    <div class="page-header">
-    <div class="page-header-inner">
-      <div class="line">
-        <hr/>
-      </div><!-- /.line -->
-        <div class="heading">
-            <h2>Мои девайсы</h2>
-          </div><!-- /.heading -->
-
-      <div class="line">
-        <hr/>
-      </div><!-- /.line -->
-    </div><!-- /.page-header-inner -->
-  </div><!-- /.page-header -->
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="content white">
-        <div class="inner">
-                    {% for device in devices %}
-                        <div class="row-item hoverable waves-effect up_down_bordered">
+                <!-- /.row -->
+                <div class="page-header">
+                    <div class="page-header-inner">
+                        <div class="line">
+                            <hr/>
+                        </div>
+                        <!-- /.line -->
+                        <div class="heading">
+                            <h2>Мои девайсы</h2>
+                        </div>
+                        <!-- /.heading -->
+                        <div class="line">
+                            <hr/>
+                        </div>
+                        <!-- /.line -->
+                    </div>
+                    <!-- /.page-header-inner -->
+                </div>
+                <!-- /.page-header -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content white">
                             <div class="inner">
-                                <div class="row">
-                                    <a href="">
-                                    <div class="col-lg-4 col-md-5 col-sm-5">
-                                            <img class="picture_of_instance" src="{% static 'images/my_device.png' %}" alt="{{ device.model }} в бишкеке">
-                                    </div>
-                                    </a>
-                                    
-                                    <div class="col-lg-8 col-md-7 col-sm-7">
-                                    <a href="">
-                                        <div class="content-inner">
-                                            <h5 style="color:#666;">
-                                                    {{device.model.title}}
-                                            </h5>
-                                            <div class="meta">
-                                                <ul>
-                                                    <li><i class="fa none">Вид:</i><i style="color:orangered" class="fa price">&nbsp<span style="color: #00658b;">{{device.model.brand.category}}</span></i></li>
-                                                    <li><i class="fa none">Imei:</i><i style="color: #00658b;" class="fa price">&nbsp  
-                                                    <span style="color: #00658b;">{{device.imei}}</span></i></li>
-                                                </ul>
+                                {% for device in devices %}
+                                <div class="row-item hoverable waves-effect up_down_bordered">
+                                    <div class="inner">
+                                        <div class="row">
+                                            <a href="">
+                                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                                    <img class="picture_of_instance" src="{% static 'images/my_device.png' %}" alt="{{ device.model }} в бишкеке">
+                                                </div>
+                                            </a>
+                                            <div class="col-lg-8 col-md-7 col-sm-7">
+                                                <a href="">
+                                                    <div class="content-inner">
+                                                        <h5 style="color:#666;">
+                                                            {{device.model.title}}
+                                                        </h5>
+                                                        <div class="meta">
+                                                            <ul>
+                                                                <li><i class="fa none">Вид:</i><i style="color:orangered" class="fa price">&nbsp<span style="color: #00658b;">{{device.model.brand.category}}</span></i></li>
+                                                                <li><i class="fa none">Imei:</i><i style="color: #00658b;" class="fa price">&nbsp  
+                                                                    <span style="color: #00658b;">{{device.imei}}</span></i>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <br>
+                                                        <span data-toggle="modal" data-target="#{{instance.id}}_sell" class="btn btn-danger" ><span style="cursor:pointer" >Удалить</span></span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                        <span data-toggle="modal" data-target="#{{instance.id}}modify_sell" class="btn btn-success"><span style="cursor:pointer">Редактировать</span></span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                    </div>
+                                                </a>
                                             </div>
-                                            <br>
-                                    <span data-toggle="modal" data-target="#{{instance.id}}_sell" class="btn btn-danger" ><span style="cursor:pointer" >Удалить</span></span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                    <span data-toggle="modal" data-target="#{{instance.id}}modify_sell" class="btn btn-success"><span style="cursor:pointer">Редактировать</span></span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                        </div> 
-                                    </a>                                               
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    {% empty %}
-                        <br> 
-                        <h5 class="text-center"> Вы еще не зарегистрировали свои девайсы. </h5>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-1"> </div>
-                            <div class="col-md-4">
-                                <a href="{% url 'main:add_device'%}">
-                                    <button class=" btn-primary btn-primary-color hoverable waves-effect">
+                                {% empty %}
+                                <br> 
+                                <h5 class="text-center"> Вы еще не зарегистрировали свои девайсы. </h5>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-1"> </div>
+                                    <div class="col-md-4">
+                                        <a href="{% url 'main:add_device'%}">
+                                        <button class=" btn-primary btn-primary-color hoverable waves-effect">
                                         Зарегистрировать 
-                                    </button>
-                                </a>
-                            </div>
-                            <div class="col-md-2"> </div>
-                            <div class="col-md-4">
-                                <button class="btn-primary waves-effect hoverable"> Что это такое? </button>
+                                        </button>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-2"> </div>
+                                    <div class="col-md-4">
+                                        <button class="btn-primary waves-effect hoverable"> Что это такое? </button>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                {% endfor %}                
                             </div>
                         </div>
-                        <br>
-                        <br>
-                        
-                    {% endfor %}                
-        </div>
-      </div><!-- /.content -->
-    </div><!-- /.col-md-12 -->
-  </div><!-- /.row -->
-</div>
+                        <!-- /.content -->
+                    </div>
+                    <!-- /.col-md-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
             <!-- /.col-md-9 -->
         </div>
     </div>
-</div>
 </div>
 <!-- /.container -->
 {% include 'add_instance_icons.html' %}
