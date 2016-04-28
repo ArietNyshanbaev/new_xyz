@@ -15,15 +15,12 @@ from .models import Information
 from fishkas.models import Slogan, Wish, Notifier
 from main.models import Category, Instance, Sold, Instance_buy, Device
 # import of custom writen decorator and views
-from custom_code.decorators import email_required
+from custom_code.decorators import email_required, logout_required
 from custom_code.ibox_views import need_for_every
 from .forms import SigninForm, SignupForm, InstanceModifyForm
 
-
+@logout_required
 def signin(request, key='main'):
-	# redirect to main page authorized users
-	if request.user.is_authenticated():
-		return redirect(reverse("main:main"))
 	# initialize variables
 	args={}
 	args.update(csrf(request))
@@ -64,10 +61,8 @@ def signin(request, key='main'):
 	args['form'] = form
 	return render(request, 'auths/signin.html', args)
 
+@logout_required
 def signup(request):
-	# redirect not authenticated users to main page
-	if request.user.is_authenticated():
-		return redirect(reverse("main:main"))
 	# initialize variables
 	args={}
 	args.update(csrf(request))
