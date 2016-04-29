@@ -53,15 +53,13 @@ class SignupForm(forms.Form):
 		return cd['email']
 
 class InstanceModifyForm(forms.Form):
-	CONDITION2 = (
+	CONDITION = (
     ('Новый (как новый)', 'Новый (как новый)'),
     ('Отличный (есть небольшие царапины )', 'Отличный (есть небольшие царапины )'),
     ('Среднее(есть царапины и потертости)', 'Среднее(есть царапины и потертости)'),
     ('Плохое (есть сколы, треск, разбитый экран и т.д.)', 'Плохое (есть сколы, треск, разбитый экран и т.д.)'),
     ('На запчасти', 'На запчасти'),
 )
-	CONDITION = (('Ariet', 'Aidai'), ('Aidai', 'Ariet'))
-	CONDITION3 = ('Ariet', 'Aidai')
 	title = forms.CharField(
 		label=' Название объявления ',
 		required=True,
@@ -70,7 +68,31 @@ class InstanceModifyForm(forms.Form):
 	)
 
 	condition = forms.ChoiceField(
-		label=' Название объявления2 ',
+		label=' condition',
 		required=True,
         choices=CONDITION
     )
+
+class ChangePasswordForm(forms.Form):
+	current_password = forms.CharField(
+		label=' Нынешний пароль ',
+		required=True, 
+		widget=forms.PasswordInput(attrs={'required': 'true'})
+	)
+	new_password = forms.CharField(
+		label=' Новый пароль ',
+		required=True, 
+		widget=forms.PasswordInput(attrs={'required': 'true'})
+	)
+	repeate_new_password = forms.CharField(
+		label=' Повторите новый пароль ',
+		required=True, 
+		widget=forms.PasswordInput(attrs={'required': 'true'})
+	)
+
+	def clean_repeate_new_password(self):
+		cd = self.cleaned_data
+		if cd['repeate_new_password'] != cd['new_password'] :
+			raise forms.ValidationError('Новые пароли не совпадают.')
+		return cd['repeate_new_password']
+

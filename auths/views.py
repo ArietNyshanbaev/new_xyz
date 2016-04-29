@@ -17,7 +17,7 @@ from main.models import Category, Instance, Sold, Instance_buy, Device
 # import of custom writen decorator and views
 from custom_code.decorators import email_required, logout_required
 from custom_code.ibox_views import need_for_every
-from .forms import SigninForm, SignupForm, InstanceModifyForm
+from .forms import SigninForm, SignupForm, InstanceModifyForm, ChangePasswordForm
 
 @logout_required
 def signin(request, key='main'):
@@ -198,17 +198,6 @@ def myinstances(request):
 	return render(request, 'auths/myinstances.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
-def my_notify(request):
-	# initialize variables
-	args = {}
-	args.update(csrf(request))
-	need_for_every(args, request)
-	# Passing arguments
-	args['notifiers'] = Notifier.objects.filter(user=request.user)
-
-	return render(request, 'auths/my_notify.html', args)
-
-@login_required(login_url=reverse_lazy('auths:signin'))
 def my_wishlist(request):
 	# initialize variables
 	args = {}
@@ -274,9 +263,6 @@ def modify_profile(request):
 		args['user'] = request.user
 		return redirect(reverse('auths:profile'))
 	else:
-		# Passing arguments
-		args['user'] = user
-
 		return render(request, 'auths/modify_profile.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
@@ -288,22 +274,20 @@ def change_password(request):
 	user = request.user
 
 	if request.POST:
-		password1 = request.POST.get('password1', '')
-		password2 = request.POST.get('password2', '')
-		# password validation
-		if len(password1) < 6 or len(password2) < 6:
-			args['password_error'] = 'Пароль должен состоять из 6 и более символов'
-			return render(request, 'auths/change_password.html', args)
-		if password1 == password2:
-			user.set_password(password1)
-			user.save()
-			messages.success(request, 'Ваш пароль успешно изменен, войдите заново используя новый пароль.')
-			return redirect(reverse('auths:signin'))
-		else:
-			args['password_error'] = 'Пароли не совпадают'
-		return render(request, 'auths/change_password.html', args)
+		form = ChangePasswordForm(request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			if request.user.check_password(cd['current_password']):
+				user.set_password(cd['new_password'])
+				user.save()
+				messages.success(request, 'Ваш пароль успешно изменен, войдите заново используя новый пароль.')
+				return redirect(reverse('auths:signin'))
+			else:
+				args['password_error'] = 'Вы ввели неправильный нынешний пароль'
 	else:
-		return render(request, 'auths/change_password.html', args)
+		form = ChangePasswordForm()
+	args['form'] = form
+	return render(request, 'auths/change_password.html', args)
 
 def profile_others(request, user_id):
 	# initialize variables

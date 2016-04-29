@@ -26,11 +26,11 @@
                         <ul class="navigation">
                             {% if user.is_authenticated %}
                             {% postman_unread as unread_count %}
-                            <li><a href="/messages"><i class="fa fa-envelope"></i> Cообщения {% if unread_count %} <span style="background-color:red;" class="badge" >{{ unread_count }}</span>{% endif %} </a></li>
+                            <li><a href="/messages"><i class="fa fa-envelope"></i> Л/С {% if unread_count %} <sup><span style="background-color:orangered; font-size:18px;" class="badge">{{unread_count}}</span></sup> {% endif %} </a></li>
                             <li><a href="{% url 'auths:my_wishlist' %}"><i class="fa fa-star fa-lg icon-left"></i> Избранные <sup>{% if user.wish_set.all.count %} <span style="background-color:orangered; font-size:18px;" class="badge">{{user.wish_set.all.count}}</span>{% endif %}</sup> </a></li>
                             <li><a href="{% url 'auths:myinstances' %}"><i class="fa fa-tasks icon-left"></i> Мои объявления</a></li>
                             <li><a href="{% url 'auths:profile' %}"><i class="fa fa-user icon-left"></i> Профиль </a></li>
-                            <li><a><span data-toggle="modal" data-target="#signout"><span style="cursor:pointer"><i class="fa fa-sign-out fa-lg icon-left"></i></span></span></a></li>
+                            <li><a><span data-toggle="modal" data-target="#signout"><span style="cursor:pointer"><i class="fa fa-sign-out fa-lg icon-left"></i>Bыйти</span></span></a></li>
                             {% else %}
                             <li><a href="{% url 'auths:signin'%}"><i class="fa fa-sign-in icon-left"></i>Войти</a></li>
                             <li><a href="{% url 'auths:signup'%}"><i class="fa fa-user-plus icon-left"></i>Регистрация</a></li>
