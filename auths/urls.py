@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^my_ads/$', 'auths.views.myinstances', name='myinstances'),
     url(r'^my_wishlist/$', 'auths.views.my_wishlist', name='my_wishlist'),
     url(r'^verify/(?P<random_string>.+)$', 'auths.views.verify', name='verify'),
-
+    url(r'^enter_email/$', 'auths.views.enter_email', name='enter_email'),
+    url(r'^need_to_verify_email/$', 'auths.views.need_to_verify_email', name='need_to_verify_email'),
 ]

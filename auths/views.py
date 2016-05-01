@@ -320,7 +320,7 @@ def enter_email(request):
 	args = {}
 	args.update(csrf(request))
 	# if user which already have verification is trying to create verification again
-	if Verification.objects.filter(user=request.user).exists():
+	if request.user.email != '':
 		return redirect(reverse('auths:need_to_verify_email'))
 
 	if request.POST:
@@ -341,8 +341,8 @@ def enter_email(request):
 def need_to_verify_email(request):
 	if request.user.verification.is_verified == True:
 		return redirect(reverse('main:main'))
-		
-	return render(request, 'auths/need_to_verify_email.html', args)
+
+	return render(request, 'auths/need_to_verify_email.html', {})
 
 def profile_others(request, user_id):
 	# initialize variables
