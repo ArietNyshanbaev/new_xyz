@@ -70,6 +70,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'xyz42.middleware.auths_middleware.CheckEmailMiddleware'
 )
 
 ROOT_URLCONF = 'xyz42.urls'

@@ -1,6 +1,6 @@
 ﻿from django import forms
 # validation of user
-from django.forms.util import ErrorList
+from django.forms.utils import ErrorList
 from django.contrib.auth.models import User
 from .models import Verification
 
@@ -38,8 +38,12 @@ class SignupForm(forms.Form):
 		return cd['username']
 	def clean_email(self):
 		cd = self.cleaned_data
-		if User.objects.filter(email=cd['email']).exists():
-			raise forms.ValidationError('Этот email уже используется')
+		temp_users = User.objects.filter(email=cd['email'])
+		if temp_users.exists():
+			verification = Verification.objects.filter(user=temp_users[0])
+			if verification.exists():
+				if verification[0].is_verified:
+					raise forms.ValidationError('Этот email уже используется')
 		return cd['email']
 
 class InstanceModifyForm(forms.Form):
@@ -96,9 +100,9 @@ class EnterEmailForm(forms.Form):
 
 	def clean_email(self):
 		cd = self.cleaned_data
-		user = User.objects.filter(email=cd['email'])[0]
+		user = User.objects.filter(email=cd['email'])
 		if user.exists():
-			verification = Verification.objects.filter(user=user)[0]
-			if verification.is_verified == True:
+			verification = Verification.objects.filter(user=user[0])
+			if verification.exists() and verification[0].is_verified == True:
 				raise forms.ValidationError('Этот email уже используется.')
 		return cd['email']

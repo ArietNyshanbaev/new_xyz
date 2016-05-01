@@ -78,16 +78,31 @@ def signup(request):
 			username = email.split('@')[0]
 			username = create_username(username)
 			user = User.objects.create_user(username=username, email=email, password=password)
+			user.first_name = 'iBox'
+			user.last_name = 'Kg'
 			user.save()
 			random_string = get_random_string(length=32)
+			# delete old verifications
+			old_verifications = Verification.objects.filter(email=email)
+
+			for temp_ver in old_verifications:
+				temp_user = temp_ver.user
+				temp_user.email = ''
+				temp_user.save()
+				temp_ver.delete()
+			old_users = User.objects.filter(email=email).exclude(username=user.username)
+			for old_user in old_users:
+				old_user.email = ''
+				old_user.save()
+
 			verification = Verification.objects.create(user=user, email=email, random_string=random_string)
+			
 			send_mail('iBox email .' ,'Здравствуйте  ' + 'подтвердите ваш email пройдя по ссылке ' + 
-			'http://ibox.kg/verify/'+ random_string ,
+			'http://ibox.kg/auths/verify/'+ random_string ,
 			settings.EMAIL_HOST_USER, [email], fail_silently=True)
 			# authenticate and login user
 			user_login = authenticate(username=username, password=password)
 			login(request, user_login)
-			messages.info(request, 'Вы успешно зарегистрировались на сайте, мы вам отправили ссылку на (' + email + ')  подтвердите ваш email пройдя по ней.')
 			
 			return redirect(reverse('main:main'))
 
@@ -305,15 +320,14 @@ def verify(request, random_string):
 		verification.is_verified = True
 		verification.random_string = ''
 		verification.save()
-		other_users_with_same_email = User.objects.filter(email=verification.email).exclude(user=verification.user)
-		for user in other_users_with_same_email:
-			user.email = ''
-			user.verification.delete()
-			user.save()
-		messages.info(request, 'Поздравляем вы успешно подтвердили ваш email.')
+		other_users_with_same_email = User.objects.filter(email=verification.email).exclude(username=verification.user.username)
+		for temp_user in other_users_with_same_email:
+			temp_user.email = ''
+			temp_user.save()
+		messages.info(request, 'Поздравляем вы успешно подтвердили ваш email. ')
 	else:
 		messages.error(request, 'Данная ссылка не активна')
-	return redirect(reverse('main:main'))
+	return redirect(reverse('auths:signin'))
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 def enter_email(request):
@@ -325,12 +339,17 @@ def enter_email(request):
 
 	if request.POST:
 		form = EnterEmailForm(request.POST)
-		cd = form.cleaned_data
-		email = cd['email']
-		verification = Verification(email=email, user=request.user, random_string=get_random_string(length=32))
-		user = request.user
-		user.email = email
-		user.save()
+		if form.is_valid():
+			cd = form.cleaned_data
+			email = cd['email']
+			random_string = get_random_string(length=32)
+			verification = Verification.objects.create(email=email, user=request.user, random_string=random_string)
+			user = request.user
+			user.email = email
+			user.save()
+			send_mail('iBox email .' ,'Здравствуйте  ' + 'подтвердите ваш email пройдя по ссылке ' + 
+			'http://ibox.kg/auths/verify/'+ random_string ,
+			settings.EMAIL_HOST_USER, [email], fail_silently=True)
 	else:
 		form = EnterEmailForm()
 	args['form'] = form
@@ -339,9 +358,14 @@ def enter_email(request):
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 def need_to_verify_email(request):
-	if request.user.verification.is_verified == True:
+	if Verification.objects.filter(user=request.user).exists() and request.user.verification.is_verified == True:
 		return redirect(reverse('main:main'))
-
+	if not Verification.objects.filter(user=request.user).exists():
+		random_string = get_random_string(length=32)
+		verification = Verification.objects.create(email=request.user.email, user=request.user, random_string=random_string)
+		send_mail('iBox email .' ,'Здравствуйте  ' + 'подтвердите ваш email пройдя по ссылке ' + 
+		'http://ibox.kg/auths/verify/'+ random_string ,
+		settings.EMAIL_HOST_USER, [request.user.email], fail_silently=True)
 	return render(request, 'auths/need_to_verify_email.html', {})
 
 def profile_others(request, user_id):

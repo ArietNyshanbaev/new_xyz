@@ -27,3 +27,6 @@ class Verification(models.Model):
 	email = models.EmailField('Email', max_length=100)
 	random_string = models.CharField('random_string', max_length=32)
 
+	def __unicode__(self):
+		return self.user.username
+
