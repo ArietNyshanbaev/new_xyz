@@ -4,6 +4,7 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Information(models.Model):
 	""" This is class which stores all information about particular user """
 
@@ -17,3 +18,12 @@ class Information(models.Model):
 	class Meta:
 		verbose_name = "инфо пользователя"
 		verbose_name_plural = "инфо пользователей"
+
+class Verification(models.Model):
+	""" Class to verify user's email """
+
+	is_verified = models.BooleanField('подтвержден ?', default=False)
+	user = models.OneToOneField(User, primary_key=True, verbose_name='ползователь')
+	email = models.EmailField('Email', max_length=100)
+	random_string = models.CharField('random_string', max_length=32)
+

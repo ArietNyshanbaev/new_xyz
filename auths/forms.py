@@ -2,6 +2,7 @@
 # validation of user
 from django.forms.util import ErrorList
 from django.contrib.auth.models import User
+from .models import Verification
 
 class SigninForm(forms.Form):
 	username = forms.CharField(
@@ -17,28 +18,17 @@ class SigninForm(forms.Form):
 	)
 
 class SignupForm(forms.Form):
-	username = forms.CharField(
-		label=' Логин ',
-		required=True, 
+	email = forms.CharField(
+		label=' Email',
+		required=True,
 		max_length=100,
-		widget=forms.TextInput(attrs={'required': 'true'})
+		widget=forms.EmailInput(attrs={'required': 'true'})
 	)
+
 	password = forms.CharField(
 		label=' Пароль ',
 		required=True, 
 		widget=forms.PasswordInput(attrs={'required': 'true'})
-	)
-	name = forms.CharField(
-		label=' Фамилия и имя ',
-		required=True, 
-		max_length=100,
-		widget=forms.TextInput(attrs={'required': 'true'})
-	)
-	email = forms.CharField(
-		label=' Email (Скрыто от других пользователей)',
-		required=True,
-		max_length=100,
-		widget=forms.EmailInput(attrs={'required': 'true'})
 	)
 
 	def clean_username(self):
@@ -96,3 +86,19 @@ class ChangePasswordForm(forms.Form):
 			raise forms.ValidationError('Новые пароли не совпадают.')
 		return cd['repeate_new_password']
 
+class EnterEmailForm(forms.Form):
+	email = forms.CharField(
+		label=' Email ',
+		required=True,
+		max_length=100,
+		widget=forms.EmailInput(attrs={'required': 'true'})
+	)
+
+	def clean_email(self):
+		cd = self.cleaned_data
+		user = User.objects.filter(email=cd['email'])[0]
+		if user.exists():
+			verification = Verification.objects.filter(user=user)[0]
+			if verification.is_verified == True:
+				raise forms.ValidationError('Этот email уже используется.')
+		return cd['email']

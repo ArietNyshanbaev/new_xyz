@@ -10,14 +10,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
+from django.conf import settings
 #impoer of models
-from .models import Information
+from .models import Verification 
 from fishkas.models import Slogan, Wish, Notifier
 from main.models import Category, Instance, Sold, Instance_buy, Device
 # import of custom writen decorator and views
 from custom_code.decorators import email_required, logout_required
-from custom_code.ibox_views import need_for_every
-from .forms import SigninForm, SignupForm, InstanceModifyForm, ChangePasswordForm
+from custom_code.ibox_views import need_for_every, create_username
+from .forms import SigninForm, SignupForm, InstanceModifyForm, ChangePasswordForm, EnterEmailForm
+
 
 @logout_required
 def signin(request, key='main'):
@@ -64,23 +68,26 @@ def signup(request):
 	args={}
 	args.update(csrf(request))
 	need_for_every(args,request)
-	validation = True
 
 	if request.POST:
 		form = SignupForm(request.POST)
 		if form.is_valid():
 			cd = form.cleaned_data
-			first_name = cd['name']
-			username = cd['username']
 			email = cd['email']
 			password = cd['password']
-
-			user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name)
+			username = email.split('@')[0]
+			username = create_username(username)
+			user = User.objects.create_user(username=username, email=email, password=password)
 			user.save()
+			random_string = get_random_string(length=32)
+			verification = Verification.objects.create(user=user, email=email, random_string=random_string)
+			send_mail('iBox email .' ,'Здравствуйте  ' + 'подтвердите ваш email пройдя по ссылке ' + 
+			'http://ibox.kg/verify/'+ random_string ,
+			settings.EMAIL_HOST_USER, [email], fail_silently=True)
 			# authenticate and login user
 			user_login = authenticate(username=username, password=password)
 			login(request, user_login)
-			messages.info(request, 'Вы успешно зарегистрировались на сайте' )
+			messages.info(request, 'Вы успешно зарегистрировались на сайте, мы вам отправили ссылку на (' + email + ')  подтвердите ваш email пройдя по ней.')
 			
 			return redirect(reverse('main:main'))
 
@@ -288,6 +295,54 @@ def change_password(request):
 		form = ChangePasswordForm()
 	args['form'] = form
 	return render(request, 'auths/change_password.html', args)
+
+def verify(request, random_string):
+	args = {}
+	args.update(csrf(request))
+	verification = Verification.objects.filter(random_string=random_string)
+	if verification.exists() and random_string != '':
+		verification = verification[0]
+		verification.is_verified = True
+		verification.random_string = ''
+		verification.save()
+		other_users_with_same_email = User.objects.filter(email=verification.email).exclude(user=verification.user)
+		for user in other_users_with_same_email:
+			user.email = ''
+			user.verification.delete()
+			user.save()
+		messages.info(request, 'Поздравляем вы успешно подтвердили ваш email.')
+	else:
+		messages.error(request, 'Данная ссылка не активна')
+	return redirect(reverse('main:main'))
+
+@login_required(login_url=reverse_lazy('auths:signin'))
+def enter_email(request):
+	args = {}
+	args.update(csrf(request))
+	# if user which already have verification is trying to create verification again
+	if Verification.objects.filter(user=request.user).exists():
+		return redirect(reverse('auths:need_to_verify_email'))
+
+	if request.POST:
+		form = EnterEmailForm(request.POST)
+		cd = form.cleaned_data
+		email = cd['email']
+		verification = Verification(email=email, user=request.user, random_string=get_random_string(length=32))
+		user = request.user
+		user.email = email
+		user.save()
+	else:
+		form = EnterEmailForm()
+	args['form'] = form
+
+	return render(request, 'auths/enter_email.html', args)
+
+@login_required(login_url=reverse_lazy('auths:signin'))
+def need_to_verify_email(request):
+	if request.user.verification.is_verified == True:
+		return redirect(reverse('main:main'))
+		
+	return render(request, 'auths/need_to_verify_email.html', args)
 
 def profile_others(request, user_id):
 	# initialize variables

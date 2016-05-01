@@ -3,6 +3,7 @@ from django.contrib.messages import get_messages
 from fishkas.models import Notifier
 from main.models import Instance, Instance_buy
 from django.core.mail import send_mail
+from django.contrib.auth.models import User
 
 def need_for_every(args, request):
 	""" This function does everything usual that is needed for evert def """
@@ -24,6 +25,17 @@ def need_for_every(args, request):
 	# dealing with messages
 	args['messages'] = list(get_messages(request))
 	return args
+
+def create_username(username):
+	while True:
+		counter = 0
+		if not User.objects.filter(username=username).exists():
+			return username
+		if counter != 0:
+			username = username[:-len(str(counter))] + str(counter+1)
+		else:
+			username = username + '1'
+		counter += 1
 
 def notify_sell(instance):
 	# part of notify for selling ads

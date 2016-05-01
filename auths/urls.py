@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^profile_os/(?P<user_id>.+)$', 'auths.views.profile_others', name='profile_others'),
     url(r'^my_ads/$', 'auths.views.myinstances', name='myinstances'),
     url(r'^my_wishlist/$', 'auths.views.my_wishlist', name='my_wishlist'),
+    url(r'^verify/(?P<random_string>.+)$', 'auths.views.verify', name='verify'),
+
 ]
