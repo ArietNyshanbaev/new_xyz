@@ -215,7 +215,7 @@ def instance(request, instance_id):
 
 	# Passing arguments
 	
-	args['model'] = model = instance.model
+	args['model'] = instance.model
 	args['instance'] = instance
 	args['user'] = request.user
 

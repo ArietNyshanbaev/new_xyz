@@ -65,6 +65,18 @@
                         <div class="category-boxes">
                             <div class="row">
                                 <div class="col-md-3 main_menu">
+                                    <a href="{% url 'certification:certification' %}">
+                                        <div class="testimonial-card z-depth-1 hoverable waves-effect">
+                                            <div class="card-up default-color-dark">
+                                                <img src="{% static 'images/certified4.png' %}" style="height: 100%; margin-left: 55px"  class="img-responsive" style="width: 85%;">
+                                            </div>
+                                            <div class="card-content">
+                                                <h5>Certified</h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3 main_menu">
                                     <a href="{% url 'main:category' category_smartphones.id %}">
                                         <div class="testimonial-card z-depth-1 hoverable waves-effect">
                                             <div class="card-up default-color-dark">
@@ -96,18 +108,6 @@
                                             </div>
                                             <div class="card-content">
                                                 <h5>Планшеты</h5>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 main_menu">
-                                    <a href="{% url 'main:category' category_accessories.id %}">
-                                        <div class="testimonial-card z-depth-1 hoverable waves-effect">
-                                            <div class="card-up default-color-dark">
-                                                <img src="{% static 'images/accessoriesnew.png' %}" class="img-responsive" style="width: 85%;">
-                                            </div>
-                                            <div class="card-content">
-                                                <h5>Аксессуары</h5>
                                             </div>
                                         </div>
                                     </a>

@@ -1,0 +1,82 @@
+{% extends "auths/base.html" %}
+{%load staticfiles%}
+{% block roadmap %}
+<li><a href="">Сертифицированные девайсы</a></li>
+{% endblock %}
+{% block content %}
+    <div class="section gray-light" style="padding: 0px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                    <div id="main">
+                        <div class="row-block block" id="best-deals">
+                            <div class="page-header">
+                                <div class="page-header-inner">
+                                    <div class="line">
+                                        <hr/>
+                                    </div>
+                                    <!-- /.line -->
+                                    <div class="heading">
+                                        <h2 style="color:#00658b">Сертифицированные девайсы</h2>
+                                        <a href="{% url 'certification:certification' %}" class="btn btn-primary " target="_blank"><i class="fa fa-question-circle" aria-hidden="true"></i> &nbsp&nbsp&nbsp&nbsp Что такое Сертификация ?</a>
+                                    </div>
+                                    <!-- /.heading -->
+                                    <div class="line">
+                                        <hr/>
+                                    </div>
+                                    <!-- /.line -->
+                                </div>
+                                <!-- /.page-header-inner -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="content white">
+                                        <div class="inner">
+                                            <div class="row">
+                                            {% for device in devices %}
+                                            <a href="{% url 'certification:detailed' device.id %}">
+                                                <div class="col-md-6">
+                                                    <!--Image Card-->
+                                                    <div class="card hoverable">
+                                                        <div class="card-image">
+                                                            <div class="view overlay hm-white-slight z-depth-1">
+                                                                {% with device.photo_set.all|first as photo %}
+                                                                    <img height="375"  src="../../../media/{{photo.photo}}" alt="{{ device.model }} купить в бишкеке" style="height: 100%">
+                                                                {% endwith %}
+                                                                <div class="mask waves-effect"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-content">
+                                                            <h5>{{device.model.title}}</h5>
+                                                            <p>{{device.description|truncatechars:25}}</p>
+                                                        </div>
+                                                        <!--Buttons-->
+                                                        <div class="card-btn text-center">
+                                                            <a href="{% url 'certification:detailed' device.id %}" class="btn btn-info btn-md waves-effect waves-light">Подробнее </a>
+                                                            <a href="{% url 'certification:order_device'%}?device_id={{device.id}}" class="btn btn-danger btn-md waves-effect waves-light">Купить сейчас</a>
+                                                        </div>
+                                                        <!--/.Buttons-->
+                                                    </div>
+                                                    <!--Image Card-->
+                                                </div>
+                                            </a>
+                                            {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.content -->
+                                </div>
+                                <!-- /.col-md-12 -->
+                            </div>
+                        </div>
+                        <!-- /.block -->                    
+                    </div>
+                    <!-- /#main -->
+                    <!--<p class="btn btn-primary from-control">Want more</p>-->
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </div>
+{% endblock %}

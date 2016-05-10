@@ -56,7 +56,8 @@ INSTALLED_APPS = (
     'password_reset',
     'adminka',
     'sport',
-    'tutorial'
+    'tutorial',
+    'certification'
 )
 
 

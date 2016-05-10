@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^bet/', include('sport.urls', namespace='sport')),
     url(r'^auths/', include('auths.urls', namespace='auths')),
     url(r'^tutorial/', include('tutorial.urls', namespace='tutorial')),
+    url(r'^certification/', include('certification.urls', namespace='certification')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^messages/', include('postman.urls', namespace="postman")),
     url(r'^password_reset/', include('password_reset.urls')),

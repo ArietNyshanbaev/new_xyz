@@ -1,0 +1,209 @@
+{% extends "auths/base.html" %}
+{%load staticfiles%}
+{% block roadmap %}
+<li><a href="{% url 'certification:certification'%}">Certification</a></li>
+{% endblock %}
+{% block content %}
+<ul class="news-list"></ul>
+    <div class="section gray-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="action-buttons">
+                        <div class="buy-it-now">
+                            <h6>Цена</h6>
+                            <h5 class="iboxed_orange">{{device.price}} сом</h5>
+                        </div><!-- /.buy-it-now -->
+
+                        <div class="buy-it-financial" >
+                            <h6>Контактные данные</h6>
+                                <h5 class="iboxed_blue"> 
+                                    <i style="display:inline" class="fa fa-phone-square"></i>{{ device.contacts }}
+                                    <!--<a href="tel://{{instance.telephones}}">Call Me</a>-->
+                                </h5>
+                        </div><!-- /.buy-it-financial -->
+
+                    </div><!-- /.action-buttons -->
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="action-buttons">
+                        <div class="buy-it-now">
+                            <h6>Статус</h6>
+                            <h5 class="iboxed_orange">Сертифицирован </h5>
+                        </div><!-- /.buy-it-now -->
+                        
+                            
+                        <div class="buy-it-now">
+
+                            <a style="margin-top: -30px;margin-left: -50px" class="btn btn-primary  waves-effect" href="{% url 'certification:certification'%}"><i class="fa fa-question-circle" aria-hidden="true"></i> Что это?</a>
+
+                                
+                        </div><!-- /.buy-it-financial -->
+                    </div><!-- /.action-buttons -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="main">
+                        <div class="car car-detail">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="gallery-wrapper" class="hoverable waves-effect ">
+                                                <div class="gallery">
+                                                {% for photo in device.photo_set.all %}
+                                                {% if forloop.counter0 == 0 %}
+                                                    <div class="slide active">
+                                                {% else %}
+                                                    <div class="slide">
+                                                {% endif %}
+                                                        <div class="picture-wrapper">
+                                                            <img height="375"  src="../../../media/{{photo.photo}}" alt="{{ device.model }} купить в бишкеке" style="height: 100%">
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                </div><!-- /.gallery -->
+
+                                                <div id="gallery-pager" class="white block-shadow">
+                                                    <div class="prev">
+                                                        <i class="icon-normal-left-arrow-small"></i>
+                                                    </div>
+
+                                                    <div class="pager">
+                                                    </div>
+
+                                                    <div class="next">
+                                                        <i class="icon-normal-right-arrow-small"></i>
+                                                    </div>
+                                                </div><!-- /#gallery-pager -->
+
+
+                                                <div class="gallery-thumbnails">
+                                                {% for photo in device.photo_set.all %}
+                                                    <div class="thumbnail-{{forloop.counter0}}">
+                                                        <div class="picture-wrapper" id="yo_photo">
+                                                            <img src="../../../media/{{photo.photo}}" alt="#">
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                </div><!-- /.gallery-thumbnails -->
+                                            </div> <!-- /#gallery-wrapper -->
+                                            <br/><br/>
+                                        </div>
+                                        
+                                    </div>
+                                    <!--{% if liked %}
+                                    <h5 style="color:#f95446;"> Потенциальные покупатели :</h5>
+                                    
+                                        <div class="list-group">
+                                            {% for liker in liked %}
+                                                <a href="{% url 'auths:profile_others' liker.user.id %}" class="list-group-item waves-effect">{{liker.user.username}} </a>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}-->
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="overview">
+                                        <div id="tab-container" class="tab-container">
+
+                                            <div class="block white block-shadow hoverable">
+                                                <div class="block-inner">
+                                                    <div id="overview" class="active">
+                                                        <div class="row">
+
+                                                            <div class="col-sm-12 col-md-12">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="property">Бренд</td>
+                                                                            <td class="value">{{device.model.brand.title}}</td>
+                                                                        </tr>
+                                                                       <tr>
+                                                                            <td class="property">Модель</td>
+                                                                            <td class="value">
+                                                                            {% if device.model.is_not_unique == True %}
+                                                                               {% if device.modell %}
+                                                                                    {{device.modell}}
+                                                                               {% else %}
+                                                                                    {{device.model.title}}
+                                                                               {% endif %}
+                                                                            {% else %}
+                                                                                {{device.model.title}}
+                                                                            {% endif %}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="property">Цена</td>
+                                                                            <td class="value">{{device.price}} сом</td>
+                                                                        </tr>
+                                                                        {% if device.model.brand.category.title == 'Телефоны' or device.model.brand.category.title == 'Аксессуары'%}
+                                                                        <tr>
+                                                                            <td class="property">Память</td>
+                                                                            <td class="value">{{device.memory}} Гб.</td>
+                                                                        </tr>
+                                                                        {% endif %}
+                                                                        <tr>
+                                                                            <td class="property">Цвет</td>
+                                                                            <td class="value">{{device.color}}</td>
+                                                                        </tr>
+                                                                        {% if device.condition != None %}
+                                                                        <tr>
+                                                                            <td class="property">Состояние</td>
+                                                                            <td class="value">{{device.condition}}</td>
+                                                                        </tr>
+                                                                        {% endif %}
+                                                                        <tr>
+                                                                            <td class="property">Imei</td>
+                                                                            <td class="value">{{device.imei}}</td>
+                                                                        </tr>
+                                                                        {% if device.box == True %}
+                                                                        <tr>
+                                                                            <td class="property">Коробка и документы</td>
+                                                                                <td class="value">есть</td>
+                                                                        </tr>
+                                                                        {% endif %}
+                                                                        {% if device.model.brand.category.title == 'Телефоны' %}
+                                                                         {% if device.earpods == True%}
+                                                                        <tr>
+                                                                            <td class="property">Наушники</td>
+                                                                            <td class="value">есть</td>
+                                                                        </tr>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                        {% if device.guarantee == 'Нет гарантии' %}
+                                                                        {% elif device.guarantee == '0' %}
+                                                                        {% else %}
+                                                                        <tr>
+                                                                            <td class="property">Гарантия</td>
+                                                                            <td class="value">{{device.guarantee}}</td>
+                                                                        </tr>
+                                                                        {% endif %}
+                                                                        <tr>
+                                                                            <td class="property">Контакт. данные</td>
+                                                                            <td class="value">{{device.contacts}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table><!-- /.table -->
+                                                            </div><!-- /.col-md-7 -->
+                                                        </div><!-- /.row -->
+                                                        <div class="info ">
+                                                            <p>{{device.description|linebreaks}}</p>
+                                                        </div><!-- /.info -->
+                                                    </div><!-- /#overview -->
+                                            </div><!-- /.block-inner -->
+                                         <a class="btn btn-primary waves-effect" href="{% url 'certification:order_device'%}?device.id"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp&nbsp&nbsp&nbsp&nbsp Оставить заявку на приобретение &nbsp&nbsp&nbsp&nbsp&nbsp<i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                            </div><!-- /.block -->
+                                        </div><!-- /#tab-container -->
+                                    </div><!-- ./overview -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /#main -->
+                </div><!-- /.col-md-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div><!-- /.section -->
+{% endblock %}
