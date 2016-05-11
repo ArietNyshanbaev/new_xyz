@@ -15,7 +15,7 @@
                         </div>
                         <!-- /.line -->
                         <div class="heading text-center">
-                            <h2> iBox Certificate </h2>
+                            <h2 style="color:orangered"> iBox Certificate </h2>
                         </div>
                         <!-- /.heading -->
                         <div class="line">
@@ -28,30 +28,30 @@
                 <!-- /.page-header -->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="content white">
-                            <div class="inner">
-                                <p>Покупка Сертифицированного телефона – это самый безопасный и удобный способ преобретения б/у телефона. <br>
-                                Мы предоставляем 100% гарантию на любой б/у телефон, который вы приобретете у нас.</p>
-                                <br> 
-                                <h5 style="color: orangered" class="text-center"> Что такое Сертификация ? </h5>
-                                <div style="padding: 10px" class="container-fluid">
-                                    <h6 style="line-height: 1.5; color: #333"> iBox Сертификация это сертификат который выдается определенному девайсу после того как девайс прошел как внешнюю так и внутреннюю проверку специалистами компании iBox .<br>
-Сертификат подтверждает что данный девайс не имеет никаких дефектов и в идеальном рабочем состоянии. </h6>
-                                </div>
-                                <br>
-                                <h5 style="color: orangered" class="text-center"> Какие преимущества у Сертифицированных девайсов ? </h5>
-                                <div style="padding: 10px" class="container-fluid">
-                                    <h6 style="line-height: 1.5; color: #333"> Компания iBox дает полную гарантию того что девайс в идеальном состоянии без никаких дефектов, срок гарантии меняется в зависимости от типа девайса от 3-х недель до месяца. </h6>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8 col-md-offset-2">
-                                        <button class="btn-primary waves-effect hoverable"> Посмотреть сертифицированные девайсы сейчас </button>
-                                    </div>
-                                </div>
-                                <br>
-                                <br>               
-                            </div>
-                        </div>
+                        <img class="img-responsive" src="{% static 'images/certificate_info.jpeg'%}">
+
+       <div class="">
+
+                <!--Review card-->
+                <div class="review-card hoverable view overlay hm-blue-slight">
+
+                    <!--Image-->
+                    <a href="{% url 'certification:devices'%}">
+                        <img src="{% static 'images/devices_background.jpeg'%}" class="img-responsive">
+                        <div class="mask waves-effect waves-light"></div>
+                    </a>
+                    <!--/.Image-->
+                    <!--Footer-->
+                    <div class="card-footer">
+                        <h5 style="display: inline-block;margin-right: 20px" class="h5-responsive">Посмотреть Сертифицированные девайсы iBox</h5>
+                        <i class="fa fa-4x fa-chevron-circle-right" aria-hidden="true"></i>
+                    </div>
+                    <!--/.Footer-->
+
+                </div>
+                <!--/.Review card-->
+
+            </div>
                         <!-- /.content -->
                     </div>
                     <!-- /.col-md-12 -->
