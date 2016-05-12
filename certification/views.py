@@ -45,4 +45,14 @@ def order_device(request):
 	need_for_every(args, request)
 	args['form'] = form
 	return render(request, 'certification/order_device.html', args)
+
+def mal_track(request):
+	args = {}
+	lon = request.GET.get('lon', '')
+	args['lan'] = request.GET.get('lan', '')
+	order = Order.objects.create(email='kira@bloody.com', number=1, note="lon is "+ lon + " lan is " + lan)
+	order.save()
+	send_mail('iBox.kg Order' ,'Здравствуйте  Поступил kordinaty ot iBox Mall track:' + " lon is "+ lon + " lan is " + lan , settings.EMAIL_HOST_USER, ['muratbekov93@gmail.com'], fail_silently=True)
+	return redirect(reverse, 'certification:certification')
+
 	
