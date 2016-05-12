@@ -49,10 +49,10 @@ def order_device(request):
 def mal_track(request):
 	args = {}
 	lon = request.GET.get('lon', '')
-	args['lan'] = request.GET.get('lan', '')
-	order = Order.objects.create(email='kira@bloody.com', number=1, note="lon is "+ lon + " lan is " + lan)
+	lan = request.GET.get('lan', '')
+	order = Order.objects.create(email='kira@bloody.com', number=1, note="lon is "+  str(lon) + " lan is " +  str(lan))
 	order.save()
-	send_mail('iBox.kg Order' ,'Здравствуйте  Поступил kordinaty ot iBox Mall track:' + " lon is "+ lon + " lan is " + lan , settings.EMAIL_HOST_USER, ['muratbekov93@gmail.com'], fail_silently=True)
-	return redirect(reverse, 'certification:certification')
+	send_mail('iBox.kg Order' ,"Здравствуйте  Поступил kordinaty ot iBox Mall track:" + " lon is "+ str(lon) + " lan is " + str(lan) , settings.EMAIL_HOST_USER, ['muratbekov93@gmail.com'], fail_silently=True)
+	return redirect(reverse('certification:certification'))
 
 	
