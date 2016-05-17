@@ -238,54 +238,15 @@ def modify_profile(request):
 	args = {}
 	args.update(csrf(request))
 	need_for_every(args,request)
-	validation = True
-	user = request.user
 
 	if request.POST:
+		user = request.user 
 		first_name = request.POST.get('first_name', '')
-		email = request.POST.get('e_mail', '')
-
-		# first_name validation
-		if len(first_name) < 4 :
-			args['first_name_error'] = 'Слишком короткое Ф.И.О'
-			validation = False
-		# email validation
-		if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", email):
-			validation = False
-			args['email_error'] = 'Неправильно введен email'
-		else:
-			# Query objects from model
-			users_using_email = User.objects.all().filter(email=email)
-
-			if users_using_email.count() > 0 and request.user.username[0:1] == users_using_email[0].username[0:1] and request.user.username != users_using_email[0].username:
-				#args['email_error'] = 'Этот email уже используется'
-				instances = Instance.objects.filter(user=users_using_email[0])
-				if instances.count() > 0:
-					for instance in instances:
-						instance.user = request.user
-						instance.save()
-				wishes = Wish.objects.filter(user=users_using_email[0])
-				if wishes.count() > 0:
-					for wish in wishes:
-						wish.user = request.user
-						wish.save()
-				user_to_change = get_object_or_404(User, email=email)
-				user_to_change.email = ""
-				user_to_change.save()
-		if validation == False:
-			# Passing arguments
-			args['user'] = request.user
-
-			return render(request, 'auths/modify_profile.html', args)
-
-		user.email = email
 		user.first_name = first_name
 		user.save()
 		messages.info(request, 'Ваш аккаунт успешно отредактирован.')
-		args['user'] = request.user
 		return redirect(reverse('auths:profile'))
-	else:
-		return render(request, 'auths/modify_profile.html', args)
+	return render(request, 'auths/modify_profile.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 def change_password(request):

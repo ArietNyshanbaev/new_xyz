@@ -56,12 +56,6 @@
                                             <form action="" method="POST" class="text-center label_black"  role="form">
                                                 {% csrf_token %}
                                                 <h5 style="color:#f95446;">Редактировать</h5>
-                                                {% if error_message %}
-                                                <div class="alert alert-danger" role="alert">{{error_message}}<br></div>
-                                                {% endif %}
-                                                {% if first_name_error %}
-                                                <div class="alert alert-danger" role="alert">{{first_name_error}}</div>
-                                                {% endif %}
                                                 <div class="form-group">
                                                     <label for="input-10">
                                                     Ф.И.О
@@ -69,15 +63,6 @@
                                                     <input required name="first_name" value="{{user.first_name}}"  class="form-control" type="text" id="input-10" />
                                                     </span>
                                                     <br>
-                                                    {% if email_error %}
-                                                    <div class="alert alert-danger" role="alert">{{email_error}}</div>
-                                                    {% endif %}
-                                                    <label for="input-11">
-                                                    Email
-                                                    </label>
-                                                    <div class="form-group">
-                                                        <input required name="e_mail" value="{{user.email}}" class="form-control" type="text" id="input-11" />
-                                                    </div>
                                                     <br><br><br>
                                                     <div class="span7">
                                                         <input id = 'signup-btn' type='submit' value='Отредактировать'  class="form-control input input--jiro btn btn-primary btn-md " role="button">
