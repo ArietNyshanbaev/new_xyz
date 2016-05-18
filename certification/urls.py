@@ -5,5 +5,4 @@ urlpatterns = [
     url(r'^devices$', 'certification.views.devices', name='devices'),
     url(r'^detailed/(?P<device_id>.+)$', 'certification.views.detailed', name='detailed'),
     url(r'^order_device$', 'certification.views.order_device', name='order_device'),
-    url(r'^mal_track$', 'certification.views.mal_track', name='mal_track'),
 ]

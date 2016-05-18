@@ -25,7 +25,6 @@ class Category(models.Model):
         verbose_name = "категория"
         verbose_name_plural = "категории"
 
-
 class Brand(models.Model):
     """ Brand class which owned by Category """
 
@@ -39,7 +38,6 @@ class Brand(models.Model):
     class Meta:
         verbose_name = "бренд"
         verbose_name_plural = "бренды"
-
 
 class Modell(models.Model):
     """ Model class which owned by Brand """

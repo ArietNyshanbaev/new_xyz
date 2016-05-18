@@ -57,7 +57,8 @@ INSTALLED_APPS = (
     'adminka',
     'sport',
     'tutorial',
-    'certification'
+    'certification',
+    'geo'
 )
 
 
@@ -119,7 +120,7 @@ STATIC_DIRS = (
 
 STATIC_ROOT = os.path.join(BASE_DIR,'static-root')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # djagno all authorization 
 TEMPLATE_CONTEXT_PROCESSORS = (

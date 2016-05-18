@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^features/', include('fishkas.urls', namespace='fishkas')),
     url(r'^bet/', include('sport.urls', namespace='sport')),
+    url(r'^geo/', include('geo.urls', namespace='geo')),
     url(r'^auths/', include('auths.urls', namespace='auths')),
     url(r'^tutorial/', include('tutorial.urls', namespace='tutorial')),
     url(r'^certification/', include('certification.urls', namespace='certification')),
