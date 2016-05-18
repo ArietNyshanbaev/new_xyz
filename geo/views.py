@@ -6,7 +6,7 @@ from shapely.geometry import Polygon, Point
 # Create your views here.
 def mal_track(request):
 	args = {}
-	status = '<h1>Mall is on the run</h1>'
+	status = ''
 	lat = request.GET.get('lat', '')
 	lon = request.GET.get('lon', '')
 	# send_mail('iBox.kg Order' ,"Здравствуйте  Поступил kordinaty ot iBox Mall track:" + " lan is " + str(lat)+ " lon is "+ str(lon) , settings.EMAIL_HOST_USER, ['muratbekov93@gmail.com'], fail_silently=True)
@@ -15,6 +15,7 @@ def mal_track(request):
 	point = Point(float(lat), float(lon))
 	if poly.contains(point):
 		status = '<h1>All right biches</h1>'
-
+	else:
+		return HttpResponse(status=262)
 
 	return HttpResponse(status)
