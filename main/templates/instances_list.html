@@ -1,3 +1,4 @@
+{% load thumbnail %}
 <div class="row-item hoverable waves-effect up_down_bordered">
     {% if instance in user_wish %}
         {% include "dislike.html" %}
@@ -9,7 +10,9 @@
             <a href="{% url 'main:instance' instance.id %}">
             <div class="col-lg-4 col-md-5 col-sm-5">
                 {% if instance.photo1 %}
-                    <img class="picture_of_instance" src="../../../media/{{instance.photo1}}" alt="{{ instance.model }} в бишкеке">
+                    {% thumbnail instance.photo1 "300" as im %}
+                        <img class="picture_of_instance" src="../../../media/{{im}}" alt="{{ instance.model }} в бишкеке">
+                    {% endthumbnail %}
                 {% endif %}
             </div>
             </a>

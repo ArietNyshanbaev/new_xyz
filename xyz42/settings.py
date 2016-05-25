@@ -58,7 +58,8 @@ INSTALLED_APPS = (
     'sport',
     'tutorial',
     'certification',
-    'geo'
+    'geo',
+    'sorl.thumbnail'
 )
 
 
