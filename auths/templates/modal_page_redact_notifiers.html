@@ -1,0 +1,28 @@
+<!-- Model pages -->
+{% for notify in notifiers %}
+        <div class="modal fade modal-redact" id="{{notify.id}}modify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal label_black" action="{%url 'fishkas:redact_notify'%}" method="POST" id='add_job_form' role="form">
+                {% csrf_token %} 
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h6 class="modal-title" style="color: #f95446;" id="myModalLabel">Изменить напоминалку для ({{notify.categories}})</h6>
+                </div>
+                <div class="modal-body">
+                    <label for="from_price">С (сом)</label><br>
+                    <input type="number" name="from_price" id="from_price" required class="form-control" value="{{notify.min_price}}">
+                    <br><br>
+                    <label for="to_price">По (сом)</label><br>
+                    <input type="number" name="to_price" id="to_price" required class="form-control" value="{{notify.max_price}}">
+                    <input type="hidden" value="{{notify.id}}" name="notify_id" >
+                    <div class="modal-footer">
+                        <input type='submit' value='Редактировать'  class="btn btn-success" role="button">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    </div>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    {% endfor %}

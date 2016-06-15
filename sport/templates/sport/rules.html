@@ -1,0 +1,200 @@
+{%load staticfiles%}
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="купить, продать, смартфоны, сотка, бишкек, кыргызстан, купить смартфон в бишкеке, ноутбуки, iphone в бишкеке, продать в бишкеке, apple, macbook, ultrabook, ibox">
+    <meta name="author" content="iBox Team">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/chosen/chosen.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-outline/pictopro-outline.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-normal/pictopro-normal.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/jslider/bin/jquery.slider.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
+    <!-- Material Design -->
+    <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
+
+    <div id="fb-root"></div>
+    {% include 'metrics.html' %}
+    <title>iBox | Сделай ставку!</title>
+</head>
+<body>
+
+<ul class="news-list"></ul>
+<!-- Include header template-->
+{% include "header.html"%}
+
+<div class="infobar">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ol class="breadcrumb pull-left">
+                    <li><a href="">Cтавки</a></li>
+				</ol>
+
+				<div class="contact pull-right">
+
+
+					<div class="contact-item mail">
+						<div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
+						<div class="value">kira.1sp@gmail.kg</div><!-- /.value -->
+					</div><!-- /.mail -->
+				</div><!-- /.contact -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.infobar -->  
+
+<div id="content" class="frontpage">
+
+	<div class="filter-wrapper">
+    
+    {% include 'messages.html' %}
+
+</div><!-- /.slider-filter -->
+
+    <div class="section gray-light">
+        <div class="container">
+            <div class="row">
+
+<div class="col-md-3 col-sm-6">
+    <br><br><br><br><br><br>
+    <div class="sidebar">
+        <div id="newsletter" class='block default'>
+          <div class="block-inner">
+           <div class="page-header-inner">
+            <div class="line">
+                <hr/>
+            </div><!-- /.line -->
+            <div class="heading text-center">
+                <h5 style="color:white">Меню</h5>
+            </div><!-- /.heading -->
+
+            <div class="line">
+                <hr/>
+            </div><!-- /.line -->
+          </div><!-- /.page-header-inner -->
+            <div class="list-group">
+                <a href="{% url 'sport:list_bets' %}" class="list-group-item waves-effect ">Главная</a>
+                <a href="" class="active list-group-item waves-effect ">Правила</a>
+                <a href="{% url 'sport:prize' %}" class="list-group-item waves-effect ">Призы</a>
+                <!--<a href="" class="list-group-item waves-effect ">Ставки других пользователей</a>-->
+            </div>
+          </div>
+          </div>          
+    </div><!-- /.sidebar -->
+    <!-- /#filter -->
+</div><!-- /.col-md-3 -->
+                <div class="col-md-9 col-sm-12">
+                    <div id="main">
+                        <div class="row-block block" id="best-deals">
+	<div class="page-header">
+		<div class="page-header-inner">
+			<div class="line">
+				<hr/>
+			</div><!-- /.line -->
+
+
+
+				<div class="heading">
+				    <h2 style="color:#00658b"> Правила </h2>
+			    </div><!-- /.heading -->
+
+			<div class="line">
+				<hr/>
+			</div><!-- /.line -->
+		</div><!-- /.page-header-inner -->
+	</div><!-- /.page-header -->
+
+       
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content white hoverable ">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="inner ">
+                                    <p>- Сделайте ставку и поделитесь в одном из соц. сетей (Facebook, Одноклассники, Вконтакте, Twitter)</p>
+                                    <p>- Ставки будут приниматься до начала первого матча .</p>
+                               
+                                    <p>- Ставки можно изменять/редактировать после того как сделали ставку .</p>
+
+                                    <p>- Не забудьте указать правильный email в случае вашего выигрыша мы свяжемся с вами через email . <small> <a href=""> Редактировать email </a></small></p>
+
+                                    <p>- Выигрывают те кто угадал наиболее количество исходов .</p>
+
+                                    <p>-У нас 3 призовых мест, так же получат призы те кто угадал исходы всех матчей .</p>
+
+                                    <p>- В случае если два или более пользователя угадали одинаковое количество исходов , выигрывает тот кто сделал ставку раньше .</p>
+
+                                    <p>- Качество призов зависит от количества ставок , так что зовите друзей .</p>
+
+                                    <p>- Что бы не пропустить новости, новые розыгрыш  переходите по ссылке и подпишитесь на нашу страничку <a href="https://www.facebook.com/Kg-IBox-1552915341687942/" target="_blank" style="text-decoration: none;"> Facebook</a> .</p>
+                        </div>
+                </div>
+            </div><!-- /.content -->
+        </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+</div><!-- /.block -->                    
+</div><!-- /#main -->
+<!--<p class="btn btn-primary from-control">Want more</p>-->
+</div><!-- /.col-md-9 -->
+
+
+</div><!-- /.row -->
+</div><!-- /.container -->
+</div><!-- /.section -->
+
+</div><!-- /#content -->  
+</div><!-- /#content -->  
+
+<!-- Includes footer form tempate folder outside -->
+{% include "footer.html" %}
+
+<!-- /#includes exti modal page-->
+{% include "exit_modal_page.html" %}
+
+
+
+<script src=" {% static 'js/release11/jquery.js' %}"></script>
+<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
+<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
+<script src=" {% static 'js/release11/cycle.js' %}"></script>
+<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
+<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
+<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
+<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
+<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
+<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
+<script src=" {% static 'js/myjs.js'%}"></script>
+
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
+
+<script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
+<script src=" {% static 'MDB/js/modules/wow.js' %}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
+<script src=" {% static 'MDB/js/mdb.js' %}"></script>
+<script src=" {% static 'js/release11/carat2.js' %}"></script>
+
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56d6ba44f0030cd9"></script>
+
+</body>
+</html>

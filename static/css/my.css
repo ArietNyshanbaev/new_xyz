@@ -1,0 +1,59 @@
+.up_down_bordered{
+    border-top: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.picture_of_instance{
+    
+    width: 54%;
+}
+.iboxed_orange{
+    color: #f95446;
+}
+.iboxed_blue{
+    color: #003e55;
+}
+.iboxed_btn{
+    line-height: 20px;
+}
+@media (min-width: 768px) {
+  .menu_for_mobile {
+    display: none;
+  }
+  .love_delete{
+    position:absolute;right: 25px; top:5px;
+  }
+  .love_add{
+    position:absolute;right: 25px; top:5px;
+  }
+  #dropdown_user_menu{
+    left: -70%;
+  }
+}
+@media (max-width: 768px) {
+  .menu_for_desktop {
+    display: none;
+  }
+  .love_delete{
+    position:absolute;right: 25px; top:5px;
+  }
+  .love_add{
+    position:absolute;right: 25px; top:5px;
+  }
+  .testimonial-card .avatar, .testimonial-card .card-up {
+    overflow: hidden;
+    height: 170px;
+  }
+  .main_menu{
+    padding-right: 45px;
+    padding-left: 45px;
+  }
+
+}
+
+form.label_black label{
+  color: #333;
+}
+
+#banner_bet a:hover{
+  background-color: red
+}

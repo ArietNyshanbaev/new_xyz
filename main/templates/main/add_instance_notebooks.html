@@ -1,0 +1,308 @@
+{%load staticfiles%}
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="купить, продать, смартфоны, сотка, бишкек, кыргызстан, купить смартфон в бишкеке, ноутбуки, iphone в бишкеке, продать в бишкеке, apple, macbook, ultrabook, ibox">
+    <meta name="author" content="iBox Team">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+
+    <!-- Material Design -->
+    <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
+
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
+
+{% include 'metrics.html' %}
+    <title>iBox | Покупай и продавай вместе с нами!</title>
+</head>
+<body>
+
+<!-- Include header template-->
+{% include "header.html"%}
+
+<div class="infobar">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb pull-left">
+            <li><a href="{% url 'main:main'%}">Главная</a></li>
+            <li><a href="">добавить объявление</a></li>
+        </ol>
+        <div class="contact pull-right">
+          <div class="contact-item mail">
+            <div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
+            <div class="value">info@ibox.kg</div><!-- /.value -->
+          </div><!-- /.mail -->
+        </div><!-- /.contact -->
+      </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+</div><!-- /.infobar -->  
+
+<div id="content" class="frontpage">
+
+  <div class="filter-wrapper">
+  
+   {% include 'messages.html' %}
+
+    <div class="section gray-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                    <div id="main">
+                        <div class="row-block block" id="best-deals">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="heading">
+        <h5> Продать ноутбук </h5>
+      </div><!-- /.heading -->
+
+      <div class="line">
+        <hr/>
+      </div><!-- /.line -->
+    </div><!-- /.page-header-inner -->
+  </div><!-- /.page-header -->
+
+  {% if user.username == 'diesel' %}
+    {% include 'check_if_contains.html'%}
+  {% endif %}
+
+  <div class="row">
+    <div class="col-md-12">
+      
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{user.first_name}} {{user.last_name}}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                <form action="" method="POST" enctype="multipart/form-data" class="text-center label_black"  role="form">
+                  {% csrf_token %}
+
+                  <h2 style="color:#f95446;">Новое объявление</h2>
+
+                  {% if error_message %}
+                      <div class="alert alert-danger" role="alert">{{error_message}}<br></div>
+                  {% endif %}
+                  {% if user.username == 'diesel' %}
+                    {% include 'diesel_add.html' %}
+                  {% endif %}
+                <div class="form-group">
+                    <label for="brand">
+                    #1 - Город 
+                    </label>
+                    <select class="form-control" name="city" id="city"  required>
+                      {% for city in cities %}
+                          <option value="{{city.name}}">{{city.name}}</option>
+                      {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label for="title">
+                  #2 - Название объявления
+                  </label>
+                  <input class="form-control" name="title" id="title" required type="text" maxlength="60" placeholder="пример:Продаю Asus i5 в хорошем состоянии">
+                </div>
+
+                  <div class="form-group" onchange="javascript:Check_notebooks();">
+                  <label for="brand">
+                  #3 - Бренд 
+                  </label>
+                  <select class="form-control" name="brand" id="brand" required>
+                    {% for brand in brands %}
+                        {% if brand.modell_set.all.count > 0%}
+                            <option value="{{brand.title}}">{{brand.title}}</option>
+                        {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group">
+                  {% for brand in brands %}
+                  <div class="center" name="{{brand.title}}" id="{{brand.title}}" style="display:none">
+                        <label for="model_id">
+                        #4 - Модель
+                        </label>
+                        <select class="form-control" name="{{brand.title}}" id="model_id">
+                          {% for model in brand.modell_set.all%}
+                            <option value="{{model.id}}">{{model.title}}</option>
+                          {% endfor %}
+                        </select>
+                  </div>
+                  {% endfor %}   
+                </div>
+                <div class="form-group">
+                  <label for="input-10">
+                  #5 - Цвет 
+                  </label>
+                  <select class="form-control" name = "color" required id="input-10">
+                      <option value="Черный">Черный</option>
+                      <option value="Белый">Белый</option>
+                      <option value="Синий">Синий</option>
+                      <option value="Красный">Красный</option>
+                      <option value="Розовый">Розовый</option>
+                      <option value="Зеленый">Зеленый</option>
+                      <option value="Желтый">Желтый</option>
+                      <option value="Space Grey">Space Grey</option>
+                      <option value="Silver">Silver</option>
+                      <option value="Rose Gold">Rose Gold</option>
+                  </select>
+                </div>
+                <div class="form-group">  
+                  <label for="input-17">
+                  #6 -  Состояние
+                  </label>
+                  <select class="form-control" name = "condition" required id="input-17">
+                      <option value="Новый (как новый)">Новый (как новый)</option>
+                      <option value="Отличный (есть небольшие царапины )">Отличный (есть небольшие царапины )</option>
+                      <option value="Среднее">Среднее(есть царапины и потертости)</option>
+                      <option value="Плохое (есть сколы, треск, разбитый экран и т.д.)">Плохое (есть сколы, треск, разбитый экран и т.д.)</option>
+                      <option value="На запчасти">На запчасти</option>
+                  </select>
+                </div>
+                <div class="form-group">  
+                  <label for="input-19">
+                  #7 -  Коробка и документы
+                  </label>
+                  <select class="form-control" name = "box" required id="input-19">
+                      <option value="0">Не имеются</option>
+                      <option value="1">Имеются</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="input-12">
+                  #8 -  Описание
+                  </label>
+                  <textarea required placeholder="например: Имеется чехол , был куплен год назад, пользовалась девушка " name="note" id="input-12" class="input form-control" rows="4" id="note">{% if user.username == 'diesel' %}P.S. Тема не моя, по всем вопросам обращаться только по указанному номеру!{% endif %}</textarea>
+                </div>
+                <div class="form-group">
+                  <label for="input-20">
+                  #9 -  Гарантия
+                  </label>
+                  <select class="form-control" name = "guarantee" required id="input-20">
+                      <option value="Нет гарантии">Нет гарантии</option>
+                      <option value="Три дня">3 дня</option>
+                      <option value="Одна неделя">Одна неделя</option>
+                      <option value="Две недели">Две недели</option>
+                      <option value="Месяц">Месяц</option>
+                      <option value="Более месяца">Более месяца</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="input-22">
+                  #10 -  Обмен
+                  </label>
+                  <select class="form-control" name = "exchange" required id="input-22">
+                      <option value="0">Нет</option>
+                      <option value="1">Есть</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="input-23">
+                  #11 -  Торг
+                  </label>
+                  <select class="form-control" name = "bargain" required id="input-23">
+                      <option value="0">Нет</option>
+                      <option value="1">Есть</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="input-13">
+                  #12 -  Цена в сомах
+                  </label>
+                  <input required name = "price" min = "0" placeholder="например: 10 000" class="form-control" type="number" id="input-13" />
+                </div>
+                <div class="form-group">
+                  <label for="input-11">
+                  #13 -  Номер телефона
+                  </label>
+                    <input required name = "telephone" class="form-control" placeholder="например: 0555123456" type="text" id="input-11" />
+                </div>
+                <div class="form-group">
+                   <label for="input-14">
+                    #14 -  Загрузить фото (главное)
+                    </label>
+                  <input required name = "photo1" class="form-control" type="file" id="input-14" />
+                </div>
+                <div class="form-group">
+                   <label for="input-15">
+                    #15 -  Загрузить еще фото 
+                    </label>
+                  <input name = "photo2" class="form-control" type="file" id="input-15" />
+                </div>
+                <div class="form-group">
+                   <label for="input-16">
+                    #16 - Загрузить еще фото 
+                    </label>
+                  <input name = "photo3" class="form-control" type="file" id="input-16" />
+                </div>
+            </span>
+                <br><br><br>
+                    <div class="span7">
+                      <input type='submit' value='Подать объявление'  class="send btn-sm btn-rounded btn-primary btn-primary-color " role="button">
+                    </div>
+                </form>
+                </div>
+              </div>
+            </div>
+      </div>        
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+</div><!-- /.block -->                    
+</div><!-- /#main -->
+</div><!-- /.col-md-9 -->
+</div>
+</div><!-- /.row -->
+</div><!-- /.container -->
+</div><!-- /.section -->
+
+</div><!-- /#content -->  
+
+<!-- Includes footer form tempate folder outside -->
+{% include "footer.html" %}
+
+<!-- /#includes exti modal page-->
+{% include "exit_modal_page.html" %}
+
+
+<script src=" {% static 'js/release11/jquery.js' %}"></script>
+<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
+<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
+<script src=" {% static 'js/release11/cycle.js' %}"></script>
+<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
+<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
+<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
+<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
+<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
+<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
+<script src=" {% static 'js/myjs_for_addinstance.js'%}"></script>
+
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
+
+<script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
+<script src=" {% static 'MDB/js/modules/wow.js' %}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
+<script src=" {% static 'MDB/js/mdb.js' %}"></script>
+<script src=" {% static 'js/release11/carat2.js' %}"></script>
+
+</body>
+</html>

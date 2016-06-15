@@ -1,0 +1,135 @@
+{% extends "auths/base.html" %}
+{%load staticfiles%}
+{% block roadmap %}
+<li><a href="">{{user_profile.username}}</a></li>
+{% endblock %}
+{% block content %}
+{% include 'add_instance_icons.html' %}
+<div class="section gray-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <div id="main">
+                    <div class="row-block block" id="best-deals">
+                        <div class="page-header">
+                            <div class="page-header-inner">
+                                <div class="heading">
+                                    <h2>Профиль пользователя {{user_profile.username}}</h2>
+                                </div>
+                                <!-- /.heading -->
+                                <div class="line">
+                                    <hr/>
+                                </div>
+                                <!-- /.line -->
+                            </div>
+                            <!-- /.page-header-inner -->
+                        </div>
+                        <!-- /.page-header -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">{{user_profile.first_name}}</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2 " align="center">  </div>
+                                            <div class=" col-md-8 col-lg-8 ">
+                                                <table class="table table-user-information">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Логин:</td>
+                                                            <td>{{user_profile.username}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Email</td>
+                                                            <td><a href="">{{user_profile.email}}</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                {% if user.is_authenticated %}
+                                                <h6><a class="btn btn-primary"  href="{% url 'postman:write' user_profile %}?body=Я бы хотел спросить ..."><i class="fa fa-envelope"></i> &nbspНаписать личное сообщение {{user_profile.username}}</a></h6>
+                                                {% else %}
+                                                <h6><a class="btn btn-primary"  href="{% url 'auths:signin' %}?next=/auths/profile_os/{{ user_profile.pk }}"><i class="fa fa-envelope"></i> &nbspНаписать личное сообщение {{user_profile.username}} </a></h6>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.col-md-12 -->
+                        </div>
+                        <!-- /.row -->
+                        <div class="page-header">
+                            <div class="page-header-inner">
+                                <div class="line">
+                                    <hr/>
+                                </div>
+                                <!-- /.line -->
+                                <div class="heading">
+                                    <h2>Объявления пользователя {{user_profile.username}}</h2>
+                                </div>
+                                <!-- /.heading -->
+                                <div class="line">
+                                    <hr/>
+                                </div>
+                                <!-- /.line -->
+                            </div>
+                            <!-- /.page-header-inner -->
+                        </div>
+                        <!-- /.page-header -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#ads_to_sell" aria-controls="ads_to_sell" role="tab" data-toggle="tab" > Продам </a></li>
+                            <li role="presentation"><a href="#ads_to_buy" aria-controls="ads_to_buy" role="tab" data-toggle="tab"> Куплю </a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="ads_to_sell">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="content white">
+                                            <div class="inner">
+                                                {% for instance in instances %}
+                                                {% include 'instances_list.html' %}
+                                                {% empty %} 
+                                                <h5 class="text-center"> У пользователя пока нет объявлений. </h5>
+                                                {% endfor %}                
+                                            </div>
+                                        </div>
+                                        <!-- /.content -->
+                                    </div>
+                                    <!-- /.col-md-12 -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!--tabpanel -->
+                            <div role="tabpanel" class="tab-pane" id="ads_to_buy">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="content white">
+                                            <div class="inner">
+                                                {% for instance in instances_to_buy %}
+                                                {% include 'instances_list_buy.html' %}
+                                                {% empty %} 
+                                                <h5 class="text-center"> У пользователя пока нет объявлений. </h5>
+                                                {% endfor %}                
+                                            </div>
+                                        </div>
+                                        <!-- /.content -->
+                                    </div>
+                                    <!-- /.col-md-12 -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!--tabpanel -->
+                        </div>
+                        <!-- tab-content -->
+                    </div>
+                    <!-- /.block -->                    
+                </div>
+                <!-- /#main -->
+            </div>
+            <!-- /.col-md-9 -->
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!-- Delete Modal page-->
+    {% for instance in instances %}
+    <div class="modal fade" id="{{instance.instance.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Удалить {{instance.instance.model}}</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Вы уверены что хотите удалить {{instance.instance.model.title}} из ваших избранных объявлений? </h4>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <a href="{% url 'fishkas:delete_from_wishlist' instance.instance.id %}"><button type="button" class="btn btn-danger">Удалить</button></a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}

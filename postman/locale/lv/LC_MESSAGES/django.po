@@ -1,0 +1,547 @@
+# latvian translation of django-postman.
+# Copyright (C) 2010 Patrick Samson
+# This file is distributed under the same license as the django-postman package.
+#
+# Translators:
+# Māris Nartišs <maris.gis@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: django-postman\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-02 20:28+0600\n"
+"PO-Revision-Date: 2015-01-17 10:44+0000\n"
+"Last-Translator: Māris Nartišs <maris.gis@gmail.com>\n"
+"Language-Team: Latvian (http://www.transifex.com/projects/p/django-postman/"
+"language/lv/)\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#: admin.py:30
+msgid "Sender and Recipient cannot be both undefined."
+msgstr "Sūtītājs un saņēmējs abi nevar būt nenodefinēti."
+
+#: admin.py:37
+msgid "Visitor's email is in excess."
+msgstr "Apmeklētāja e-pasts nav nepieciešams."
+
+#: admin.py:42
+msgid "Visitor's email is missing."
+msgstr "Iztrūkst apmeklētāja e-pasts."
+
+#: admin.py:48
+msgid "Reading date must be later than sending date."
+msgstr "Lasīšanas datumam ir jābūt vēlākam par sūtīšanas datumu."
+
+#: admin.py:53
+msgid "Deletion date by sender must be later than sending date."
+msgstr "Sūtītāja norādītajam dzēšanas datumam jābūt pēc sūtīšanas datuma."
+
+#: admin.py:58
+msgid "Deletion date by recipient must be later than sending date."
+msgstr "Saņēmēja dzēšanas datumam jābūt vēlākam par sūtīšanas datumu."
+
+#: admin.py:66
+msgid "Response date must be later than sending date."
+msgstr "Atbildes datumam ir jābūt vēlākam par sūtīšanas datumu."
+
+#: admin.py:68
+msgid "The message cannot be replied without having been read."
+msgstr "Uz ziņu var atbildēt tikai pēc tās izlasīšanas."
+
+#: admin.py:70
+msgid "Response date must be later than reading date."
+msgstr "Atbildes datumam jābūt vēlākam par lasīšanas datumu."
+
+#: admin.py:72
+msgid "Response date cannot be set without at least one reply."
+msgstr "Atbildes datumu nevar iestatīt, ja nav vismaz vienas atbildes."
+
+#: admin.py:74
+msgid "The message cannot be replied without being in a conversation."
+msgstr "Nevar atbildēt uz ziņu, kas nav daļa no sarakstes."
+
+#: admin.py:97 admin.py:178 templates/postman/view.html:102
+msgid "Message"
+msgstr "Ziņa"
+
+#: admin.py:102
+msgid "Dates"
+msgstr "Datumi"
+
+#: admin.py:107 admin.py:182
+msgid "Moderation"
+msgstr "Moderēšana"
+
+#: fields.py:33
+#, python-brace-format
+msgid "Some usernames are unknown or no longer active: {users}."
+msgstr "Daži lietotājvārdi nav zināmi vai vairs nav aktīvi: {users}."
+
+#: fields.py:34
+#, python-brace-format
+msgid ""
+"Ensure this value has at most {limit_value} distinct items (it has "
+"{show_value})."
+msgstr ""
+"Pārliecinieties, ka šai vērtībai ir ne vairāk kā {limit_value} atšķirīgi "
+"vienumi (tai ir {show_value})."
+
+#: fields.py:35
+#, python-brace-format
+msgid ""
+"Ensure this value has at least {limit_value} distinct items (it has "
+"{show_value})."
+msgstr ""
+"Pārliecinieties, ka šai vērtībai ir vismaz {limit_value} atšķirīgi vienumi "
+"(tai ir {show_value})."
+
+#: fields.py:36
+#, python-brace-format
+msgid "Some usernames are rejected: {users}."
+msgstr "Daži lietotājvārdi ir noraidīti: {users}."
+
+#: fields.py:37 forms.py:72
+#, python-brace-format
+msgid "{username}"
+msgstr "{username}"
+
+#: fields.py:38 forms.py:73
+#, python-brace-format
+msgid "{username} ({reason})"
+msgstr "{username} ({reason})"
+
+#: forms.py:71
+#, python-brace-format
+msgid "Writing to some users is not possible: {users}."
+msgstr "Dažiem lietotājiem nevar rakstīt: {users}."
+
+#: forms.py:158 forms.py:171
+msgid "Recipients"
+msgstr "Saņēmēji"
+
+#: forms.py:158 forms.py:171 templates/postman/base_folder.html:132
+#: templates/postman/reply.html:4
+msgid "Recipient"
+msgstr "Saņēmējs"
+
+#: forms.py:170
+msgid "Email"
+msgstr "E-pasts"
+
+#: forms.py:187
+msgid "Undefined recipient."
+msgstr "Nenodefinēts saņēmējs."
+
+#: forms.py:222
+msgid "Additional recipients"
+msgstr "Papildus saņēmēji"
+
+#: forms.py:222
+msgid "Additional recipient"
+msgstr "Papildus saņēmējs"
+
+#: management/__init__.py:22
+msgid "Message Rejected"
+msgstr "Ziņa noraidīta"
+
+#: management/__init__.py:22
+msgid "Your message has been rejected"
+msgstr "Jūsu ziņa ir noraidīta"
+
+#: management/__init__.py:23
+msgid "Message Received"
+msgstr "Ziņa ir saņemta"
+
+#: management/__init__.py:23
+msgid "You have received a message"
+msgstr "Jūs esat saņēmis ziņu"
+
+#: management/__init__.py:24
+msgid "Reply Received"
+msgstr "Ir saņemta atbilde"
+
+#: management/__init__.py:24
+msgid "You have received a reply"
+msgstr "Jūs esat saņēmis atbildi"
+
+#: models.py:35
+msgid "Pending"
+msgstr "Gaida"
+
+#: models.py:36
+msgid "Accepted"
+msgstr "Pieņemts"
+
+#: models.py:37 templates/postman/view.html:112
+msgid "Rejected"
+msgstr "Noraidīts"
+
+#: models.py:271
+msgid "subject"
+msgstr "temats"
+
+#: models.py:272
+msgid "body"
+msgstr "saturs"
+
+#: models.py:273 models.py:356
+msgid "sender"
+msgstr "sūtītājs"
+
+#: models.py:274 models.py:380
+msgid "recipient"
+msgstr "saņēmējs"
+
+#: models.py:275
+msgid "visitor"
+msgstr "apmeklētājs"
+
+#: models.py:276
+msgid "parent message"
+msgstr "vecākziņa"
+
+#: models.py:277
+msgid "root message"
+msgstr "saknes ziņa"
+
+#: models.py:278
+msgid "sent at"
+msgstr "nosūtīta"
+
+#: models.py:279
+msgid "read at"
+msgstr "lasīta"
+
+#: models.py:280
+msgid "replied at"
+msgstr "atbildēta"
+
+#: models.py:281
+msgid "archived by sender"
+msgstr "sūtītājs arhivējis"
+
+#: models.py:282
+msgid "archived by recipient"
+msgstr "saņēmējs arhivējis"
+
+#: models.py:283
+msgid "deleted by sender at"
+msgstr "sūtītājs izdzēsis"
+
+#: models.py:284
+msgid "deleted by recipient at"
+msgstr "saņēmējs izdzēsis"
+
+#: models.py:286
+msgid "status"
+msgstr "statuss"
+
+#: models.py:288
+msgid "moderator"
+msgstr "moderators"
+
+#: models.py:289
+msgid "moderated at"
+msgstr "moderēta"
+
+#: models.py:290
+msgid "rejection reason"
+msgstr "noraidījuma iemesls"
+
+#: models.py:295
+msgid "message"
+msgstr "ziņa"
+
+#: models.py:296
+msgid "messages"
+msgstr "ziņas"
+
+#: models.py:408
+msgid "Undefined sender."
+msgstr "Nenodefinēts sūtītājs."
+
+#: models.py:556
+msgid "pending message"
+msgstr "gaidoša ziņa"
+
+#: models.py:557
+msgid "pending messages"
+msgstr "gaidošas ziņas"
+
+#: templates/admin/postman/pendingmessage/change_form.html:17
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "Lūdzu izlabojiet kļūdu."
+msgstr[1] "Lūdzu izlabojiet kļūdu."
+msgstr[2] "Lūdzu izlabojiet kļūdas."
+
+#: templates/admin/postman/pendingmessage/submit_line.html:6
+msgid "Accept"
+msgstr "Pieņemt"
+
+#: templates/admin/postman/pendingmessage/submit_line.html:7
+msgid "Reject"
+msgstr "Noraidīt"
+
+#: templates/postman/archives.html:3
+msgid "Archived Messages"
+msgstr "Arhivēt ziņas"
+
+#: templates/postman/archives.html:7
+msgid ""
+"Messages in this folder will never be removed. You can use this folder for "
+"long term storage."
+msgstr ""
+"Šajā mapē esošās ziņas netiks aizvāktas. Izmantojiet šo mapi ziņu ilgtermiņa "
+"glabāšanai."
+
+#: templates/postman/base.html:3
+msgid "Messaging"
+msgstr "Ziņojumapmaiņa"
+
+#: templates/postman/base.html:12 templates/postman/base_folder.html:101
+#: templates/postman/base_write.html:119 templates/postman/view.html:93
+msgid "Inbox"
+msgstr "Iesūtne"
+
+#: templates/postman/base.html:13 templates/postman/base_folder.html:102
+#: templates/postman/base_write.html:120 templates/postman/sent.html:3
+#: templates/postman/view.html:94
+msgid "Sent Messages"
+msgstr "Nosūtītās ziņas"
+
+#: templates/postman/base.html:14 templates/postman/base_folder.html:100
+#: templates/postman/base_write.html:118 templates/postman/view.html:92
+#: templates/postman/write.html:3
+msgid "Write"
+msgstr "Rakstīt"
+
+#: templates/postman/base.html:15 templates/postman/base_folder.html:103
+#: templates/postman/base_write.html:121 templates/postman/view.html:95
+msgid "Archives"
+msgstr "Arhīvs"
+
+#: templates/postman/base.html:16 templates/postman/base_folder.html:104
+#: templates/postman/base_write.html:122 templates/postman/view.html:96
+msgid "Trash"
+msgstr "Miskaste"
+
+#: templates/postman/base_folder.html:114
+msgid "Sorry, this page number is invalid."
+msgstr "Atvainojiet, lapas numurs nav derīgs."
+
+#: templates/postman/base_folder.html:118
+msgid "by conversation"
+msgstr "pēc sarakstes"
+
+#: templates/postman/base_folder.html:119
+msgid "by message"
+msgstr "pēc ziņas"
+
+#: templates/postman/base_folder.html:123 templates/postman/view.html:121
+msgid "Delete"
+msgstr "Dzēst"
+
+#: templates/postman/base_folder.html:124 templates/postman/view.html:122
+msgid "Archive"
+msgstr "Arhivēt"
+
+#: templates/postman/base_folder.html:125
+msgid "Undelete"
+msgstr "Atsaukt dzēšanu"
+
+#: templates/postman/base_folder.html:130
+msgid "Action"
+msgstr "Darbība"
+
+#: templates/postman/base_folder.html:131
+msgid "Sender"
+msgstr "Sūtītājs"
+
+#: templates/postman/base_folder.html:133
+msgid "Subject"
+msgstr "Temats"
+
+#: templates/postman/base_folder.html:134
+msgid "Date"
+msgstr "Datums"
+
+#: templates/postman/base_folder.html:156
+msgid "No messages."
+msgstr "Nav ziņu."
+
+#: templates/postman/base_write.html:135
+msgid "Send"
+msgstr "Sūtīt"
+
+#: templates/postman/email_user.txt:1
+msgid "Dear user,"
+msgstr "Dārgo lietotāj,"
+
+#: templates/postman/email_user.txt:3 templates/postman/email_visitor.txt:3
+#, python-format
+msgid "On %(date)s, you asked to send a message to the user '%(recipient)s'."
+msgstr "%(date)s Jūs lūdzāt nosūtīt ziņu lietotājam '%(recipient)s'."
+
+#: templates/postman/email_user.txt:5 templates/postman/email_visitor.txt:5
+msgid "Your message has been rejected by the moderator"
+msgstr "Moderators noraidīja jūsu ziņu"
+
+#: templates/postman/email_user.txt:5 templates/postman/email_visitor.txt:5
+msgid ", for the following reason:"
+msgstr ", ar iemeslu:"
+
+#: templates/postman/email_user.txt:9 templates/postman/email_visitor.txt:10
+#, python-format
+msgid "On %(date)s, you sent a message to the user '%(sender)s'."
+msgstr "%(date)s, Jūs nosūtījāt ziņu lietotājam '%(sender)s'."
+
+#: templates/postman/email_user.txt:10
+msgid "Your correspondent has given you an answer."
+msgstr "Jūsu sarakstes partneris ir atbildējis."
+
+#: templates/postman/email_user.txt:11
+#, python-format
+msgid "You have received a copy of a response from the user '%(sender)s'."
+msgstr "Jūs saņēmāt kopiju atbildei no lietotāja '%(sender)s'."
+
+#: templates/postman/email_user.txt:13
+#, python-format
+msgid "You have received a message from the user '%(sender)s'."
+msgstr "Jūs esat saņēmis ziņu no lietotāja '%(sender)s'."
+
+#: templates/postman/email_user.txt:16 templates/postman/email_visitor.txt:14
+msgid "Thank you again for your interest in our services."
+msgstr "Paldies par Jūsu interesi par mūsu pakalpojumiem."
+
+#: templates/postman/email_user.txt:17 templates/postman/email_visitor.txt:16
+msgid "The site administrator"
+msgstr "Lapas administrators"
+
+#: templates/postman/email_user.txt:19 templates/postman/email_visitor.txt:18
+msgid ""
+"Note: This message is issued by an automated system.\n"
+"Do not reply, this would not be taken into account."
+msgstr ""
+"Piezīme: Šo ziņu ir ģenerējusi automātiska sistēma.\n"
+"Neatbildiet uz to, jo Jūsu atbilde tiks ignorēta."
+
+#: templates/postman/email_user_subject.txt:1
+#: templates/postman/email_visitor_subject.txt:1
+#, python-format
+msgid "Message \"%(subject)s\" on the site %(sitename)s"
+msgstr "Ziņa par \"%(subject)s\" vietnē %(sitename)s"
+
+#: templates/postman/email_visitor.txt:1
+msgid "Dear visitor,"
+msgstr "Dārgo viesi,"
+
+#: templates/postman/email_visitor.txt:8
+msgid "As a reminder, please find below the content of your message."
+msgstr "Ziņas saturu varat aplūkot zemāk."
+
+#: templates/postman/email_visitor.txt:11
+msgid "Please find below the answer from your correspondent."
+msgstr "Zemāk seko sarakstes partnera atbilde."
+
+#: templates/postman/email_visitor.txt:15
+msgid "For more comfort, we encourage you to open an account on the site."
+msgstr "Lielākai labsajūtai, mēs iesakām reģistrēt kontu vietnē."
+
+#: templates/postman/inbox.html:4
+msgid "Received Messages"
+msgstr "Saņemtās ziņas"
+
+#: templates/postman/inbox.html:7
+msgid "Received"
+msgstr "Saņemta"
+
+#: templates/postman/reply.html:3 templates/postman/view.html:125
+#: templates/postman/view.html.py:128 templates/postman/view.html:131
+msgid "Reply"
+msgstr "Atbildēt"
+
+#: templates/postman/sent.html:6
+msgid "Sent"
+msgstr "Nosūtīta"
+
+#: templates/postman/trash.html:3
+msgid "Deleted Messages"
+msgstr "Dzēstās ziņas"
+
+#: templates/postman/trash.html:10
+msgid ""
+"Messages in this folder can be removed from time to time. For long term "
+"storage, use instead the archive folder."
+msgstr ""
+"Šajā mapē esošās ziņas var tikt laiku pa laikam aizvāktas. Ziņu ilgtermiņa "
+"glabāšanai izmantojiet arhīva mapi."
+
+#: templates/postman/view.html:102
+msgid "Conversation"
+msgstr "Sarakste"
+
+#: templates/postman/view.html:112
+msgid ":"
+msgstr ":"
+
+#: templates/postman/view.html:119
+msgid "Back"
+msgstr "Atpakaļ"
+
+#: templatetags/postman_tags.py:50
+msgid "<me>"
+msgstr "<es>"
+
+#: utils.py:39
+msgid "> "
+msgstr "> "
+
+#: utils.py:55
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
+"{sender} wrote:\n"
+"{body}\n"
+msgstr ""
+"\n"
+"\n"
+"{sender} rakstīja:\n"
+"{body}\n"
+
+#: utils.py:65
+#, python-brace-format
+msgid "Re: {subject}"
+msgstr "Atb: {subject}"
+
+#: views.py:201
+msgid "Message successfully sent."
+msgstr "Ziņa ir sekmīgi nosūtīta."
+
+#: views.py:203
+msgid "Message rejected for at least one recipient."
+msgstr "Vismaz vienam saņēmējam vēstule ir noraidīta."
+
+#: views.py:421
+msgid "Select at least one object."
+msgstr "Izvēlieties vismaz vienu objektu."
+
+#: views.py:428
+msgid "Messages or conversations successfully archived."
+msgstr "Ziņas vai sarakstes ir sekmīgi arhivētas."
+
+#: views.py:435
+msgid "Messages or conversations successfully deleted."
+msgstr "Ziņas vai sarakstes ir sekmīgi dzēstas."
+
+#: views.py:442
+msgid "Messages or conversations successfully recovered."
+msgstr "Ziņas vai sarakstes ir sekmīgi atjaunotas."
+
+#~ msgid "g:i A,M j,n/j/y"
+#~ msgstr "G:i,j b,j/n/y"

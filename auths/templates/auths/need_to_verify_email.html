@@ -1,0 +1,45 @@
+{% extends "auths/base.html" %}
+{%load staticfiles%}
+{% block roadmap %}
+<li><a href="">{{user.username}}</a></li>
+{% endblock %}
+{% block content %}
+<div class="section gray-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <div id="main">
+                    <div class="row-block block" id="best-deals">
+                        <div class="page-header">
+                            <div class="page-header-inner">
+                                <!-- /.heading -->
+                                <div class="line">
+                                    <br/>
+                                </div>
+                                <!-- /.line -->
+                            </div>
+                            <!-- /.page-header-inner -->
+                        </div>
+                        <!-- /.page-header -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title text-center">На ваш email ({{user.email}}) мы отправили ссылку для подтверждения,<br> пройдите по ней что бы подтвердить ваш еmail.</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.col-md-12 -->
+                        </div>
+                        <br>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.block -->                    
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.col-md-9 -->
+        </div>
+    </div>
+</div>
+{% endblock %}

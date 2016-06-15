@@ -1,0 +1,65 @@
+{% extends "auths/base.html" %}
+{%load staticfiles%}
+{% block roadmap %}
+<li><a href="">Certification</a></li>
+{% endblock %}
+{% block content %}
+<div class="section gray-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <div class="page-header">
+                    <div class="page-header-inner">
+                        <div class="line">
+                            <hr/>
+                        </div>
+                        <!-- /.line -->
+                        <div class="heading text-center">
+                            <h2 style="color:orangered"> iBox Certificate </h2>
+                        </div>
+                        <!-- /.heading -->
+                        <div class="line">
+                            <hr/>
+                        </div>
+                        <!-- /.line -->
+                    </div>
+                    <!-- /.page-header-inner -->
+                </div>
+                <!-- /.page-header -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <img class="img-responsive" src="{% static 'images/certificate_info.jpeg'%}">
+
+       <div class="">
+
+                <!--Review card-->
+                <div class="review-card hoverable view overlay hm-blue-slight">
+
+                    <!--Image-->
+                    <a href="{% url 'certification:devices'%}">
+                        <img src="{% static 'images/devices_background.jpeg'%}" class="img-responsive">
+                        <div class="mask waves-effect waves-light"></div>
+                    </a>
+                    <!--/.Image-->
+                    <!--Footer-->
+                    <div class="card-footer">
+                        <h5 style="display: inline-block;margin-right: 20px" class="h5-responsive">Посмотреть Сертифицированные девайсы iBox</h5>
+                        <i class="fa fa-4x fa-chevron-circle-right" aria-hidden="true"></i>
+                    </div>
+                    <!--/.Footer-->
+
+                </div>
+                <!--/.Review card-->
+
+            </div>
+                        <!-- /.content -->
+                    </div>
+                    <!-- /.col-md-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.col-md-9 -->
+        </div>
+    </div>
+</div>
+{% endblock %}

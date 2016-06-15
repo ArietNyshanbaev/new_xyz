@@ -1,0 +1,441 @@
+{%load staticfiles%}
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="{{ instance.model.brand.title }}, {{ instance.model.title }} купить в бишкеке, кыргызстан, ibox, дешево">
+    <meta name="author" content="iBox Team">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-normal/pictopro-normal.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+
+    <!-- Material Design -->
+    <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+    <!-- Light Box effect for image 
+    <link rel="stylesheet" type="text/css" media="screen" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.css" />
+    <style type="text/css">
+        a.fancybox img {
+            border: none;
+            box-shadow: 0 1px 7px rgba(0,0,0,0.6);
+            -o-transform: scale(1,1); -ms-transform: scale(1,1); -moz-transform: scale(1,1); -webkit-transform: scale(1,1); transform: scale(1,1); -o-transition: all 0.2s ease-in-out; -ms-transition: all 0.2s ease-in-out; -moz-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out;
+        } 
+        a.fancybox:hover img {
+            position: relative; z-index: 999; -o-transform: scale(1.03,1.03); -ms-transform: scale(1.03,1.03); -moz-transform: scale(1.03,1.03); -webkit-transform: scale(1.03,1.03); transform: scale(1.03,1.03);
+        }
+    </style> 
+    -->
+{% include 'metrics.html' %}
+     <title>iBox.kg - {{instance.model.brand.category.title}} - {{instance.model.brand.title}} - {{instance.model.title}}</title>
+</head>
+<body>
+
+<div id="fb-root"></div>
+<ul class="news-list"></ul>
+<!-- Include header template-->
+{% include "header.html"%}
+
+<div class="infobar">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ol class="breadcrumb pull-left">
+		  			<li><a href="{% url 'main:main'%}">Главная</a></li>
+		  			<li><a href="{% url 'main:category' instance.model.brand.category.id%}">{{instance.model.brand.category.title}}</a></li>
+		  			<li><a href="{% url 'main:brand' instance.model.brand.id%}">{{instance.model.brand.title}}</a></li>
+		  			<li><a href="{% url 'main:model' instance.model.id%}">{{instance.model.title}}</a></li>
+				</ol>
+
+				<div class="contact pull-right">
+
+
+					<div class="contact-item mail">
+						<div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
+						<div class="value">info@ibox.kg</div><!-- /.value -->
+					</div><!-- /.mail -->
+				</div><!-- /.contact -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.infobar -->  
+
+<div id="content">
+{% include 'messages.html'%}
+
+{% include 'add_instance_icons.html' %}
+    <div id="page-heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading">
+                        {% if imeied %}
+                        <h3 class="text-center">Это девайс сертифицирован iBoxoм</h3>
+                    {% else %}
+                        <div class="title">
+                            <h5 style="font-size: 18px; margin-top: 23px;">{{ instance.title }}</h5>
+                        </div><!-- /.title -->
+                        <div class="subtitle">
+                            Добавлено пользователем <a href="{% url 'auths:profile_others' instance.user.pk %}" style="font-weight: bold">{{ instance.user }}</a>, {{ instance.added_date }}
+                        </div><!-- /.subtitle -->
+                    </div><!-- /.heading -->
+                    {% endif %}
+                    </div><!-- /.heading -->
+                </div><!-- /.col-md-8 -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div><!-- /#page-heading -->
+
+    <div class="section gray-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="action-buttons">
+                        <div class="buy-it-now">
+                            <h6>Цена</h6>
+                            <h5 class="iboxed_orange">{{instance.price}} сом</h5>
+                        </div><!-- /.buy-it-now -->
+
+                        <div class="buy-it-financial" >
+                            <h6>Контактные данные</h6>
+
+                            {% if user.is_authenticated %}
+                                <h5 class="iboxed_blue"> 
+                                    <i style="display:inline" class="fa fa-phone-square"></i>{{ instance.telephones }}
+                                    <!--<a href="tel://{{instance.telephones}}">Call Me</a>-->
+                                </h5>
+                            {% else%}
+                                <h5><a href="{% url 'auths:signin'%}?next=/instance/{{ instance.pk }}">  <button style="line-height: 20px;" type="button" class="btn btn-success"><span>Посмотреть</button></a></h5>
+                                
+                            {% endif %}
+                        </div><!-- /.buy-it-financial -->
+
+                    </div><!-- /.action-buttons -->
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="action-buttons">
+                        <div class="buy-it-now" style="display:inline">
+                            <div class="label">обновлено (up) </div>
+                            <div class="price">{{instance.updated_date}}</div>
+                        </div><!-- /.buy-it-now -->
+
+                    </div><!-- /.action-buttons -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="main">
+                        <div class="car car-detail">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="gallery-wrapper" class="hoverable waves-effect ">
+                                                <div class="gallery">
+                                                    {% if instance.photo1 %}
+                                                    <div class="slide active">
+                                                        <div class="picture-wrapper">
+                                                            <img height="375"  src="../../../media/{{instance.photo1}}" alt="{{ instance.model }} купить в бишкеке">
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if instance.photo2 %}
+                                                    <div class="slide active">
+                                                        <div class="picture-wrapper">
+                                                            <img height="375" alt="{{ instance.model.brand.title }} {{ instance.model.title }} купить продать в Кыргызстане" src="../../../media/{{instance.photo2}}">
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if instance.photo3 %}
+                                                    <div class="slide active">
+                                                        <div class="picture-wrapper">
+                                                            <img height="375" src="../../../media/{{instance.photo3}}" alt="{{ instance.model }}  {{ instance.model.title }} купить в бишкеке">
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                </div><!-- /.gallery -->
+
+                                                <div id="gallery-pager" class="white block-shadow">
+                                                    <div class="prev">
+                                                        <i class="icon-normal-left-arrow-small"></i>
+                                                    </div>
+
+                                                    <div class="pager">
+                                                    </div>
+
+                                                    <div class="next">
+                                                        <i class="icon-normal-right-arrow-small"></i>
+                                                    </div>
+                                                </div><!-- /#gallery-pager -->
+
+
+                                                <div class="gallery-thumbnails">
+                                                    {% if instance.photo1 %}
+                                                    <div class="thumbnail-0">
+                                                        <div class="picture-wrapper" id="yo_photo">
+                                                            <img src="../../../media/{{instance.photo1}}" alt="#">
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if instance.photo2 %}
+                                                    <div class="thumbnail-1">
+                                                        <div class="picture-wrapper">
+                                                            <img src="../../../media/{{instance.photo2}}" alt="#">
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if instance.photo3 %}
+                                                    <div class="thumbnail-2">
+                                                        <div class="picture-wrapper">
+                                                            <img src="../../../media/{{instance.photo3}}" alt="#">
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                </div><!-- /.gallery-thumbnails -->
+
+                                            </div> <!-- /#gallery-wrapper -->
+                                            <br/><br/>
+                                        </div>
+                                        
+                                    </div>
+                                    {% if liked %}
+                                    <h5 style="color:#f95446;"> Потенциальные покупатели :</h5>
+                                    
+                                        <div class="list-group">
+                                            {% for liker in liked %}
+                                                <a href="{% url 'auths:profile_others' liker.user.id %}" class="list-group-item waves-effect">{{liker.user.username}} </a>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="overview">
+                                        <div id="tab-container" class="tab-container">
+
+                                            <div class="block white block-shadow hoverable">
+                                                <div class="block-inner">
+                                                    <div id="overview" class="active">
+                                                        <div class="row">
+
+                                                            <div class="col-sm-12 col-md-12">
+                                                                {% if instance in user_wish %}
+                                                                    <a class="btn btn-primary btn-xs waves-effect" href="{% url 'fishkas:delete_from_wishlist' instance.id %}"><i class="icon icon-normal-star"></i>Удалить из избранных</a>
+                                                                {% else %}
+                                                                    <a class="btn btn-primary btn-xs waves-effect" href="{% url 'fishkas:add_to_wishlist' instance.id %}"><i class="icon icon-normal-star"></i>Добавить в избранные</a>
+                                                                {% endif %}
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="property">Город</td>
+                                                                            <td class="value">{{instance.city.name}}</td>
+                                                                        </tr>
+                                                                    {% if instance.category.title == 'Аксессуары'%}
+                                                                        <tr>
+                                                                            <td class="property">Вид аксессуара</td>
+                                                                            <td class="value">{{instance.model.brand.title}}</td>
+                                                                        </tr>
+                                                                    {% else %}
+                                                                        <tr>
+                                                                            <td class="property">Бренд</td>
+                                                                            <td class="value">{{instance.model.brand.title}}</td>
+                                                                        </tr>
+                                                                    {% endif %}
+                                                                    {% if instance.category.title == 'Аксессуары'%}
+                                                                        <tr>
+                                                                            <td class="property">Бренд</td>
+                                                                            <td class="value">
+                                                                            {% if instance.model.is_not_unique == True %}
+                                                                               {% if instance.modell %}
+                                                                                    {{instance.modell}}
+                                                                               {% else %}
+                                                                                    {{instance.model.title}}
+                                                                               {% endif %}
+                                                                            {% else %}
+                                                                                {{instance.model.title}}
+                                                                            {% endif %}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% else %}
+                                                                       <tr>
+                                                                            <td class="property">Модель</td>
+                                                                            <td class="value">
+                                                                            {% if instance.model.is_not_unique == True %}
+                                                                               {% if instance.modell %}
+                                                                                    {{instance.modell}}
+                                                                               {% else %}
+                                                                                    {{instance.model.title}}
+                                                                               {% endif %}
+                                                                            {% else %}
+                                                                                {{instance.model.title}}
+                                                                            {% endif %}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endif %}
+
+                                                                        <tr>
+                                                                            <td class="property">Цена</td>
+                                                                            <td class="value">{{instance.price}} сом</td>
+                                                                        </tr>
+                                                                        {% if instance.model.brand.category.title == 'Телефоны' or instance.model.brand.category.title == 'Аксессуары'%}
+                                                                        <tr>
+                                                                            <td class="property">Память</td>
+                                                                            <td class="value">{{instance.memory}} Гб.</td>
+                                                                        </tr>
+                                                                        {% endif %}
+                                                                        <tr>
+                                                                            <td class="property">imei</td>
+                                                                            <td class="value">{{instance.color}}</td>
+                                                                        </tr>
+                                                                        {% if instance.condition != None %}
+                                                                        <tr>
+                                                                            <td class="property">Состояние</td>
+                                                                            <td class="value">{{instance.condition}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="property">IMEI</td>
+                                                                            <td class="value">{{imeied}}</td>
+                                                                        </tr>
+                                                                        {% endif %}
+                                                                        <tr>
+                                                                            <td class="property">Обмен</td>
+                                                                            {% if instance.exchange == True %}
+                                                                                <td class="value">есть</td>
+                                                                            {% else %}
+                                                                                <td class="value">нет</td>
+                                                                            {% endif %}
+                                                                        </tr>
+                                                                        {% if instance.box == True %}
+                                                                        <tr>
+                                                                            <td class="property">Коробка и документы</td>
+                                                                                <td class="value">есть</td>
+                                                                        </tr>
+                                                                        {% endif %}
+                                                                        {% if instance.model.brand.category.title == 'Телефоны' %}
+                                                                         {% if instance.earpods == True%}
+                                                                        <tr>
+                                                                            <td class="property">Наушники</td>
+                                                                            <td class="value">есть</td>
+                                                                        </tr>
+                                                                        {% endif %}
+                                                                        {% endif %}
+
+                                                                        <tr>
+                                                                            <td class="property">Торг</td>
+                                                                            {% if instance.bargain == True%}
+                                                                                <td class="value">есть</td>
+                                                                            {% else %}
+                                                                                <td class="value">нет</td>
+                                                                            {% endif %}
+                                                                        </tr>
+
+                                                                        {% if instance.guarantee == 'Нет гарантии' %}
+                                                                        {% elif instance.guarantee == '0' %}
+                                                                        {% else %}
+                                                                        <tr>
+                                                                            <td class="property">Гарантия</td>
+                                                                            <td class="value">{{instance.guarantee}}</td>
+                                                                        </tr>
+                                                                        {% endif %}
+
+                                                                        <tr>
+                                                                            
+                                                                            <td class="property">Контакт. данные</td>
+                                                                            {% if user.is_authenticated %}
+                                                                            <td class="value">{{instance.telephones}}</td>
+                                                                            {% else%}
+                                                                            <td class="value">
+                                                                            <a href="{% url 'auths:signin'%}?next=/instance/{{ instance.pk }}"> <button type="button" class="btn btn-success btn-sm"><span style="color:#4401FF">Войдите</span>, чтобы посмотреть контактные данные</button></a>
+                                                                            </td>
+                                                                            {% endif %}
+                                                                        </tr>
+                                                                       
+                                                                    </tbody>
+                                                                </table><!-- /.table -->
+                                                            </div><!-- /.col-md-7 -->
+
+                                                        </div><!-- /.row -->
+
+                                                        <div class="info ">
+                                                            <p style="font-size: 14px;">{{instance.note}}</p>
+                                                        </div><!-- /.info -->
+                                                    </div><!-- /#overview -->
+                                            </div><!-- /.block-inner -->
+
+                                             {% if instance.user == user %}
+
+
+                                         <a class="btn btn-primary btn-xs waves-effect" style="background-color: lightseagreen" href="{% url 'fishkas:up' instance.id %}"><i class="icon icon-normal-star"></i>Up (Обновить)</a>
+                                <br/>
+
+
+                            {% endif %}
+                                         <a class="btn btn-primary btn-xs waves-effect" href="{% if user.is_anonymous %}{% url 'auths:signin'  %}?next=/instance/{{ instance.pk }}{% else %}{% url 'postman:write' instance.user %}?subject={% if instance.model.is_not_unique == True %}{% if instance.modell %}{{instance.modell|slice:":20"}}{% else %}{{instance.model.title}}{% endif %}{% else %}{{instance.model.title}}{% endif %}&body=Я бы хотел спросить, {% endif %}"><i class="icon icon-normal-question-mark"></i> Задать вопрос продавцу</a>
+                                            </div><!-- /.block -->
+                                        </div><!-- /#tab-container -->
+                                    </div><!-- ./overview -->
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /#main -->
+                </div><!-- /.col-md-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div><!-- /.section -->
+</div>
+
+<!-- Includes footer form tempate folder outside -->
+{% include "footer.html" %}
+
+
+<!-- Model pages -->
+
+<!-- /#includes exti modal page-->
+{% include "exit_modal_page.html" %}
+
+
+<script src=" {% static 'js/release11/jquery.js' %}"></script>
+<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
+<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
+<script src=" {% static 'js/release11/cycle.js' %}"></script>
+<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
+<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
+<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
+<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
+<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
+<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
+<script src=" {% static 'js/myjs.js'%}"></script>
+
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
+
+
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
+<script src=" {% static 'MDB/js/mdb.js' %}"></script>
+<script src=" {% static 'js/release11/carat.js' %}"></script>
+{% if test_popup %}
+    {% include "popUp.html"%}
+{% endif %}
+</body>
+</html>

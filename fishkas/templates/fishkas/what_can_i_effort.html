@@ -1,0 +1,311 @@
+{%load staticfiles%}
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="купить, продать, смартфоны, сотка, бишкек, кыргызстан, купить смартфон в бишкеке, ноутбуки, iphone в бишкеке, продать в бишкеке, apple, macbook, ultrabook, ibox">
+    <meta name="author" content="iBox Team">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/chosen/chosen.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-outline/pictopro-outline.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-normal/pictopro-normal.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/jslider/bin/jquery.slider.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat.css' %} " media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+
+{% include 'metrics.html' %}
+    <title>iBox | Покупай и продавай вместе с нами!</title>
+</head>
+<body onload="javascript:Check11();">
+ <!-- Include topbar template -->
+{% include "topbar.html"%}
+<!-- Include header template-->
+{% include "header.html"%}
+
+<div class="infobar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb pull-left">
+                    <li><a href="{% url 'main:main' %}">Главная</a></li>
+                    <li><a href="#">Что я могу себе позволить </a></li>
+                </ol>
+
+                <div class="contact pull-right">
+                    <div class="contact-item mail">
+                        <div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
+                        <div class="value">info@ibox.kg</div><!-- /.value -->
+                    </div><!-- /.mail -->
+                </div><!-- /.contact -->
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.infobar -->  
+<div id="content" class="page-filter">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}} fade in text-center">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <h5><strong>{{message}}</strong></h5>
+            </div>
+        {% endfor %}
+    {% endif %}
+<div class="section gray-light">
+<div class="container">
+<div class="row">
+<div class="col-md-3 sidebar">
+
+
+    <div id="filter" class="filter-cars block default block-shadow">
+        <div class="block-inner">
+            <div class="block-title">
+                <h3 style="color:white">Что я могу о себе позволить за</h3>
+
+            </div>
+
+            <div class="block-inner">
+                <form action="{% url 'fishkas:what_can_i_effort'%}" method="GET" role="form">
+                    {% csrf_token %} 
+
+                    <div class="form-group">
+                        <input required name = "price" type="number" placeholder="10000" value="{{price}}" onmouseout="javascript:Check_sum();">
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        {% for category in categories %}
+                            <div class="form-group">
+                                <label style="color:white; text-align: right;clear: both;float:left;margin-right:15px;" for="{{category.id}}"> {{category.title}}</label>
+                                <input type="checkbox" name="category_name" id="{{category.id}}" value="{{category.title}}">
+                                <hr>
+                            </div>
+                        {% endfor %}
+
+                        <p style="color:#FB4949">Не отмечайте ничего если вы хотите отметить все</p>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="send btn btn-primary btn-primary-color">Проверить<i
+                                class="icon icon-normal-right-arrow-small"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /#filter -->
+
+
+</div>
+<div class="col-md-9">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block block-margin sort">
+                <div class="block-inner gray">
+                    <div class="pull-left">
+                        <p>
+                            Найдено {{num_of_instances}} объвлений
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div class="row-block block block-margin">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="content white">
+                        <div class="inner">
+                        {% for instance in instances %}
+
+                    <div class="row-item">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-5 col-sm-5">
+                                        <div class="picture">
+                                            <div class="image-slider">
+
+                                                    {% if instance.photo1 %}
+                                                        <a href="{% url 'main:instance' instance.pk %}" class="slide">
+                                                            <img src="../../../media/{{instance.photo1}}" alt="{{ instance.model }} в бишкеке">
+                                                        </a>
+                                                    {% endif %}
+
+                                                    {% if instance.photo2 %}
+                                                        <a href="{% url 'main:instance' instance.pk %}" class="slide">
+                                                            <img src="../../../media/{{instance.photo2}}" alt="{{ instance.model }} в кыргызстане">
+                                                        </a>
+
+                                                    {% endif %}
+
+                                                    {% if instance.photo3 %}
+                                                        <a href="{% url 'main:instance' instance.pk %}" class="slide">
+                                                            <img src="../../../media/{{instance.photo3}}" alt="{{ instance.model }} купить в бишкеке">
+                                                        </a>
+                                                    {% endif %}
+                                                <div class="cycle-pager"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-8 col-md-7 col-sm-7">
+
+                                        <div class="content-inner">
+                                            <h2>
+                                                <a href="{% url 'main:instance' instance.pk %}">
+                                                {% if instance.title %}
+                                                    {{instance.title|slice:"50"}}
+                                                {% else %}  
+                                                    {% if instance.model.is_not_unique == True %}
+                                                       {% if instance.modell %}
+                                                            {{instance.model.brand.title}} {{instance.modell|slice:":20"}}
+                                                       {% else %}
+                                                            {{instance.model.title}}
+                                                       {% endif %}
+                                                    {% else %}
+                                                        {{instance.model.title}}
+                                                    {% endif %}
+                                                {% endif %}
+                                                </a>
+                                            </h2>
+                                            
+                                            
+                                            <!--
+                                            <div class="description">
+                                                <p>{{instance.note|slice:":100" }}</p>
+                                            </div>
+                                            -->
+                                            <div class="meta">
+                                                <ul>
+
+                                                         
+                                                        {% if instance.title %}
+                                                        <li><i class="fa none">Модель:</i><i style="color: orangered" class="fa price">&nbsp  
+                                                            <h3 style="display:inline">
+                                                                <a href="{% url 'main:instance' instance.pk %}">
+                                                                    {% if instance.model.is_not_unique == True %}
+                                                                       {% if instance.modell %}
+                                                                            {{instance.model.brand.title}} {{instance.modell|slice:":20"}}
+                                                                       {% else %}
+                                                                            {{instance.model.title}}
+                                                                       {% endif %}
+                                                                    {% else %}
+                                                                        {{instance.model.title}}
+                                                                    {% endif %}
+                                                                </a>
+                                                            </h3>
+                                                            </i></li>
+                                                        {% endif %}
+                                                        
+                                                        </li>
+                                                        
+                                                        <li><i class="fa none">Цена:</i><i style="color: orangered" class="fa price">&nbsp  {{instance.price}} сом</i></li>
+                                                    <li data-toggle="tooltip" title="Дата обновления"><i class="fa fa-refresh price" > &nbsp{{ instance.updated_date|date:"d.m.Y" }} </i></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                        {% if instance in user_wish %}
+                                            <a class="text-center form-control btn-primary-color btn-info " style="text-decoration:none; background-color:#0F5D79;" href="{% url 'fishkas:delete_from_wishlist' instance.id %}"><i class="icon icon-normal-star"></i> Удалить из избранных</a>
+                                        {% else %}
+                                            <a class="text-center form-control btn-primary-color btn-info" style=" background-color:#0F5D79; text-decoration:none;" href="{% url 'fishkas:add_to_wishlist' instance.id %}"><i class="icon icon-normal-star"></i>Добавить в избранные</a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="{% url 'main:instance' instance.pk %}" class=" btn text-center  btn-primary-color form-control btn-primary"  style="text-decoration:none;">
+                                        Подробнее   <i class="fa fa-chevron-right"></i></a>
+                                    </div>
+                                    </div>
+                                    <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    {% empty %} 
+                    <h2 class="text-center"> К сожалению вы ничего не можете приобрести за {{price}} сом. </h2>
+                    {% endfor %}                                    
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+<section style="background-color:#f95446; ">
+    <div class="container text-center">
+        <nav>
+            <ul class="pager">
+                {% if instances.has_previous %}
+                    {% if current_page %}
+                        <li class="previous"><a href="?{{current_page}}&page={{ instances.previous_page_number }}"><span aria-hidden="true">&larr;</span> Пред. </a></li>
+                    {% else %}
+                        <li class="previous"><a href="?page={{ instances.previous_page_number }}"><span aria-hidden="true">&larr;</span> Пред. </a></li>
+                    {% endif %}
+                {% else %}
+                    <li class="previous disabled" style="visibility: hidden;"><a href=""><span aria-hidden="true">&larr;</span> Пред. </a></li>
+                {% endif %}
+               <span style="color:white"> Страница {{ instances.number }} из {{ instances.paginator.num_pages }}. </span>
+                {% if instances.has_next %}
+                    {% if current_page %}
+                        <li class="next"><a href="?{{current_page}}&page={{ instances.next_page_number }}">След. <span aria-hidden="true">&rarr;</span></a></li>
+                    {% else %}
+                        <li class="next"><a href="?page={{ instances.next_page_number }}">След. <span aria-hidden="true">&rarr;</span></a></li>
+                    {% endif %}
+                   
+
+                {% else %}
+                    <li class="next disabled" style="visibility: hidden;"><a href="">След. <span aria-hidden="true">&rarr;</span></a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</section>
+<!-- Includes footer form tempate folder outside -->
+{% include "footer.html" %}
+<!-- /#includes exti modal page-->
+{% include "exit_modal_page.html" %}
+
+
+<script src=" {% static 'js/release11/jquery.js' %}"></script>
+<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
+<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
+<script src=" {% static 'js/release11/cycle.js' %}"></script>
+<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
+<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
+<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
+<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
+<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
+<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
+<script src=" {% static 'js/myjs.js'%}"></script>
+
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
+
+
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
+<script src=" {% static 'js/release11/carat.js' %}"></script>
+{% if test_popup %}
+    {% include "popUp.html"%}
+{% endif %}
+</body>
+</html>

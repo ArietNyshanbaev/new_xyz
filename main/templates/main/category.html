@@ -1,0 +1,527 @@
+{%load staticfiles%}
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="купить, продать, смартфоны, сотка, бишкек, кыргызстан, купить смартфон в бишкеке, ноутбуки, iphone в бишкеке, продать в бишкеке, apple, macbook, ultrabook, ibox">
+    <meta name="author" content="iBox Team">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-normal/pictopro-normal.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
+    
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+
+    <link href="{% static 'css/main_test.css'%}" rel="stylesheet">
+
+    <!-- Material Design -->
+    <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
+    
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
+
+{% include 'metrics.html' %}
+    <title>iBox | Покупай и продавай вместе с нами!</title>
+</head>
+<body>
+
+<div id="fb-root"></div>
+<!-- Include header template-->
+{% include "header.html"%}
+{% include "js_for_menu.html"%}
+
+
+<div class="infobar">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ol class="breadcrumb pull-left">
+		  			<li><a href="{% url 'main:main' %}">Главная</a></li>
+                    <li><a href="{% url 'main:category' this_category.id %}">{{this_category.title}}</a></li>
+				</ol>
+
+				<div class="contact pull-right">
+
+					<div class="contact-item mail">
+						<div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
+						<div class="value">info@ibox.kg</div><!-- /.value -->
+					</div><!-- /.mail -->
+				</div><!-- /.contact -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.infobar -->
+    <div id="main">
+{% include 'messages.html'%}
+
+{% include 'add_instance_icons.html' %}
+
+<!-- Menu for mobile -->
+<div class="section gray-light  menu_for_mobile" style="padding: 0px;">
+        <div class="container">
+    <div class="sidebar" >
+        <div id="newsletter" class='block default'>
+            <div class="block-inner">
+                <div class="page-header-inner">
+                    <div class="line">
+                        <hr/>
+                    </div><!-- /.line -->
+                    <div class="heading text-center ">
+                        <h5 style="color:white">{{this_category.title}}</h5>
+                    </div><!-- /.heading -->
+                    <div class="line">
+                        <hr/>
+                    </div><!-- /.line -->
+                </div><!-- /.page-header-inner -->
+                <div class="list-group" id="">
+                    <div class="form-section">
+                        <div class="form-group">
+                            <p class="text-center" style="color:white">
+                            {% if this_category.title == 'Аксессуары'%}
+                                        Выберите вид
+                                    {% else %}
+                                        Выберите бренд
+                                    {% endif %}
+                                                                </p>
+                            <select class="form-control" name="category" id="category_menu" required onchange="javascript:go_to_brand();">
+                                <option value="" selected="" disabled="">
+                                    {% if this_category.title == 'Аксессуары'%}
+                                        Все виды
+                                    {% else %}
+                                        Все бренды
+                                    {% endif %}
+                                </option>
+                                {% for brand in brands %}
+                                    <option value="{{brand.id}}">{{brand.title}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>          
+    </div><!-- menu for mobile -->
+</div>
+</div>
+
+    <div class="section gray-light">
+        <div class="container">
+            <div class="row">
+
+<div class="col-md-3 col-sm-6 menu_for_desktop">
+    <br><br><br><br><br><br>
+    <div class="sidebar" >
+        <div id="newsletter" class='block default'>
+        <div class="block-inner">
+           <div class="page-header-inner">
+            <div class="line">
+                <hr/>
+            </div><!-- /.line -->
+            <div class="heading text-center ">
+                <h5 style="color:white">{{this_category.title}}</h5>
+            </div><!-- /.heading -->
+
+            <div class="line">
+                <hr/>
+            </div><!-- /.line -->
+          </div><!-- /.page-header-inner -->
+        <div class="list-group" id="">
+             <a href="{% url 'main:main' %}" class="list-group-item  hoverable waves-effect">Главная</a>
+              <a href="{% url 'main:category' this_category.id %}" style="background-color:#F95446" class="list-group-item active  hoverable waves-effect">
+             {% if this_category.title == 'Аксессуары'%}
+                Все виды
+             {% else %}
+                 Все бренды
+             {% endif %}
+            </a>
+               {% for brand in brands %}
+                  <a href="{% url 'main:brand' brand.id %}" class="list-group-item hoverable waves-effect">{{brand.title}}</a>
+               {% endfor %}
+        </div>
+        </div>
+    </div>          
+    </div><!-- /.sidebar -->
+
+    <div id="filter" class="filter-cars block default block-shadow menu_for_desktop">
+        <div class="block-inner">
+            <div class="page-header-inner">
+            <div class="line">
+                <hr/>
+            </div><!-- /.line -->
+            <div class="heading text-center">
+                <h5 style="color:white">Поиск</h5>
+            </div><!-- /.heading -->
+
+            <div class="line">
+                <hr/>
+            </div><!-- /.line -->
+          </div><!-- /.page-header-inner -->
+
+            <div class="block-inner">
+                <form action="{% url 'fishkas:search'%}" method="GET" role="form">
+                                                    {% csrf_token %}
+                            <div class="row">
+                                <div class="">
+                                    <div class="content">
+                                        <div class="inner">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="search-sales">
+                                                        <div class="row">
+                                                            <div class="form-group col-md-12">
+                                                                <select class="form-control" name="category" id="category" required onchange="javascript:Check11();">
+                                                                    <option value="All_type">Все виды</option>
+                                                                    {% for category in categories %}
+                                                                        {% if category.brand_set.all.count > 0 %}
+                                                                            {% if this_category == category %}
+                                                                                <option value="{{category.title}}" selected="">{{category.title}}</option>
+                                                                            {% else %}
+                                                                                <option value="{{category.title}}">{{category.title}}</option>
+                                                                            {% endif %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+
+
+
+                                                             <div  class="form-group col-md-12" id="all_things" style="display:none">
+                                                                <select class="form-control" name="All_type" id="category_id">
+                                                                      <option value="all_things">Все бренды</option>
+                                                                </select>
+                                                            </div>
+                                                            
+                                                            {% for category in categories %}
+                                                              <div  class="form-group col-md-12" id="{{category.title}}" style="display:none" >
+                                                                    <select class="form-control" name="{{category.title}}" id="category_id" >
+                                                                      <option value="all_brands">
+                                                                            {% if category.title == 'Аксессуары'%}
+                                                                                Все виды
+                                                                            {% else %}
+                                                                                Все бренды
+                                                                            {% endif %}
+                                                                      </option>
+                                                                      {% for brand in category.brand_set.all %}
+                                                                          <option value="{{brand.id}}">{{brand.title}}</option>
+                                                                      {% endfor %}
+                                                                    </select>
+                                                              </div>
+                                                            {% endfor %} 
+                                                           
+                                                        </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="content">
+                                        <div class="inner">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="search-sales">
+                                                    <div class="row">
+                                                        <div class="form-group year-to">
+                                                            <input type="number"  class="form-control" name="start" placeholder=" с 0 (сом)">
+                                                        </div>
+
+                                                        <div class="form-group year-to">
+                                                            <input type="number"  class="form-control" name="end" placeholder=" до 100000 (сом)">
+                                                        </div>
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 year-to">
+
+                                                         <div class="switch">
+                                                            <label>
+                                                            Обмен &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                              <input class="text-right" name="exchange" type="checkbox">
+                                                              <span class="lever"></span>
+                                                              
+                                                            </label>
+                                                          </div>
+                                                        </div>
+
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 year-to">
+
+                                                         <div class="switch">
+                                                            <label>
+                                                            Документы 
+                                                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                              <input class="text-right" name="box" type="checkbox">
+                                                              <span class="lever"></span>
+                                                              
+                                                            </label>
+                                                          </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+                            <br>
+                                    <div class="form-group">
+                                        <button type="submit" class="send btn-sm btn-rounded btn-primary btn-primary-color waves-effect ">
+                                            Найти <i class="icon icon-normal-right-arrow-small"></i>
+                                        </button>
+                                    </div>
+                              
+                                
+                            </form>
+            </div>
+        </div>
+    </div>
+    <!-- /#filter -->
+
+</div><!-- /.col-md-3 -->
+                <div class="col-md-9 col-sm-12">
+                    <div id="main">
+                        <div class="row-block block" id="best-deals">
+    <div class="page-header">
+        <div class="page-header-inner">
+            <div class="line">
+                <hr/>
+            </div><!-- /.line -->
+                <div class="heading">
+                    <h2>{{this_category.title}}</h2>
+                </div><!-- /.heading -->
+
+            <div class="line">
+                <hr/>
+            </div><!-- /.line -->
+        </div><!-- /.page-header-inner -->
+    </div><!-- /.page-header -->
+
+ <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#ads_to_sell" aria-controls="ads_to_sell" role="tab" data-toggle="tab" > Продам </a></li>
+        <li role="presentation"><a href="#ads_to_buy" aria-controls="ads_to_buy" role="tab" data-toggle="tab">Куплю</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="ads_to_sell">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content white">
+                <div class="inner">
+                    {% for instance in instances %}
+                        {% include 'instances_list.html' %}
+                    {% empty %} 
+                        <h4 class="text-center"> Пока нет объявлений </h4>
+                    {% endfor %}  
+                </div>
+            </div><!-- /.content -->
+            {% include 'paggination.html' %}  
+        </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+
+    </div>
+        <div role="tabpanel" class="tab-pane" id="ads_to_buy">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="content white">
+                        <div class="inner">
+                            {% for instance in instances_to_buy %}
+                                {% include 'instances_list_buy.html' %}
+                            {% empty %} 
+                                <h4 class="text-center"> Пока нет объявлений </h4>
+                            {% endfor %}                                                   
+                        </div>
+                    </div><!-- /.content -->
+                    {% include 'paggination_buy.html' %}
+                </div><!-- /.col-md-12 -->
+            </div><!-- /.row -->
+        </div>
+    </div>
+</div><!-- /.block -->                    
+</div><!-- /#main -->
+<!--<p class="btn btn-primary from-control">Want more</p>-->
+</div><!-- /.col-md-9 -->
+</div><!-- /.row -->
+</div><!-- /.container -->
+</div><!-- /.section -->
+</div>
+
+<div class="section gray-light menu_for_mobile">
+        <div class="container">
+            <div class="row">
+
+<div class="col-md-3 col-sm-6">
+    <div id="filter" class="filter-cars block default block-shadow" >
+        <div class="block-inner">
+            <div class="page-header-inner">
+            <div class="line">
+                <hr/>
+            </div><!-- /.line -->
+            <div class="heading text-center">
+                <h5 style="color:white">Поиск</h5>
+            </div><!-- /.heading -->
+
+            <div class="line">
+                <hr/>
+            </div><!-- /.line -->
+          </div><!-- /.page-header-inner -->
+
+            <div class="block-inner">
+                <form action="{% url 'fishkas:search'%}" method="GET" role="form">
+                                                    {% csrf_token %}
+                            <div class="row">
+                                <div class="">
+                                    <div class="content">
+                                        <div class="inner">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="search-sales">
+                                                        <div class="row">
+                                                            <div class="form-group col-md-12">
+                                                                <select class="form-control" name="category" id="category_m" required onchange="javascript:Check12();">
+                                                                    <option value="All_type">Все виды</option>
+                                                                    {% for category in categories %}
+                                                                        {% if category.brand_set.all.count > 0 %}
+                                                                            {% if this_category == category %}
+                                                                                <option value="{{category.title}}" selected="">{{category.title}}</option>
+                                                                            {% else %}
+                                                                                <option value="{{category.title}}">{{category.title}}</option>
+                                                                            {% endif %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                            
+                                                            {% for category in categories %}
+                                                              <div  class="form-group col-md-12" id="{{category.title}}_m" style="display:none;" >
+                                                                    <select class="form-control" name="{{category.title}}" id="category_id" >
+                                                                      <option value="all_brands">
+                                                                            {% if category.title == 'Аксессуары'%}
+                                                                                Все виды
+                                                                            {% else %}
+                                                                                Все бренды
+                                                                            {% endif %}</option>
+                                                                      {% for brand in category.brand_set.all %}
+                                                                          <option value="{{brand.id}}">{{brand.title}}</option>
+                                                                      {% endfor %}
+                                                                    </select>
+                                                              </div>
+                                                            {% endfor %} 
+                                                            <div  class="form-group col-md-12" id="all_things_m" style="display:none">
+                                                                <select class="form-control" name="All_type" id="category_id">
+                                                                      <option value="all_things">Все бренды</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="content">
+                                        <div class="inner">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="search-sales">
+                                                    <div class="row">
+                                                        <div class="form-group year-to">
+                                                            <input type="number"  class="form-control" name="start" placeholder=" с 0 (сом)">
+                                                        </div>
+
+                                                        <div class="form-group year-to">
+                                                            <input type="number"  class="form-control" name="end" placeholder=" до 100000 (сом)">
+                                                        </div>
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 year-to">
+
+                                                         <div class="switch">
+                                                            <label>
+                                                            Обмен &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                              <input class="text-right" name="exchange" type="checkbox">
+                                                              <span class="lever"></span>
+                                                              
+                                                            </label>
+                                                          </div>
+                                                        </div>
+
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 year-to">
+
+                                                         <div class="switch">
+                                                            <label>
+                                                            Документы 
+                                                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                              <input class="text-right" name="box" type="checkbox">
+                                                              <span class="lever"></span>
+                                                              
+                                                            </label>
+                                                          </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+                            <br>
+                                    <div class="form-group">
+                                        <button type="submit" class="send btn-sm btn-rounded btn-primary btn-primary-color waves-effect ">
+                                            Найти <i class="icon icon-normal-right-arrow-small"></i>
+                                        </button>
+                                    </div>
+                              
+                                
+                            </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<!-- Includes footer form tempate folder outside -->
+{% include "footer.html" %}
+
+
+<!-- Model pages -->
+
+<!-- /#includes exti modal page-->
+{% include "exit_modal_page.html" %}
+
+<script src=" {% static 'js/release11/jquery.js' %}"></script>
+<!-- Buy tab activation-->
+{% if request.GET.tab == 'buy' %}
+    {% include 'tab_script.html' %}
+{% endif %}
+
+<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
+<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
+<script src=" {% static 'js/release11/cycle.js' %}"></script>
+<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
+<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
+<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
+<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
+<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
+<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
+<script src=" {% static 'js/myjs.js'%}"></script>
+
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
+
+<script src="{% static 'js/main.js'%}"></script>
+
+<script src=" {% static 'MDB/js/mdb.js' %}"></script>
+<script src=" {% static 'js/release11/carat2.js' %}"></script>
+</body>
+</html>

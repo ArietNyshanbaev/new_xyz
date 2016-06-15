@@ -1,0 +1,196 @@
+{% load i18n postman_tags %}{% load pagination_tags %}
+{% comment %}
+WARNING: 'pagination_tags' is a name from the django-pagination application.
+For convenience, the design of this template is done with the use of that application.
+Django-postman will still be working, even if that application is not installed, by providing a mock
+for the template tag library.
+If the real implementation is to be used, just make sure that 'pagination' is declared before 'postman'
+in the INSTALLED_APPS setting.
+{% endcomment %}
+{% block content %}
+    {%load staticfiles%}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="смартфоны, купить в бишкеке, кыргызстан, ibox, продать в бишкеке, кыргызстане">
+    <meta name="author" content="iBox Team">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/bootstrap.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/chosen/chosen.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-outline/pictopro-outline.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/pictopro-normal/pictopro-normal.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/colorbox/colorbox.css' %}" media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'libraries/jslider/bin/jquery.slider.min.css' %}" media="screen, projection">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/mycss.css' %} " media="screen, projection">
+
+   
+   <!-- Material Design -->
+    <link rel="stylesheet" type="text/css" href=" {% static 'MDB/css/mdb_pro.css' %} " media="screen, projection">
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:100,400,700,400italic,700italic" rel="stylesheet" type="text/css"  media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/my.css' %} " media="screen, projection">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/release11/carat2.css' %} " media="screen, projection">
+{% include 'metrics.html' %}
+     <title>iBox.kg - Личные сообщения </title>
+</head>
+<body >
+
+<div id="fb-root"></div>
+
+
+<!-- Include header template-->
+{% include "header.html"%}
+<div class="infobar">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ol class="breadcrumb pull-left">
+		  			<li><a href="{% url 'main:main'%}">Главная</a></li>
+		  			<li><a href="/messages">Личные сообщения</a></li>
+                </ol>
+
+				<div class="contact pull-right">
+
+
+					<div class="contact-item mail">
+						<div class="label"><i class="icon icon-normal-mail"></i></div><!-- /.label -->
+						<div class="value">info@ibox.kg</div><!-- /.value -->
+					</div><!-- /.mail -->
+				</div><!-- /.contact -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.infobar -->
+<div class="container">
+<div  id="content" >
+{% include 'messages.html' %}
+{% include 'add_instance_icons.html' %}
+
+<div class="row" style="min-height: 430px">
+  <div class="col-sm-3">
+
+  <h1>&nbsp </h1>
+
+<b>
+ <ul id="list-group" style="max-width: 280px">{% postman_unread as unread_count %}
+ <a class="list-group-item" href="{% url 'postman:write' %}"><i class="fa fa-envelope"></i> {% trans "Write" %}</a>
+ <a class="list-group-item" href="{% url 'postman:inbox' %}"> <i class="fa fa-inbox"></i> {% trans "Inbox" %}{% if unread_count %} <span class="badge">{{ unread_count }}</span>{% endif %}</a>
+ <a class="list-group-item" href="{% url 'postman:sent' %}"><i class="fa fa-paper-plane"></i> {% trans "Sent Messages" %}</a>
+ <a class="list-group-item" href="{% url 'postman:archives' %}"><i class="fa fa-archive"></i> {% trans "Archives" %}</a>
+ <a class="list-group-item" href="{% url 'postman:trash' %}"><i class="fa fa-trash"></i> {% trans "Trash" %}</a>
+</ul>
+</b>
+  </div>
+  <div class="col-sm-6">
+    <div id="postman">
+
+<h4>{% block pm_folder_title %}{% endblock %}</h4>
+{% autopaginate pm_messages %}
+{% if invalid_page %}
+<p>{% trans "Sorry, this page number is invalid." %}</p>
+{% else %}
+{% if pm_messages %}
+{% block pm_by_modes %}<div id="pm_by_modes">
+
+</div>{% endblock pm_by_modes %}
+<form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
+    {% block pm_form_buttons %}<span id="pm_buttons">
+{% block pm_delete_button %}<button  type="submit" onclick="this.form.action='{% url 'postman:delete' %}'">{% trans "Delete" %}</button>{% endblock %}
+{% block pm_archive_button %}<button type="submit" onclick="this.form.action='{% url 'postman:archive' %}'">{% trans "Archive" %}</button>{% endblock %}
+{% block pm_undelete_button %}<button type="submit" onclick="this.form.action='{% url 'postman:undelete' %}'">{% trans "Undelete" %}</button>{% endblock %}
+</span>{% endblock %}
+<table class="table table-hover" id="pm_messages" >
+ <thead>
+  <tr>
+   <th>{% trans "Action" %}</th>
+  <th><a href="{% postman_order_by subject %}">{% trans "Subject" %}</a></th>
+{% block pm_sender_header %}   <th><a href="{% postman_order_by sender %}">{% trans "Sender" %}</a></th>{% endblock %}
+{% block pm_recipient_header %}   <th><a href="{% postman_order_by recipient %}">{% trans "Recipient" %}</a></th>{% endblock %}
+
+   <th><a href="{% postman_order_by date %}">{% block pm_date %}{% trans "Date" %}{% endblock %}</a></th>
+  </tr>
+ </thead>
+ <tbody>{% for message in pm_messages %}
+
+  <tr>
+   <td ><input style="visibility: visible; left: +20px" type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} /></td>
+
+      <td>{% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}
+{% block pm_subject %}
+
+
+    <a style="text-decoration: none" href="{% if by_conversation and message.thread_id %}{% url 'postman:view_conversation' message.thread_id %}{% else %}{% url 'postman:view' message.pk %}{% endif %}?next={{ current_url|urlencode }}">
+    {% include "postman/inc_subject_ex.html" %}
+    </a>
+{% endblock %}
+   {% if message.is_replied %}</em>{% endif %}{% if message.is_new %}</strong>{% endif %}</td>
+      {% block pm_sender_cell %}   <td>{{ message.obfuscated_sender|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
+{% block pm_recipient_cell %}   <td>{{ message.obfuscated_recipient|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
+
+   <td>{{ message.sent_at|compact_date:_("") }}</td>
+  </tr>{% endfor %}
+ </tbody>
+</table>
+</form>
+{% paginate %}
+{% else %}
+<p>{% trans "No messages." %}</p>
+{% endif %}
+{% endif %}
+{% block pm_footer_info %}{% endblock %}
+
+
+
+
+</div>
+  </div>
+<!-- ПРАВАЯ ЧАСТЬ СТРАНИЦЫ ПУСТАЯ ПОКА -->
+  <div class="col-sm-3">  </div>
+</div>
+</div>
+</div>
+    <!-- Includes footer form tempate folder outside -->
+{% include "footer.html" %}
+
+
+<!-- Model pages -->
+
+<!-- /#includes exti modal page-->
+{% include "exit_modal_page.html" %}
+
+
+<script src=" {% static 'js/release11/jquery.js' %}"></script>
+<script src="../code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src=" {% static 'js/release11/jquery.ui.js' %}"></script>
+<script src=" {% static 'js/release11/bootstrap.js' %}"></script>
+<script src=" {% static 'js/release11/cycle.js' %}"></script>
+<script src=" {% static 'libraries/jquery.bxslider/jquery.bxslider.js' %}"></script>
+<script src=" {% static 'libraries/easy-tabs/lib/jquery.easytabs.min.js' %}"></script>
+<script src=" {% static 'libraries/chosen/chosen.jquery.js' %}"></script>
+<script src=" {% static 'libraries/star-rating/jquery.rating.js' %}"></script>
+<script src=" {% static 'libraries/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src=" {% static 'libraries/jslider/bin/jquery.slider.min.js' %}"></script>
+<script src=" {% static 'libraries/ezMark/js/jquery.ezmark.js' %}"></script>
+<script src=" {% static 'js/myjs.js'%}"></script>
+
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.canvas.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.resize.js' %}"></script>
+<script type="text/javascript" src=" {% static 'libraries/flot/jquery.flot.time.js' %}"></script>
+
+<script src=" {% static 'MDB/js/modules/jquery-easing.js' %}"></script>
+<script src=" {% static 'MDB/js/modules/wow.js' %}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;v=3.13"></script>
+<script src=" {% static 'MDB/js/mdb.js' %}"></script>
+<script src=" {% static 'js/release11/carat2.js' %}"></script>
+</body>
+</html>
+{% endblock content %}
+
