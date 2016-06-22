@@ -12,7 +12,6 @@
                 {% if instance.photo1 %}
                     {% thumbnail instance.photo1 "300" as im %}
                         <img class="picture_of_instance" src="../../../media/{{im}}" alt="{{ instance.model }} в бишкеке">
-                    {% endthumbnail %}
                 {% endif %}
             </div>
             </a>
